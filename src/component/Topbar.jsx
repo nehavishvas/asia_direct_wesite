@@ -4,7 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { MyContext } from "../MyContext";
 import image2 from "../assestss/logo.png";
-import imagelogouser from "../assestss/logoasia.png"
+import imagelogouser from "../assestss/logoasia.png";
+import "./homepage/NavbarWeb.css";
 export default function Topbar() {
   const { text, setText } = useContext(MyContext);
   const [userData, setUserData] = useState({});
@@ -125,7 +126,7 @@ export default function Topbar() {
                         </div>
                       </a>
                       <ul className="dropdown-menu sidebar123 drop_noti notifi_view">
-                        <h5>Notification</h5>
+                        <h5 className="noti_cation">Notification</h5>
                         <div className="scrollNoti">
                           {data && data.length > 0 ? (
                             data.map((item, index) => (
@@ -244,7 +245,7 @@ export default function Topbar() {
                             className="dropdown-item list_item"
                             to={"/QuotationInFreight"}
                           >
-                            Chatting
+                            Chat
                           </Link>
                         </li>
                         {/* <li><Link className="dropdown-item list_item drop_item1" onClick={handleclicklogout}>Logout</Link></li> */}

@@ -7,6 +7,14 @@ import logoprofile from '../../assestss/logoasia.png'
 import { useLocation, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
+import MailOutlineIcon from "@mui/icons-material/MailOutline";
+import PhoneIcon from "@mui/icons-material/Phone";
+import PhoneAndroidIcon from "@mui/icons-material/PhoneAndroid";
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import EditIcon from "@mui/icons-material/Edit";
+import "./Profile.css";
+
+const DEFAULT_AVATAR = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23cbd5e1'><circle cx='12' cy='8' r='4'/><path d='M12 14c-6.1 0-8 4-8 4v2h16v-2s-1.9-4-8-4z'/></svg>";
 
 export default function Profile() {
 
@@ -40,201 +48,160 @@ export default function Profile() {
     <div>
       <Topbar />
       <Navbar />
-      <>
-        <section
-          className="bannerBg"
-          style={{ backgroundImage: `url(${image})`, position: "relative" }}
-        >
-          <div className="container">
-            <div className="row">
-              <div className="col-lg-12">
-                <h1>Profile Details</h1>
-                {/* <h5>
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. illo quae
-                  vero{" "}
-                </h5> */}
-              </div>
-            </div>
+      <div className="prf-wrapper">
+        <div className="prf-container">
+          
+          {/* Header */}
+          <div className="prf-header">
+            <h1 className="prf-title">Profile Details</h1>
+            <p className="prf-subtitle">Manage and view your personal details and business credentials</p>
           </div>
-        </section>
-        <section className="profileDetails">
-          <div className="container">
-            <div className="row">
-              <div className="col-lg-4">
-                <div className="leftProfile">
-                  <div className="leftProfileImg">
-                    {
-                      userData.profile ? (
-                        <img src={`${process.env.REACT_APP_BASE_URL_image}${userData?.profile}`} alt="apifdgdfg" style={{ objectFit: "cover" }} />
-                      ) : (
-                        <img src={logoprofile} alt="tushardgdfg" style={{ objectFit: "cover" }} />
-                      )
+
+          <div className="row">
+            {/* Left Card */}
+            <div className="col-lg-4 col-md-5 mb-4">
+              <div className="prf-card prf-left-card">
+                <div className="prf-avatar-wrapper">
+                  <img
+                    src={
+                      userData.profile && userData.profile !== "null" && userData.profile !== "undefined"
+                        ? `${process.env.REACT_APP_BASE_URL_image}${userData.profile}`
+                        : DEFAULT_AVATAR
                     }
-                  </div>
-                  <h3 className='text-capitalize'>{userdata?.full_name}</h3>
-                  <div className="bgContactLeft">
-                    <h5>Contact</h5>
-                  </div>
-                  <div className="contactDetailsWidth">
-                    <p>
-                      {" "}
-                      <span>Email:</span>{userdata.email}
-                    </p>
-                    <p>
-                      {" "}
-                      <span>Tele Phone:</span> {userData.telephone}
-                    </p>
-                    <p>
-                      {" "}
-                      <span>Cell Phone:</span> {userdata.cellphone}
-                    </p>
-                    <p>
-                      {
-                        userData ? (
-                          <>
-                            <span>Address 1:</span>{userData?.address_1}
-                          </>
-
-                        ) : (
-                          <>
-                            <span>Address 1:</span>{userdata?.address_1}
-                          </>
-                        )
-                      }
-                    </p>
-                    <p>
-                      {" "}
-                      {
-                        userData ? (
-                          <>
-                            <span>Address 2:</span>{userData?.address_2}
-                          </>
-
-                        ) : (
-                          <>
-                            <span>Address 2:</span>{userdata?.address_2}
-                          </>
-                        )
-                      }
-                    </p>
-                  </div>
+                    className="prf-avatar"
+                    alt="user profile"
+                    onError={(e) => {
+                      e.target.src = DEFAULT_AVATAR;
+                    }}
+                  />
                 </div>
-              </div>
-              <div className="col-lg-8">
-                <div className="profileRight">
-                  <div className="profileSummary">
-                    <h5>Profile Summary</h5>
-                    {/* <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut
-                      magni ex quis repellendus temporibus accusamus architecto facere
-                      corporis corrupti obcaecati similique incidunt minus, vel
-                      dolores placeat commodi blanditiis nihil mollitia?
-                    </p> */}
-                    <div className="row">
-                      <div className="col-lg-6">
-                        <div className="parantClientRf">
-                          <div className="me-3">
-                            <p>
-                              {" "}
-                              <strong>City :</strong>{" "}
-                            </p>
-                          </div>
-                          <div>
-                            <p>{ userData ? userData.city :  userdata.city}</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-lg-6">
-                        <div className="parantClientRf">
-                          <div className="me-3">
-                            <p>
-                              {" "}
-                              <strong>Province :</strong>{" "}
-                            </p>
-                          </div>
-                          <div>
-                            <p>{userData ? userData.province :  userdata.province}</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-lg-6">
-                        <div className="parantClientRf">
-                          <div className="me-3">
-                            <p>
-                              {" "}
-                              <strong>Country :</strong>{" "}
-                            </p>
-                          </div>
-                          <div>
-                            <p>{userData.country_name	?userData.country_name	:userdata.country_name	}</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-lg-6">
-                        <div className="parantClientRf">
-                          <div className="me-3">
-                            <p>
-                              {" "}
-                              <strong>Code :</strong>{" "}
-                            </p>
-                          </div>
-                          <div>
-                            <p>{userData.code?userData.code:userdata.code}</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-lg-6">
-                        <div className="parantClientRf">
-                          <div className="me-3">
-                            <p>
-                              {" "}
-                              <strong>Company Id :</strong>{" "}
-                            </p>
-                          </div>
-                          <div>
-                            <p>{userData.company_id?userData.company_id:userdata.company_id}</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-lg-6">
-                        <div className="parantClientRf">
-                          <div className="me-3">
-                            <p>
-                              {" "}
-                              <strong>Importers Reference :</strong>{" "}
-                            </p>
-                          </div>
-                          <div>
-                            <p>{userData.importers_ref?userData.importers_ref:userdata.importers_ref}</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-lg-6">
-                        <div className="parantClientRf">
-                          <div className="me-3">
-                            <p>
-                              {" "}
-                              <strong>Tax Reference :</strong>{" "}
-                            </p>
-                          </div>
-                          <div>
-                            <p> {userdata.tax_ref?userdata.tax_ref:userData.tax_ref}</p>
-                          </div>
-                        </div>
-                      </div>
+                <h3 className="prf-name text-capitalize">{userdata?.full_name || "N/A"}</h3>
+                <span className="prf-badge">Client</span>
+
+                <div className="prf-divider"></div>
+                <h5 className="prf-section-title">Contact Details</h5>
+
+                <div className="prf-contact-list">
+                  <div className="prf-contact-item">
+                    <span className="prf-contact-icon">
+                      <MailOutlineIcon fontSize="small" />
+                    </span>
+                    <div className="prf-contact-content">
+                      <span className="prf-contact-label">Email</span>
+                      <span className="prf-contact-value">{userdata?.email || "N/A"}</span>
                     </div>
                   </div>
-                  <div className='text-center'>
-                    <button className='fre_up_btn' onClick={handleclicknavi}>Update Profile</button>
+
+                  <div className="prf-contact-item">
+                    <span className="prf-contact-icon">
+                      <PhoneIcon fontSize="small" />
+                    </span>
+                    <div className="prf-contact-content">
+                      <span className="prf-contact-label">Tele Phone</span>
+                      <span className="prf-contact-value">{userData?.telephone || "N/A"}</span>
+                    </div>
+                  </div>
+
+                  <div className="prf-contact-item">
+                    <span className="prf-contact-icon">
+                      <PhoneAndroidIcon fontSize="small" />
+                    </span>
+                    <div className="prf-contact-content">
+                      <span className="prf-contact-label">Cell Phone</span>
+                      <span className="prf-contact-value">{userdata?.cellphone || "N/A"}</span>
+                    </div>
+                  </div>
+
+                  <div className="prf-contact-item">
+                    <span className="prf-contact-icon">
+                      <HomeOutlinedIcon fontSize="small" />
+                    </span>
+                    <div className="prf-contact-content">
+                      <span className="prf-contact-label">Address 1</span>
+                      <span className="prf-contact-value">{userData?.address_1 || userdata?.address_1 || "N/A"}</span>
+                    </div>
+                  </div>
+
+                  <div className="prf-contact-item">
+                    <span className="prf-contact-icon">
+                      <HomeOutlinedIcon fontSize="small" />
+                    </span>
+                    <div className="prf-contact-content">
+                      <span className="prf-contact-label">Address 2</span>
+                      <span className="prf-contact-value">{userData?.address_2 || userdata?.address_2 || "N/A"}</span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+
+            {/* Right Card Panel */}
+            <div className="col-lg-8 col-md-7 mb-4">
+              <div className="prf-right-panels">
+                
+                {/* Location Settings Card */}
+                <div className="prf-card">
+                  <h5 className="prf-section-title">Location Settings</h5>
+                  <div className="prf-grid">
+                    <div className="prf-detail-box">
+                      <span className="prf-detail-label">City</span>
+                      <span className="prf-detail-value">{userData?.city || userdata?.city || "N/A"}</span>
+                    </div>
+
+                    <div className="prf-detail-box">
+                      <span className="prf-detail-label">Province</span>
+                      <span className="prf-detail-value">{userData?.province || userdata?.province || "N/A"}</span>
+                    </div>
+
+                    <div className="prf-detail-box">
+                      <span className="prf-detail-label">Country</span>
+                      <span className="prf-detail-value">{userData?.country_name || userdata?.country_name || "N/A"}</span>
+                    </div>
+
+                    <div className="prf-detail-box">
+                      <span className="prf-detail-label">Postal Code</span>
+                      <span className="prf-detail-value">{userData?.code || userdata?.code || "N/A"}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Company & References Card */}
+                <div className="prf-card">
+                  <h5 className="prf-section-title">Company & References</h5>
+                  <div className="prf-grid">
+                    <div className="prf-detail-box">
+                      <span className="prf-detail-label">Company ID</span>
+                      <span className="prf-detail-value">{userData?.company_id || userdata?.company_id || "N/A"}</span>
+                    </div>
+
+                    <div className="prf-detail-box">
+                      <span className="prf-detail-label">Importers Reference</span>
+                      <span className="prf-detail-value">{userData?.importers_ref || userdata?.importers_ref || "N/A"}</span>
+                    </div>
+
+                    <div className="prf-detail-box">
+                      <span className="prf-detail-label">Tax Reference</span>
+                      <span className="prf-detail-value">{userdata?.tax_ref || userData?.tax_ref || "N/A"}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Actions area */}
+                <div className="prf-action-area">
+                  <button className="prf-btn" onClick={handleclicknavi}>
+                    <EditIcon fontSize="small" />
+                    Update Profile
+                  </button>
+                </div>
+
+              </div>
+            </div>
           </div>
-        </section>
-      </>
+
+        </div>
+      </div>
       <ToastContainer />
       <Footer />
     </div>
-  )
+  );
 }

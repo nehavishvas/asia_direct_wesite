@@ -593,7 +593,7 @@ ul.footerIconSocial a {
     rgba(17, 17, 26, 0.1) 0px 0px 8px;
   margin-top: -40px;
   position: relative;
-  z-index: 9999999999999;
+  z-index: 2 !important;
   background: white;
 }
 

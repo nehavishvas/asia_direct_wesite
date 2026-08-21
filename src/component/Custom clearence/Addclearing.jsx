@@ -17,6 +17,8 @@ import {
   Select,
 } from "@mui/material";
 import { ArrowBack } from "@mui/icons-material";
+import "./Customclearence.css";
+
 export default function Addclearing() {
   const [error, setError] = useState({});
   const navigate = useNavigate();
@@ -301,7 +303,7 @@ export default function Addclearing() {
                           onChange={handleFreightModeChange}
                           name="freight"
                         >
-                          <option>Select...</option>
+                          <option value="">Select...</option>
                           <option value="Sea">Sea</option>
                           <option value="Air">Air</option>
                           <option value="Road">Road</option>
@@ -318,13 +320,6 @@ export default function Addclearing() {
                     {freightMode === "Air" && (
                       <div className="col-md-6 mb-3">
                         <label htmlFor="">Air Freight Option </label>
-                        {/* <input
-                          type="text"
-                          className="form-control"
-                          onChange={handleInputChange}
-                          name="freight_option"
-                          placeholder="Air Freight Option"
-                        /> */}
                         <div className="mainTool">
                           <select
                             name="freight_option"
@@ -350,13 +345,6 @@ export default function Addclearing() {
                     {freightMode === "Sea" && (
                       <div className="col-md-6 mb-3">
                         <label htmlFor="">Sea Freight Option</label>
-                        {/* <input
-                          type="text"
-                          className="form-control"
-                          onChange={handleInputChange}
-                          name="freight_option"
-                          placeholder="Enter sea Name"
-                        /> */}
                         <div className="mainTool">
                           <select
                             name="freight_option"
@@ -412,103 +400,76 @@ export default function Addclearing() {
                       <p className="text-danger mb-0"> {error.destination}</p>
                     </div>
                     <div className="col-md-6 mb-3">
-                      <div className="col-12 ">
-                        <div className="">
-                          <h5 className="mb-0">I would like to</h5>
-                          <div className="shipRefer d-flex align-items-center">
-                            <input
-                              type="radio"
-                              id="stausone"
-                              name="is_Import_Export"
-                              defaultValue="import"
-                              value="import"
-                              onChange={handleInputChange}
-                            />
-                            <label htmlFor="stausone" className="mb-0">
-                              Import
-                            </label>
+                      <h5 className="mb-0">I would like to</h5>
+                      <div className="shipRefer d-flex align-items-center">
+                        <input
+                          type="radio"
+                          id="status_import"
+                          name="is_Import_Export"
+                          defaultValue="import"
+                          value="import"
+                          onChange={handleInputChange}
+                        />
+                        <label htmlFor="status_import" className="mb-0">
+                          Import
+                        </label>
 
-                            <input
-                              type="radio"
-                              id="stausone"
-                              name="is_Import_Export"
-                              defaultValue="export"
-                              value="export"
-                              onChange={handleInputChange}
-                            />
-                            <label htmlFor="staustwo" className="mb-0">
-                              Export
-                            </label>
-                          </div>
-                        </div>
+                        <input
+                          type="radio"
+                          id="status_export"
+                          name="is_Import_Export"
+                          defaultValue="export"
+                          value="export"
+                          onChange={handleInputChange}
+                        />
+                        <label htmlFor="status_export" className="mb-0">
+                          Export
+                        </label>
                       </div>
                     </div>
-                    <div className="col-md-6">
-                      <div className="mb-3">
-                        <h5 className="mb-0">I am the</h5>
-                        <div className="shipRefer d-flex align-items-center">
-                          <input
-                            type="radio"
-                            id="stausonee"
-                            name="is_cong_shipp"
-                            defaultValue="Shipper"
-                            value="Shipper"
-                            onChange={handleInputChange}
-                          />
-                          <label htmlFor="stausone" className="mb-0">
-                            Shipper
-                          </label>
+                    <div className="col-md-6 mb-3">
+                      <h5 className="mb-0">I am the</h5>
+                      <div className="shipRefer d-flex align-items-center">
+                        <input
+                          type="radio"
+                          id="status_shipper"
+                          name="is_cong_shipp"
+                          defaultValue="Shipper"
+                          value="Shipper"
+                          onChange={handleInputChange}
+                        />
+                        <label htmlFor="status_shipper" className="mb-0">
+                          Shipper
+                        </label>
 
-                          <input
-                            type="radio"
-                            id="stausonee"
-                            name="is_cong_shipp"
-                            defaultValue="Consignee"
-                            value="Consignee"
-                            onChange={handleInputChange}
-                          />
-                          <label htmlFor="staustwo" className="mb-0">
-                            Consignee
-                          </label>
-                        </div>
-                        <p className="text-danger mb-0">
-                          {" "}
-                          {error.is_cong_shipp}
-                        </p>
+                        <input
+                          type="radio"
+                          id="status_consignee"
+                          name="is_cong_shipp"
+                          defaultValue="Consignee"
+                          value="Consignee"
+                          onChange={handleInputChange}
+                        />
+                        <label htmlFor="status_consignee" className="mb-0">
+                          Consignee
+                        </label>
                       </div>
+                      <p className="text-danger mb-0">
+                        {error.is_cong_shipp}
+                      </p>
                     </div>
                   </div>
                 </div>
+
                 <div className="borderShip">
+                  <h3 className="mb-3">Port Clearing Details</h3>
                   <div className="row">
-                    <div className="">
-                      <h3 className="mb-3">Port Clearing Details</h3>
-                    </div>
                     <div className="col-md-6 mb-3 autoComplete mainTool">
                       <h5>Port of Loading Country</h5>
-                      {/* <select
-                        className="form-select"
-                        onChange={handleInputChange}
-                        name="loading_country"
-                      >
-                        <option>Select...</option>
-                        {country &&
-                          country.length > 0 &&
-                          country.map((item, index) => {
-                            return (
-                              <>
-                                <option key={index} value={item.country_id}>
-                                  {item.country_name}
-                                </option>
-                              </>
-                            );
-                          })}
-                      </select> */}
                       <Autocomplete
                         options={country || []}
                         getOptionLabel={(option) => option.country_name || ""}
                         onChange={(e, value) => {
-                          // value = whole selected object {country_id, country_name}
                           handleInputChange({
                             target: {
                               name: "loading_country",
@@ -523,7 +484,6 @@ export default function Addclearing() {
                             required
                           />
                         )}
-                        sx={{ width: 300 }}
                       />
                       <div className="toolSpace">
                         <p className="toolText">
@@ -533,28 +493,9 @@ export default function Addclearing() {
                         </p>
                       </div>
                       <p className="text-danger mb-0">{error.port_of_exit}</p>
-                      <p className="text-danger mb-0">{error.port_of_exit}</p>
                     </div>
                     <div className="col-md-6 mb-3 autoComplete mainTool">
                       <h5>Port of Discharge Country</h5>
-                      {/* <select
-                        className="form-select"
-                        onChange={handleInputChange}
-                        name="discharge_country"
-                      >
-                        <option>Select...</option>
-                        {country &&
-                          country.length > 0 &&
-                          country.map((item, index) => {
-                            return (
-                              <>
-                                <option key={index} value={item.country_id}>
-                                  {item.country_name}
-                                </option>
-                              </>
-                            );
-                          })}
-                      </select> */}
                       <Autocomplete
                         options={country || []}
                         getOptionLabel={(option) => option.country_name || ""}
@@ -614,27 +555,22 @@ export default function Addclearing() {
                     </div>
                   </div>
                 </div>
-                 <div className="d-flex justify-content-between flex-wrap gap-3 mt-4">
+
+                <div className="borderShip d-flex justify-content-between flex-wrap gap-3 align-items-center">
                   <div>
-                    <h4 className="freight_hd">Document Section</h4>
-                    <span class="line"></span>
+                    <h3 className="mb-0" style={{ borderLeft: "none", paddingLeft: 0 }}>Document Section</h3>
                   </div>
                   <div>
-                    <button
-                      className="btn btn_add_web
-                                                                      "
-                      onClick={handleShow}
-                    >
+                    <button className="btn btn_add_web" onClick={handleShow}>
                       Upload Documents
                     </button>
-
                     {show1 && (
                       <Modal
                         open={show1}
                         onClose={handleClose}
                         slotProps={{
                           backdrop: {
-                            sx: { backgroundColor: "rgba(0,0,0,0.5)" }, // darker overlay background
+                            sx: { backgroundColor: "rgba(0,0,0,0.5)" },
                           },
                         }}
                       >
@@ -646,20 +582,14 @@ export default function Addclearing() {
                             width: 500,
                             mx: "auto",
                             mt: 10,
-                            boxShadow: 24, // nice shadow effect
+                            boxShadow: 24,
                             textAlign: "center",
-                            backgroundImage:
-                              "linear-gradient(135deg, #e3f2fd, #ffffff)", // gradient background
+                            backgroundImage: "linear-gradient(135deg, #e3f2fd, #ffffff)",
                           }}
                         >
-                          {/* Title */}
-                          <h2
-                            style={{ marginBottom: "20px", color: "#1976d2" }}
-                          >
+                          <h2 style={{ marginBottom: "20px", color: "#1976d2" }}>
                             📂 Upload Documents
                           </h2>
-
-                          {/* Dropdown */}
                           <FormControl fullWidth sx={{ mt: 2 }}>
                             <InputLabel id="doc-select-label">
                               Select Document Type
@@ -676,8 +606,6 @@ export default function Addclearing() {
                               ))}
                             </Select>
                           </FormControl>
-
-                          {/* Dynamic file inputs */}
                           <div className="mt-3">
                             {selectedDocs.map((doc, index) => (
                               <div
@@ -698,24 +626,8 @@ export default function Addclearing() {
                               </div>
                             ))}
                           </div>
-
-                          {/* Footer buttons */}
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-end",
-                              gap: 2,
-                              mt: 4,
-                            }}
-                          >
-                            <Button
-                              onClick={handleClose}
-                              variant="outlined"
-                              sx={{
-                                borderRadius: 2,
-                                px: 3,
-                              }}
-                            >
+                          <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2, mt: 4 }}>
+                            <Button onClick={handleClose} variant="outlined" sx={{ borderRadius: 2, px: 3 }}>
                               Cancel
                             </Button>
                             <Button
@@ -725,8 +637,7 @@ export default function Addclearing() {
                               sx={{
                                 borderRadius: 2,
                                 px: 3,
-                                backgroundImage:
-                                  "linear-gradient(45deg, #43a047, #66bb6a)",
+                                backgroundImage: "linear-gradient(45deg, #43a047, #66bb6a)",
                               }}
                             >
                               Save
@@ -737,11 +648,10 @@ export default function Addclearing() {
                     )}
                   </div>
                 </div>
+
                 <div className="borderShip">
+                  <h3 className="mb-3">Cargo Details</h3>
                   <div className="row">
-                    <div className="">
-                      <h3 className="mb-3">Cargo Details</h3>
-                    </div>
                     <div className="col-md-6 mb-3 mainTool">
                       <h5>Product Description</h5>
                       <input
@@ -762,12 +672,12 @@ export default function Addclearing() {
                         onChange={handleInputChange}
                         name="nature_of_goods"
                       >
-                        <option> Select...</option>
-                        <option> General Cargo</option>
-                        <option> Battery</option>
-                        <option> Liquid</option>
-                        <option> Powder</option>
-                        <option> Harzadous</option>
+                        <option value="">Select...</option>
+                        <option value="General Cargo">General Cargo</option>
+                        <option value="Battery">Battery</option>
+                        <option value="Liquid">Liquid</option>
+                        <option value="Powder">Powder</option>
+                        <option value="Harzadous">Hazardous</option>
                       </select>
                       <div className="toolSpace">
                         <p className="toolText">
@@ -783,11 +693,11 @@ export default function Addclearing() {
                         onChange={handleInputChange}
                         name="packing_type"
                       >
-                        <option>Select...</option>
-                        <option>Box</option>
-                        <option>Crate</option>
-                        <option>Pallet</option>
-                        <option>Bag</option>
+                        <option value="">Select...</option>
+                        <option value="Box">Box</option>
+                        <option value="Crate">Crate</option>
+                        <option value="Pallet">Pallet</option>
+                        <option value="Bag">Bag</option>
                       </select>
                       <div className="toolSpace">
                         <p className="toolText">
@@ -872,7 +782,6 @@ export default function Addclearing() {
                     <div className="col-md-12 mb-3 mainTool">
                       <h5>Comment on Docs</h5>
                       <textarea
-                        type="textarea"
                         rows="4"
                         className="form-control"
                         onChange={handleInputChange}
@@ -881,12 +790,12 @@ export default function Addclearing() {
                       <div className="toolSpace">
                         <p className="toolText">
                           Add any remarks or notes related to shipping
-                          documents."
+                          documents.
                         </p>
                       </div>
                     </div>
 
-                    <div className="text-center">
+                    <div className="text-center my-4">
                       <button className="btn btnFreight2" onClick={handleclick}>
                         Add Clearance
                       </button>

@@ -98,6 +98,7 @@ export default function AddFreight() {
   useEffect(() => {
     getdataap();
   }, []);
+  
   const getdataap = () => {
     axios
       .get(`${process.env.REACT_APP_BASE_URL}getCommodities`)
@@ -109,6 +110,7 @@ export default function AddFreight() {
         console.log(error.response.data);
       });
   };
+
   const getdata = () => {
     axios
       .get(`${process.env.REACT_APP_BASE_URL}GetCountries`)
@@ -120,10 +122,12 @@ export default function AddFreight() {
         toast.error(error.response.data.message);
       });
   };
+
   useEffect(() => {
     getdata();
     getclient();
   }, []);
+
   const handleFreightOptionChange = (event) => {
     const value = event.target.value;
     setShowAirOptions(value === "Air");
@@ -165,6 +169,7 @@ export default function AddFreight() {
       apihit();
     }
   };
+
   const totalcalc =
     167 * parseInt(formData.totalWeight);
   const apihit = () => {
@@ -236,11 +241,13 @@ export default function AddFreight() {
         toast.error(error.response.data);
       });
   };
+
   const handlekey12 = (e) => {
     if (e.charCode < 44 || e.charCode > 57) {
       e.preventDefault();
     }
   };
+  
   const handleclickprevious = () => {
     navigate("/freight-details");
   };

@@ -1,0 +1,134 @@
+/* Premium Public Navbar CSS Override */
+
+.navbar-expand-lg {
+  height: 80px !important;
+  background-color: #ffffff !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.035) !important;
+  border-bottom: 1px solid #f1f5f9 !important;
+  padding: 0 !important;
+}
+
+.navbar-expand-lg .container {
+  height: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* Logo Alignment */
+.nav_img img {
+  height: 46px !important; /* Elegant scaled height */
+  width: auto !important;
+  object-fit: contain !important;
+  transition: transform 0.2s ease !important;
+}
+
+.nav_img img:hover {
+  transform: scale(1.02) !important;
+}
+
+/* Nav Item Links */
+.headNav {
+  padding: 0 10px !important;
+  display: flex !important;
+  align-items: center !important;
+  height: 100% !important;
+}
+
+.headNav a {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 0.85rem !important;
+  font-weight: 700 !important;
+  color: #334155 !important; /* Cool dark slate gray instead of pure black */
+  letter-spacing: 0.05em !important;
+  text-transform: uppercase !important;
+  padding: 8px 12px !important;
+  border-bottom: 2px solid transparent !important;
+  transition: all 0.2s ease !important;
+  border-radius: 4px !important;
+}
+
+.headNav a:hover,
+.headNav a.active {
+  color: #d31c20 !important; /* Brand Red */
+  background-color: rgba(211, 28, 32, 0.04) !important; /* Subtly tinted bg */
+}
+
+/* Billing Dropdown button */
+.invoiceDrop {
+  display: flex !important;
+  align-items: center !important;
+}
+
+.invoiceDrop button {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 0.85rem !important;
+  font-weight: 700 !important;
+  color: #334155 !important;
+  letter-spacing: 0.05em !important;
+  text-transform: uppercase !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 8px 12px !important;
+  transition: all 0.2s ease !important;
+  border-radius: 4px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+}
+
+.invoiceDrop button:hover,
+.invoiceDrop.show button {
+  color: #d31c20 !important;
+  background-color: rgba(211, 28, 32, 0.04) !important;
+}
+
+.invoiceDrop .dropdown-menu {
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08) !important;
+  padding: 8px !important;
+  min-width: 220px !important;
+  margin-top: 10px !important;
+}
+
+.invoiceDrop .dropdown-item {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  color: #475569 !important;
+  padding: 10px 14px !important;
+  border-radius: 6px !important;
+  transition: all 0.15s ease !important;
+}
+
+.invoiceDrop .dropdown-item:hover {
+  background-color: #f1f5f9 !important;
+  color: #0f172a !important;
+  padding-left: 18px !important;
+}
+
+/* Add Freight button in Navbar */
+.callNav {
+  display: flex !important;
+  align-items: center !important;
+}
+
+.btn_add_web {
+  height: 42px !important;
+  padding: 0 20px !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  background-color: #d31c20 !important; /* Brand Red */
+  border: none !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 6px -1px rgba(211, 28, 32, 0.25) !important;
+  transition: all 0.2s ease !important;
+  white-space: nowrap !important;
+}
+
+.btn_add_web:hover {
+  background-color: #b01418 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 12px -2px rgba(211, 28, 32, 0.35) !important;
+}

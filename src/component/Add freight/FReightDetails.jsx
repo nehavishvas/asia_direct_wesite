@@ -6,6 +6,7 @@ import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { toast, ToastContainer } from "react-toastify";
+import "./FReightDetails.css";
 export default function FreightDetails() {
   const location = useLocation();
   const [document, setDocument] = useState([]);
@@ -70,25 +71,27 @@ export default function FreightDetails() {
     <div>
       <Topbar />
       <Navbar />
-      <section class="sec_freight">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-12">
-              <div class="page-banner full-row">
-                <div class="container">
-                  <div class="row align-items-center">
-                    <div class="col-md-6">
-                      <h3 class="fre_det_hd">Freight Details</h3>
+      
+      {/* Banner */}
+      <section className="sec_freight">
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-md-12">
+              <div className="page-banner full-row">
+                <div className="container">
+                  <div className="row align-items-center">
+                    <div className="col-md-6">
+                      <h3 className="fre_det_hd">Freight Details</h3>
                     </div>
-                    <div class="col-md-6">
-                      <nav class="float-start float-md-end">
-                        <ol class="breadcrumb m-0">
-                          <li class="breadcrumb-item">
-                            <a href="">Home</a>
+                    <div className="col-md-6">
+                      <nav className="float-start float-md-end">
+                        <ol className="breadcrumb m-0">
+                          <li className="breadcrumb-item">
+                            <a href="/">Home</a>
                           </li>
-                          <li class="breadcrumb-item active">
+                          <li className="breadcrumb-item active">
                             <Link to={"/freight-details"}>
-                              All Freight Detail's
+                              All Freight Details
                             </Link>
                           </li>
                         </ol>
@@ -101,672 +104,244 @@ export default function FreightDetails() {
           </div>
         </div>
       </section>
-      <div className="container">
-        <div className="row mt-4">
-          <div className="col-md-4">
-            <div className="card desti_card">
-              <div className="card-body">
-                <div className="">
-                  <h6 className="orgin_hd">Shipper Details</h6>
-                  <span className="line"></span>
-                </div>
-                <div className="main_det">
-                  <div class="table-responsive">
-                    <table class="det_show">
-                      <tbody>
-                        <tr>
-                          <td class="fright_num">
-                            <p class="client_para1">Shipper:</p>
-                          </td>
-                          <td>
-                            <p class="client_para1">{data1.full_name}</p>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <p class="client_para1">Contact Person:</p>
-                          </td>
-                          <td>
-                            <p class="client_para1">{data1.contact_person}</p>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <p class="client_para1">Cell:</p>
-                          </td>
-                          <td>
-                            <p class="client_para1">{data1.cellphone}</p>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <p class="client_para1">Telephone:</p>
-                          </td>
-                          <td>
-                            <p class="client_para1">{data1.telephone}</p>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <p class="client_para1 mb-2">Email:</p>
-                          </td>
-                          <td>
-                            <p class="client_para1 mb-2">{data1.email}</p>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <p className="ship_hd">Pickup Address</p>
-                          </td>
-                        </tr>
-                        {/* <tr>
-                              <td>
-                                <p class="client_para1">Str Add:</p>
-                              </td>
-                              <td>
-                                <p class="client_para1">000000</p>
-                              </td>
-                            </tr> */}
-                        <tr>
-                          <td>
-                            <p class="client_para1">Address1:</p>
-                          </td>
-                          <td>
-                            <p class="client_para1">{data1.address_1}</p>
-                          </td>
-                        </tr>
-                        {/* <tr>
-                              {/* <td>
-                                <p class="client_para1">Town:</p>
-                              </td> */}
-                        {/* <td>
-                                <p class="client_para1">000000</p>
-                              </td> */}
-                        {/* </tr>  */}
-                        <tr>
-                          <td>
-                            <p class="client_para1">City:</p>
-                          </td>
-                          <td>
-                            <p class="client_para1">{data1.city}</p>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <p class="client_para1">Country:</p>
-                          </td>
-                          <td>
-                            <p class="client_para1">{data1.country}</p>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <p class="client_para1 mb-2">Postal Code:</p>
-                          </td>
-                          <td>
-                            <p class="client_para1 mb-2">{data1.code}</p>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <p className="ship_hd">Export details</p>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <p class="client_para1">Exporter:</p>
-                          </td>
-                          <td>
-                            <p class="client_para1">Asia Direct</p>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <p class="client_para1">Export Code:</p>
-                          </td>
-                          <td>
-                            <p class="client_para1">204101</p>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <p class="client_para1">Vat/Tax No:</p>
-                          </td>
-                          <td>
-                            <p class="client_para1">{data1.tax_ref}</p>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
 
-          <div className="col-md-4">
-            {/* <div className="card desti_card">
-              <div className="card-body">
-                <div className="">
-                  <h6 className="orgin_hd">Attachments</h6>
-                  <span className="line"></span>
-                  {/* <tr>
-                    <td>
-                      <p class="client_para1">Document Name:</p>
-                    </td>
-                    <td>
-                      <p class="client_para1">{data1.add_attachments}</p>
-                    </td>
+      {/* Main Details Body */}
+      <div className="fd-container">
+        <div className="row mt-2">
+          
+          {/* Column 1: Shipper Details */}
+          <div className="col-md-4 mb-4">
+            <div className="fd-card">
+              <h6 className="fd-card-title">Shipper Details</h6>
+              
+              <h6 className="fd-section-header">Company Details</h6>
+              <table className="fd-table">
+                <tbody>
+                  <tr className="fd-row">
+                    <td className="fd-label-cell">Shipper:</td>
+                    <td className="fd-value-cell">{data1.full_name || "N/A"}</td>
                   </tr>
-                  <a
-                    href={`${process.env.REACT_APP_BASE_URLdocument}${data1.add_attachment_file}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    View Document
-                  </a> */}
-                   {/* <div className="mb-4 ">
-                      <label>Supplier Invoice : </label>
-                      {document?.map((item, index) => {
-                        return (
-                          <>
-                            <a
-                              href={`${process.env.REACT_APP_BASE_URLdocument}${item?.document}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="view_docu ms-2"
-                            >
-                              View Document
-                            </a>
-                            <DeleteIcon onClick={()=>{deleteapi(item.id)}} className="text-danger" style={{cursor:"pointer"}} />
-                          </>
-                        );
-                      })}
-                    </div>
-                    <div className="mb-4 ">
-                      <label>Other Document :</label>
-                      {document1?.map((item, index) => {
-                        return (
-                          <>
-                            <a
-                              href={`${process.env.REACT_APP_BASE_URLdocument}${item?.document}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="view_docu ms-2"
-                            >
-                              View Document
-                            </a>
-                             <DeleteIcon onClick={()=>{deleteapi(item.id)}} className="text-danger" style={{cursor:"pointer"}} />
-                          </>
-                        );
-                      })}
-                    </div>
-                    <div className="mb-4 ">
-                      <label>packing List :</label>
-                      {packing?.map((item, index) => {
-                        return (
-                          <>
-                            <a
-                              href={`${process.env.REACT_APP_BASE_URLdocument}${item?.document}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="view_docu ms-2"
-                            >
-                              View Document
-                            </a>
-                             <DeleteIcon onClick={()=>{deleteapi(item.id)}} className="text-danger" style={{cursor:"pointer"}} />
-                          </>
-                        );
-                      })}
-                    </div>
-                    <div className="mb-4 ">
-                      <label>Licenses Docs :</label>
-                      {licenses?.map((item, index) => {
-                        return (
-                          <>
-                            <a
-                              href={`${process.env.REACT_APP_BASE_URLdocument}${item?.document}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="view_docu ms-2"
-                            >
-                              View Document
-                            </a>
-                             <DeleteIcon onClick={()=>{deleteapi(item.id)}} className="text-danger" style={{cursor:"pointer"}} />
-                          </>
-                        );
-                      })}
-                    </div>
-                    <div className="mb-4 ">
-                      <label>Attach Quote :</label>
-                            <a
-                              href={`${process.env.REACT_APP_BASE_URLdocument}${data1?.attachment_Estimate}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="view_docu ms-2"
-                            >
-                              View Document
-                            </a>
-                             {/* <DeleteIcon onClick={()=>{deleteapi(item.id)}} className="text-danger" style={{cursor:"pointer"}} /> */}
-                    {/* </div>
-                </div>
-              </div>
-            </div> */}
-             <div className="col-md-12">
-  <div className="card desti_card">
-    <div className="card-body mb-3">
-      {Object.keys(documents).map((groupName, groupIndex) => (
-        <div key={groupIndex} className="mb-2">
-          <label>{groupName} :</label>
-          {documents[groupName]?.map((item, index) => (
-            <div key={item.id} className="d-flex align-items-center">
-              <a
-                href={`${process.env.REACT_APP_BASE_URLdocument}${item?.document}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="view_docu ms-2"
-              >
-                View Document
-              </a>
-              <DeleteIcon
-                onClick={() => deleteapi(item.id)}
-                className="text-danger ms-2"
-                style={{ cursor: "pointer" }}
-              />
-            </div>
-          ))}
-        </div>
-      ))}
+                  <tr className="fd-row">
+                    <td className="fd-label-cell">Contact Person:</td>
+                    <td className="fd-value-cell">{data1.contact_person || "N/A"}</td>
+                  </tr>
+                  <tr className="fd-row">
+                    <td className="fd-label-cell">Cell:</td>
+                    <td className="fd-value-cell">{data1.cellphone || "N/A"}</td>
+                  </tr>
+                  <tr className="fd-row">
+                    <td className="fd-label-cell">Telephone:</td>
+                    <td className="fd-value-cell">{data1.telephone || "N/A"}</td>
+                  </tr>
+                  <tr className="fd-row">
+                    <td className="fd-label-cell">Email:</td>
+                    <td className="fd-value-cell">{data1.email || "N/A"}</td>
+                  </tr>
+                </tbody>
+              </table>
 
-      {/* Quotation (separate because it's not part of groups) */}
-      {/* <div className="mb-2">
-        <label>Attach Quotation :</label>
-        {info.attachment_Estimate && (
-          <a
-            href={`${process.env.REACT_APP_BASE_URL}document/${info?.attachment_Estimate}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="view_docu ms-2"
-          >
-            View Document
-          </a>
-        )}
-      </div> */}
-    </div>
-  </div>
-</div>
+              <h6 className="fd-section-header">Pickup Address</h6>
+              <table className="fd-table">
+                <tbody>
+                  <tr className="fd-row">
+                    <td className="fd-label-cell">Address 1:</td>
+                    <td className="fd-value-cell">{data1.address_1 || "N/A"}</td>
+                  </tr>
+                  <tr className="fd-row">
+                    <td className="fd-label-cell">City:</td>
+                    <td className="fd-value-cell">{data1.city || "N/A"}</td>
+                  </tr>
+                  <tr className="fd-row">
+                    <td className="fd-label-cell">Country:</td>
+                    <td className="fd-value-cell">{data1.country || "N/A"}</td>
+                  </tr>
+                  <tr className="fd-row">
+                    <td className="fd-label-cell">Postal Code:</td>
+                    <td className="fd-value-cell">{data1.code || "N/A"}</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <h6 className="fd-section-header">Export Details</h6>
+              <table className="fd-table">
+                <tbody>
+                  <tr className="fd-row">
+                    <td className="fd-label-cell">Exporter:</td>
+                    <td className="fd-value-cell">Asia Direct</td>
+                  </tr>
+                  <tr className="fd-row">
+                    <td className="fd-label-cell">Export Code:</td>
+                    <td className="fd-value-cell">204101</td>
+                  </tr>
+                  <tr className="fd-row">
+                    <td className="fd-label-cell">Vat/Tax No:</td>
+                    <td className="fd-value-cell">{data1.tax_ref || "N/A"}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
-                   <div className="col-md-4">
-            <div className="card desti_card">
-              <div className="card-body">
-                <div className="">
-                  <h6 className="orgin_hd">Booking Information</h6>
-                  <span className="line"></span>
-                </div>
-                <div className="main_det">
-                  <div class="table-responsive">
-                    <table class="det_show">
-                      <tbody>
-                        <tr>
-                          <td>
-                            <p className="ship_hd">POL Information</p>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td class="fright_num">
-                            <p class="client_para1">Place of loading:</p>
-                          </td>
-                          <td>
-                            <p class="client_para1">{data1.port_of_loading}</p>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <p class="client_para1">Port of Loading:</p>
-                          </td>
-                          <td>
-                            <p class="client_para1">{data1.port_of_loading}</p>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td className="instr_td">
-                            <p className="client_para1 mb-2">Instructions:</p>
-                          </td>
-                          <td>
-                            <p className="client_para1 mb-2">
-                              {data1.shipment_origin}
-                            </p>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <p className="ship_hd">Transit Information</p>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <p class="client_para1">Freight Option:</p>
-                          </td>
-                          <td>
-                            <p class="client_para1">{data1.freight_type}</p>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <p class="client_para1">Type:</p>
-                          </td>
-                          <td>
-                            <p class="client_para1">{data1.fcl_lcl}</p>
-                          </td>
-                        </tr>
-                        {/* <tr>
-                          <td>
-                            <p class="client_para1">Efficiency:</p>
-                          </td>
-                          <td>
-                            <p class="client_para1"></p>
-                          </td>
-                        </tr> */}
-                        {/* <tr>
-                          <td>
-                            <p class="client_para1">Incoterms:</p>
-                          </td>
-                          <td>
-                            <p class="client_para1">{data1.incoterm}</p>
-                          </td>
-                        </tr> */}
-                        <tr>
-                          <td>
-                            <p class="client_para1">Insurance:</p>
-                          </td>
-                          <td>
-                            <p class="client_para1">{data1.insurance}</p>
-                          </td>
-                        </tr>
-                        {/* <tr>
-                          <td>
-                            <p class="client_para1 mb-2">Warehouse:</p>
-                          </td>
-                          <td>
-                            <p class="client_para1 mb-2">
-                              {data1.assign_warehouse}
-                            </p>
-                          </td>
-                        </tr> */}
-                        <tr>
-                          <td>
-                            <p className="ship_hd">POD Information</p>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <p class="client_para1">Place of delivery:</p>
-                          </td>
-                          <td>
-                            <p class="client_para1">
-                              {data1.place_of_delivery}
-                            </p>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <p class="client_para1">Port of Discharge:</p>
-                          </td>
-                          <td>
-                            <p class="client_para1">
-                              {data1.post_of_discharge}
-                            </p>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td></td>
-                          <td>
-                            <p class="client_para1"></p>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td className="instr_td">
-                            <p className="client_para1 mb-2">Instructions:</p>
-                          </td>
-                          <td>
-                            <p className="client_para1 mb-2">
-                              {data1.shipment_des}
-                            </p>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <p class="ship_hd">Comment</p>
-                          </td>
-                          <td>
-                            <p class="client_para1">{data1.comment}</p>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
+
+          {/* Column 2: Attachments */}
+          <div className="col-md-4 mb-4">
+            <div className="fd-card">
+              <h6 className="fd-card-title">Attachments & Documents</h6>
+              
+              <div className="main_det p-0">
+                {Object.keys(documents).length > 0 ? (
+                  Object.keys(documents).map((groupName, groupIndex) => (
+                    <div key={groupIndex} className="fd-doc-group">
+                      <h6 className="fd-doc-group-label">{groupName}</h6>
+                      <div className="fd-doc-list">
+                        {documents[groupName] && documents[groupName].length > 0 ? (
+                          documents[groupName].map((item) => (
+                            <div key={item.id} className="fd-doc-item">
+                              <a
+                                href={`${process.env.REACT_APP_BASE_URLdocument}${item?.document}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="fd-doc-link"
+                              >
+                                View Document
+                              </a>
+                              <DeleteIcon
+                                onClick={() => deleteapi(item.id)}
+                                className="fd-delete-btn"
+                                fontSize="small"
+                              />
+                            </div>
+                          ))
+                        ) : (
+                          <p className="fd-empty-docs">No files attached</p>
+                        )}
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <p className="fd-empty-docs text-center my-auto">No attached files found for this freight.</p>
+                )}
               </div>
             </div>
           </div>
+
+          {/* Column 3: Booking Information */}
+          <div className="col-md-4 mb-4">
+            <div className="fd-card">
+              <h6 className="fd-card-title">Booking Information</h6>
+              
+              <h6 className="fd-section-header">POL Information</h6>
+              <table className="fd-table">
+                <tbody>
+                  <tr className="fd-row">
+                    <td className="fd-label-cell">Place of Loading:</td>
+                    <td className="fd-value-cell">{data1.port_of_loading || "N/A"}</td>
+                  </tr>
+                  <tr className="fd-row">
+                    <td className="fd-label-cell">Port of Loading:</td>
+                    <td className="fd-value-cell">{data1.port_of_loading || "N/A"}</td>
+                  </tr>
+                  <tr className="fd-row">
+                    <td className="fd-label-cell">Instructions:</td>
+                    <td className="fd-value-cell">{data1.shipment_origin || "N/A"}</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <h6 className="fd-section-header">Transit Information</h6>
+              <table className="fd-table">
+                <tbody>
+                  <tr className="fd-row">
+                    <td className="fd-label-cell">Freight Option:</td>
+                    <td className="fd-value-cell">{data1.freight_type || "N/A"}</td>
+                  </tr>
+                  <tr className="fd-row">
+                    <td className="fd-label-cell">Type:</td>
+                    <td className="fd-value-cell">{data1.fcl_lcl || "N/A"}</td>
+                  </tr>
+                  <tr className="fd-row">
+                    <td className="fd-label-cell">Insurance:</td>
+                    <td className="fd-value-cell">{data1.insurance || "N/A"}</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <h6 className="fd-section-header">POD Information</h6>
+              <table className="fd-table">
+                <tbody>
+                  <tr className="fd-row">
+                    <td className="fd-label-cell">Place of delivery:</td>
+                    <td className="fd-value-cell">{data1.place_of_delivery || "N/A"}</td>
+                  </tr>
+                  <tr className="fd-row">
+                    <td className="fd-label-cell">Port of Discharge:</td>
+                    <td className="fd-value-cell">{data1.post_of_discharge || "N/A"}</td>
+                  </tr>
+                  <tr className="fd-row">
+                    <td className="fd-label-cell">Instructions:</td>
+                    <td className="fd-value-cell">{data1.shipment_des || "N/A"}</td>
+                  </tr>
+                  <tr className="fd-row">
+                    <td className="fd-label-cell">Comment:</td>
+                    <td className="fd-value-cell">{data1.comment || "N/A"}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
         </div>
-        <div className="row my-4">
-          <div className="col-md-4">
-            <div className="card desti_card1">
-              <div className="card-body">
-                <div className="">
-                  <h6 className="orgin_hd">Cargo Details</h6>
-                  <span className="line"></span>
-                </div>
-                <div className="main_det">
-                  <div class="table-responsive">
-                    <table class="det_show">
-                      <tbody>
-                        <tr>
-                          <td class="fright_num">
-                            <p class="client_para1">Product Description:</p>
-                          </td>
-                          <td>
-                            <p class="client_para1">{data1.product_desc}</p>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <p class="client_para1">Hazardous:</p>
-                          </td>
-                          <td>
-                            <p class="client_para1">{data1.nature_of_goods}</p>
-                          </td>
-                        </tr>
-                        {/* <tr>
-                              <td>
-                                <p class="client_para1">Industry:</p>
-                              </td>
-                              <td>
-                                <p class="client_para1">{data1.industry}</p>
-                              </td>
-                            </tr> */}
-                        <tr>
-                          <td>
-                            <p class="client_para1">Packaging:</p>
-                          </td>
-                          <td>
-                            <p class="client_para1">{data1.package_type}</p>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <p class="client_para1">Commodity:</p>
-                          </td>
-                          <td>
-                            <p class="client_para1">{data1.commodity}</p>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <p class="client_para1">No of Packages:</p>
-                          </td>
-                          <td>
-                            <p class="client_para1">{data1.no_of_packages}</p>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <p class="client_para1">Dimensions(cbm):</p>
-                          </td>
-                          <td>
-                            <p class="client_para1">{data1.dimension}</p>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <p class="client_para1">Weight(kgs):</p>
-                          </td>
-                          <td>
-                            <p class="client_para1">{data1.weight}</p>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <p class="client_para1">Vol weight(kgs):</p>
-                          </td>
-                          <td>
-                            <p class="client_para1">{data1.auto_calculate}</p>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <p class="client_para1">Document Name:</p>
-                          </td>
-                          <td>
-                            <p class="client_para1">{data1.add_attachments}</p>
-                          </td>
-                        </tr>
-                        <tr>
-                          {/* <td>
-                              <p class="client_para1">Chargeable weight:</p>
-                            </td>
-                            <td>
-                              <p class="client_para1"></p>
-                            </td> */}
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
+
+        {/* Cargo Details Card */}
+        <div className="row my-2">
+          <div className="col-md-12 mb-4">
+            <div className="fd-card">
+              <h6 className="fd-card-title">Cargo Details</h6>
+              
+              <table className="fd-table">
+                <tbody>
+                  <tr className="fd-row">
+                    <td className="fd-label-cell">Product Description:</td>
+                    <td className="fd-value-cell">{data1.product_desc || "N/A"}</td>
+                  </tr>
+                  <tr className="fd-row">
+                    <td className="fd-label-cell">Hazardous:</td>
+                    <td className="fd-value-cell">{data1.nature_of_goods || "N/A"}</td>
+                  </tr>
+                  <tr className="fd-row">
+                    <td className="fd-label-cell">Packaging:</td>
+                    <td className="fd-value-cell">{data1.package_type || "N/A"}</td>
+                  </tr>
+                  <tr className="fd-row">
+                    <td className="fd-label-cell">Commodity:</td>
+                    <td className="fd-value-cell">{data1.commodity || "N/A"}</td>
+                  </tr>
+                  <tr className="fd-row">
+                    <td className="fd-label-cell">No of Packages:</td>
+                    <td className="fd-value-cell">{data1.no_of_packages || "N/A"}</td>
+                  </tr>
+                  <tr className="fd-row">
+                    <td className="fd-label-cell">Dimensions (cbm):</td>
+                    <td className="fd-value-cell">{data1.dimension || "N/A"}</td>
+                  </tr>
+                  <tr className="fd-row">
+                    <td className="fd-label-cell">Weight (kgs):</td>
+                    <td className="fd-value-cell">{data1.weight || "N/A"}</td>
+                  </tr>
+                  <tr className="fd-row">
+                    <td className="fd-label-cell">Vol weight (kgs):</td>
+                    <td className="fd-value-cell">{data1.auto_calculate || "N/A"}</td>
+                  </tr>
+                  <tr className="fd-row">
+                    <td className="fd-label-cell">Attachment Name:</td>
+                    <td className="fd-value-cell">{data1.add_attachments || "N/A"}</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
-          {/* <div className="col-md-4">
-            <div className="card desti_card1">
-              <div className="card-body">
-                <div className="">
-                  <h6 className="orgin_hd">Shipping Estimate</h6>
-                  <span className="line"></span>
-                </div>
-                <div className="main_det">
-                  <div className="table-responsive">
-                    <table className="det_show">
-                      <thead>
-                        <tr>
-                          <td className="ship_hd1"></td>
-                          <td className="ship_hd2">Cost</td>
-                          <td className="ship_hd3">Billing</td>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td className="ship_hd">
-                            Freight
-                            <br />
-                            <p className="client_para1 mb-3"></p>
-                          </td>
-                          <td>
-                            <p className="client_para1 mb-3"></p>
-                          </td>
-                          <td>
-                            <p className="client_para1 mb-3"></p>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td className="ship_hd">
-                            Origin Charges
-                            <br />
-                            <p className="client_para1">Collection</p>
-                          </td>
-                          <td>
-                            <p className="client_para1"></p>
-                          </td>
-                          <td>
-                            <p className="client_para1"></p>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <p className="client_para1">Warehousing</p>
-                          </td>
-                          <td>
-                            <p className="client_para1"></p>
-                          </td>
-                          <td>
-                            <p className="client_para1"></p>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <p className="client_para1 mb-3">Origin Handling</p>
-                          </td>
-                          <td>
-                            <p className="client_para1 mb-3"></p>
-                          </td>
-                          <td>
-                            <p className="client_para1 mb-3"></p>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td className="ship_hd">
-                            Destination Charges
-                            <br />
-                            <p className="client_para1">Delivery</p>
-                          </td>
-                          <td>
-                            <p className="client_para1"></p>
-                          </td>
-                          <td>
-                            <p className="client_para1"></p>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <p className="client_para1">Warehousing</p>
-                          </td>
-                          <td>
-                            <p className="client_para1"></p>
-                          </td>
-                          <td>
-                            <p className="client_para1"></p>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <p className="client_para1">Destination Handling</p>
-                          </td>
-                          <td>
-                            <p className="client_para1"></p>
-                          </td>
-                          <td>
-                            <p className="client_para1"></p>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> */}
         </div>
       </div>
+      
       <Footer />
       <ToastContainer />
     </div>

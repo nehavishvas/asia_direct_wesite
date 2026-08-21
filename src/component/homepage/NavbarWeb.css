@@ -1,0 +1,238 @@
+/* Premium Navbar Override Stylesheet */
+
+/* Navbar Brand & Logo */
+.dash_nav {
+  height: 80px !important;
+  background-color: #ffffff !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+  padding: 0 24px !important;
+}
+
+.dash_nav .navbar-brand {
+  display: flex !important;
+  align-items: center !important;
+  padding-left: 8px !important;
+}
+
+.dash_nav .navbar-brand img {
+  height: 45px !important; /* Slightly smaller for a modern, sleek logo look */
+  width: auto !important;
+  object-fit: contain !important;
+  transition: transform 0.2s ease !important;
+}
+
+.dash_nav .navbar-brand img:hover {
+  transform: scale(1.02) !important;
+}
+
+/* Bell Icon Container */
+.bell_icon {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 40px !important;
+  height: 40px !important;
+  background-color: #f1f5f9 !important; /* Soft gray circular badge bg */
+  border-radius: 50% !important;
+  transition: all 0.2s ease !important;
+}
+
+.bell_icon:hover {
+  background-color: #e2e8f0 !important;
+}
+
+.bell_icon i.noti_icon {
+  font-size: 18px !important;
+  color: #64748b !important; /* Muted slate bell */
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.bell_icon:hover i.noti_icon {
+  color: #0f172a !important; /* Slate color on hover */
+}
+
+/* Notification badge count */
+.bell_icon span {
+  position: absolute !important;
+  top: -4px !important;
+  right: -4px !important;
+  background-color: #d31c20 !important; /* Brand red badge */
+  color: #ffffff !important;
+  font-size: 0.7rem !important;
+  font-weight: 700 !important;
+  border-radius: 9999px !important;
+  min-width: 18px !important;
+  height: 18px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border: 2px solid #ffffff !important;
+  padding: 0 4px !important;
+}
+
+/* Topbar Stack context */
+.topBar {
+  position: relative !important;
+  z-index: 1030 !important;
+}
+
+/* Notification Dropdown Container */
+.notificationFreight,
+.drop_noti.notifi_view {
+  min-width: 340px !important;
+  background-color: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1) !important;
+  padding: 0 !important;
+  margin-top: 10px !important;
+  overflow: hidden !important;
+  z-index: 1050 !important;
+}
+
+.noti_cation {
+  font-size: 0.95rem !important;
+  font-weight: 700 !important;
+  color: #0f172a !important;
+  padding: 16px 20px !important;
+  margin: 0 !important;
+  border-bottom: 1px solid #f1f5f9 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  background-color: #f8fafc !important;
+}
+
+/* Scroll area of notifications */
+.scrollNoti {
+  max-height: 320px !important;
+  height: auto !important;
+  overflow-y: auto !important;
+  padding: 0 !important;
+}
+
+.scrollNoti::-webkit-scrollbar {
+  width: 6px !important;
+}
+
+.scrollNoti::-webkit-scrollbar-track {
+  background: #f8fafc !important;
+}
+
+.scrollNoti::-webkit-scrollbar-thumb {
+  background: #cbd5e1 !important;
+  border-radius: 3px !important;
+}
+
+.scrollNoti::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8 !important;
+}
+
+/* Notification Item */
+.notidropparent {
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  padding: 16px 20px !important;
+  border-bottom: 1px solid #f1f5f9 !important;
+  transition: background-color 0.2s ease !important;
+  margin-top: 0 !important;
+}
+
+.notidropparent:hover {
+  background-color: #f8fafc !important;
+}
+
+.notidropparent h6 {
+  color: #0f172a !important; /* Sleek dark text */
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  margin-bottom: 4px !important;
+  margin-top: 0 !important;
+}
+
+.notidropparent p {
+  color: #64748b !important; /* Muted body text */
+  font-size: 0.8rem !important;
+  line-height: 1.4 !important;
+  margin: 0 !important;
+}
+
+/* View All Notifications Button Container */
+.btnShowAll {
+  margin: 0 !important;
+  padding: 12px 20px !important;
+  background-color: #f8fafc !important;
+  border-top: 1px solid #f1f5f9 !important;
+  text-align: center !important;
+}
+
+.btnShowAll button {
+  background-color: #d31c20 !important; /* Maroon/red action button */
+  color: #ffffff !important;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  border: none !important;
+  border-radius: 6px !important;
+  padding: 8px 16px !important;
+  width: 100% !important;
+  transition: all 0.2s ease !important;
+  cursor: pointer !important;
+}
+
+.btnShowAll button:hover {
+  background-color: #b01418 !important;
+  box-shadow: 0 4px 6px -1px rgba(211, 28, 32, 0.2) !important;
+}
+
+/* Bell Icon in Topbar */
+.bellIcon {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 36px !important;
+  height: 36px !important;
+  background-color: rgba(255, 255, 255, 0.1) !important; /* Semi-transparent white bg for black topbar */
+  border-radius: 50% !important;
+  transition: all 0.2s ease !important;
+}
+
+.bellIcon:hover {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.bellIcon i {
+  font-size: 16px !important;
+  color: #ffffff !important; /* White bell on black topbar */
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Notification count badge in Topbar */
+.bellIcon span.OneNot {
+  position: absolute !important;
+  top: -4px !important;
+  right: -4px !important;
+  background-color: #d31c20 !important; /* Brand red */
+  color: #ffffff !important;
+  font-size: 0.65rem !important;
+  font-weight: 700 !important;
+  border-radius: 9999px !important;
+  min-width: 16px !important;
+  height: 16px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border: 1.5px solid #000000 !important; /* Dark border matching topbar bg */
+  padding: 0 3px !important;
+  left: auto !important; /* Clear left values from App.css */
+}
+
+.bellIcon span.OneNot small {
+  position: relative !important;
+  top: 0 !important;
+  font-size: inherit !important;
+}
+

@@ -1,0 +1,252 @@
+/* Premium Profile Styling */
+
+.prf-wrapper {
+  padding-left: 24px;
+  padding-top: 70px;
+  padding-right: 24px;
+  padding-bottom: 60px;
+  background-color: #f8fafc;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+@media (max-width: 767px) {
+  .prf-wrapper {
+    padding-left: 16px;
+    padding-top: 100px;
+    padding-right: 16px;
+    padding-bottom: 40px;
+  }
+}
+
+.prf-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Header Area */
+.prf-header {
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+.prf-title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+}
+
+.prf-subtitle {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin-top: 4px;
+}
+
+/* Card layout wrapper */
+.prf-card {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+  padding: 24px;
+}
+
+/* Left Profile card */
+.prf-left-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.prf-avatar-wrapper {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  padding: 4px;
+  background: linear-gradient(135deg, #4f46e5, #3b82f6);
+  margin-bottom: 16px;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.15);
+}
+
+.prf-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #ffffff;
+  background-color: #f1f5f9;
+}
+
+.prf-name {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 6px 0;
+}
+
+.prf-badge {
+  font-size: 0.725rem;
+  font-weight: 700;
+  color: #4f46e5;
+  background: #e0e7ff;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  display: inline-block;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.prf-divider {
+  width: 100%;
+  height: 1px;
+  background-color: #f1f5f9;
+  margin-bottom: 20px;
+}
+
+.prf-section-title {
+  font-size: 0.85rem;
+  font-weight: 750;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 16px;
+  width: 100%;
+  text-align: left;
+}
+
+.prf-contact-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: left;
+}
+
+.prf-contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.prf-contact-icon {
+  color: #4f46e5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.prf-contact-content {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.prf-contact-label {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.prf-contact-value {
+  font-size: 0.80rem;
+  font-weight: 500;
+  color: #64748b;
+  margin: 0;
+  word-break: break-all;
+}
+
+/* Right Profile Panels */
+.prf-right-panels {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.prf-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  width: 100%;
+}
+
+@media (max-width: 575px) {
+  .prf-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}
+
+.prf-detail-box {
+  padding: 16px;
+  background-color: #f8fafc;
+  border: 1px solid #f1f5f9;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.prf-detail-box:hover {
+  border-color: #e2e8f0;
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+}
+
+.prf-detail-label {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #1e293b;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+
+.prf-detail-value {
+  font-size: 0.80rem;
+  font-weight: 500;
+  color: #64748b;
+  margin: 0;
+}
+
+/* Action button area */
+.prf-action-area {
+  margin-top: 8px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.prf-btn {
+  background: linear-gradient(135deg, #4f46e5, #3b82f6);
+  color: #ffffff;
+  padding: 12px 28px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.prf-btn:hover {
+  background: linear-gradient(135deg, #4338ca, #2563eb);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(79, 70, 229, 0.35);
+  color: #ffffff;
+}
+
+.prf-btn:active {
+  transform: translateY(0);
+}

@@ -1,0 +1,87 @@
+/* Premium Sidebar Stylesheet */
+
+.sidebarMain {
+  position: fixed !important;
+  width: 250px !important;
+  height: calc(100vh - 80px) !important;
+  top: 80px !important;
+  left: 0 !important;
+  background-color: #ffffff !important;
+  border-right: 1px solid #e2e8f0 !important;
+  padding: 24px 16px !important;
+  box-shadow: none !important;
+  z-index: 100 !important;
+}
+
+.sidebar-nav {
+  padding: 0 !important;
+}
+
+.nav_bar_side {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.sidebar-item {
+  margin-bottom: 8px !important;
+  list-style: none !important;
+}
+
+.sidebar-item .sidebar-link {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  padding: 12px 18px !important;
+  color: #64748b !important;
+  text-decoration: none !important;
+  border-radius: 8px !important;
+  font-size: 0.925rem !important;
+  font-weight: 550 !important;
+  font-family: 'Inter', sans-serif !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  background-color: transparent !important;
+  border-left: none !important;
+  margin: 0 !important;
+}
+
+.sidebar-item .sidebar-link i {
+  font-size: 1.15rem !important;
+  color: #64748b !important;
+  padding: 0 !important;
+  transition: all 0.2s ease !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.sidebar-item .sidebar-link:hover {
+  background-color: #f1f5f9 !important;
+  color: #0f172a !important;
+}
+
+.sidebar-item .sidebar-link:hover i {
+  color: #0f172a !important;
+}
+
+/* Active State Styles */
+.sidebar-item .sidebar-link.active {
+  background-color: rgba(211, 28, 32, 0.08) !important;
+  color: #d31c20 !important;
+  font-weight: 700 !important;
+}
+
+.sidebar-item .sidebar-link.active i {
+  color: #d31c20 !important;
+}
+
+.sidebar-item .sidebar-link.active .hide-menu {
+  color: #d31c20 !important;
+  font-weight: 700 !important;
+}
+
+.sidebar-item .sidebar-link .hide-menu {
+  color: inherit !important;
+  font-size: inherit !important;
+  font-weight: inherit !important;
+}

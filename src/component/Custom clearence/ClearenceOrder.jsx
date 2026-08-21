@@ -2,18 +2,37 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import SidebarWeb from "../homepage/SidebarwWeb";
 import NavbarWeb from "../homepage/NavbarWeb";
-import Arrow from "../../assestss/Group 2.png";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import FooterWeb from "../homepage/FooterWeb";
+import SearchIcon from "@mui/icons-material/Search";
+import EastIcon from "@mui/icons-material/East";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import "./ClearanceOrder.css";
+
 const pageSize = 5;
 export default function ClearanceOrder() {
   const [data1, setData1] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredData, setFilteredData] = useState([]);
+  const [countriesList, setCountriesList] = useState([]);
+
   useEffect(() => {
     getdata();
+    getCountries();
   }, []);
+
+  const getCountries = () => {
+    axios
+      .get(`${process.env.REACT_APP_BASE_URL}GetCountries`)
+      .then((response) => {
+        setCountriesList(response.data.data || []);
+      })
+      .catch((err) => {
+        console.log("Error fetching countries:", err);
+      });
+  };
   useEffect(() => {
     setFilteredData(
       data1.filter(
@@ -62,116 +81,153 @@ export default function ClearanceOrder() {
       <NavbarWeb />
       <SidebarWeb />
       <section className="manageFrightSec">
-        <div className="container-fluid">
+        <div className="co-container">
           <div className="row">
             <div className="col-md-12">
-              <div className="d-flex justify-content-between align-items-center my-3 flex-wrap">
-                <div>
-                  <h4 className="para_det me-4">Order clearance</h4>
-                </div>
-                <div>
+              
+              {/* Header */}
+              <div className="co-header">
+                <h4 className="co-title">Order Clearance</h4>
+                <div className="co-search-wrapper">
+                  <SearchIcon className="co-search-icon" />
                   <input
-                    className=" py-1 px-2 rounded customSearch"
+                    className="co-search-input"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Search"
-                  ></input>
+                    placeholder="Search clearances..."
+                  />
                 </div>
               </div>
-              <div className="card border-0">
-                <div className="card-body">
-                  <div className="table-responsive">
-                    <table className="table table-striped tableICon">
-                      <tbody style={{ border: "none" }}>
-                        {currentData.length > 0 ? (
-                          currentData.map((item, index) => (
-                            <tr key={index}>
-                              <td className="list_bd">
-                                <div>
-                                  <div className="d-flex align-items-center">
-                                    <p className="client_nm">
-                                      {item.client_name}
-                                    </p>
-                                    <p className="fright_no mx-2">
-                                      {item.clearance_number}
-                                    </p>
+
+              {/* Table Card container */}
+              <div className="co-card">
+                <div className="table-responsive">
+                  <table className="co-table">
+                    <thead>
+                      <tr>
+                        <th className="co-th">Client / Order</th>
+                        <th className="co-th">Route & Ports</th>
+                        <th className="co-th">Status & Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {currentData.length > 0 ? (
+                        currentData.map((item, index) => {
+                          const fromCountry = countriesList.find(c => c.country_id == item.loading_country || c.id == item.loading_country);
+                          const toCountry = countriesList.find(c => c.country_id == item.discharge_country || c.id == item.discharge_country);
+                          const fromFlag = fromCountry?.flag_url || fromCountry?.flag || item.flag_url_f || item.collection_from_country_flag_url;
+                          const toFlag = toCountry?.flag_url || toCountry?.flag || item.flag_url_d || item.delivery_to_country_flag_url;
+                          return (
+                            <tr key={index} className="co-tr">
+                              <td className="co-td">
+                                <div className="co-client-wrapper">
+                                  <div className="co-client-header">
+                                    <span className="co-client-name">{item.client_name}</span>
+                                    <span className="co-badge">{item.clearance_number}</span>
                                   </div>
-                                  <div className="">
-                                    <p className="origin">{item.goods_desc}</p>
-                                  </div>
+                                  <p className="co-desc">{item.goods_desc || "No description provided"}</p>
                                 </div>
                               </td>
-                              <td>
-                                <div className="country_mnge">
-                                  {item.port_of_entry_name}
-                                  <img src={Arrow} className="flag_img1" />
-                                  {item.port_of_exit_name}
-                                </div>
-                              </td>
-                              <td className="">
-                                <p className="port_date">
-                                  {new Date(item.created_at).toLocaleDateString(
-                                    "en-GB"
+                              <td className="co-td">
+                                <div className="co-route">
+                                  {fromFlag && (
+                                    <img
+                                      src={`${process.env.REACT_APP_FLAGURL}${fromFlag}`}
+                                      alt=""
+                                      className="co-flag-img"
+                                      onError={(e) => {
+                                        e.target.style.display = "none";
+                                      }}
+                                    />
                                   )}
+                                  <span>{item.port_of_entry_name || "N/A"}</span>
+                                  <EastIcon className="co-route-arrow" fontSize="inherit" />
+                                  {toFlag && (
+                                    <img
+                                      src={`${process.env.REACT_APP_FLAGURL}${toFlag}`}
+                                      alt=""
+                                      className="co-flag-img"
+                                      onError={(e) => {
+                                        e.target.style.display = "none";
+                                      }}
+                                    />
+                                  )}
+                                  <span>{item.port_of_exit_name || "N/A"}</span>
+                                </div>
+                              </td>
+                            <td className="co-td">
+                              <div className="d-flex flex-column gap-2 align-items-start">
+                                <p className="co-date">
+                                  {new Date(item.created_at).toLocaleDateString("en-GB")}
                                 </p>
-                                <div className="">
-                                  {item.clearing_status == "Cleared" ? (
-                                    <button className="dec_btn dot_icon">
-                                      <FiberManualRecordIcon />
+                                <div>
+                                  {item.clearing_status === "Cleared" ? (
+                                    <span className="co-status-badge co-status-cleared">
+                                      <FiberManualRecordIcon fontSize="inherit" />
                                       Cleared
-                                    </button>
-                                  ) : item.clearing_status == "0" ? (
-                                    <button className="acc_btn dot_icon">
-                                      <FiberManualRecordIcon />
+                                    </span>
+                                  ) : item.clearing_status === "0" ? (
+                                    <span className="co-status-badge co-status-pending">
+                                      <FiberManualRecordIcon fontSize="inherit" />
                                       Accept
-                                    </button>
-                                  ) : item.clearing_status ==
-                                    "Still to clear" ? (
-                                    <button className="dec_btn dot_icon">
-                                      <FiberManualRecordIcon />
-                                      Still to clear
-                                    </button>
-                                  ) : item.clearing_status == "In process" ? (
-                                    <button className="dec_btn dot_icon">
-                                      <FiberManualRecordIcon />
-                                      In process
-                                    </button>
+                                    </span>
+                                  ) : item.clearing_status === "Still to clear" ? (
+                                    <span className="co-status-badge co-status-still-clear">
+                                      <FiberManualRecordIcon fontSize="inherit" />
+                                      Still to Clear
+                                    </span>
+                                  ) : item.clearing_status === "In process" ? (
+                                    <span className="co-status-badge co-status-in-process">
+                                      <FiberManualRecordIcon fontSize="inherit" />
+                                      In Process
+                                    </span>
                                   ) : (
-                                    ""
+                                    <span className="co-status-badge co-status-pending">
+                                      <FiberManualRecordIcon fontSize="inherit" />
+                                      {item.clearing_status || "Pending"}
+                                    </span>
                                   )}
                                 </div>
-                              </td>
-                            </tr>
-                          ))
-                        ) : (
-                          <tr>
-                            <td colSpan="8" className="text-center">
-                              No results found
+                              </div>
                             </td>
                           </tr>
-                        )}
-                      </tbody>
-                    </table>
-                    <div className="text-center d-flex align-items-center justify-content-center">
+                          );
+                        })
+                      ) : (
+                        <tr>
+                          <td colSpan="3" className="co-empty-state">
+                            No clearances found matching your search.
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                  
+                  {/* Pagination Footer */}
+                  {totalPages > 1 && (
+                    <div className="co-pagination">
                       <button
                         disabled={currentPage === 1}
-                        className="bg_page"
+                        className="co-page-btn"
                         onClick={() => handlePageChange(currentPage - 1)}
+                        aria-label="Previous page"
                       >
-                        <i class="fi fi-rr-angle-small-left page_icon"></i>
+                        <ChevronLeftIcon fontSize="small" />
                       </button>
-                      <span className="mx-2">{` ${currentPage}`}</span>
+                      <span className="co-page-num">{currentPage}</span>
                       <button
                         disabled={currentPage === totalPages}
-                        className="bg_page"
+                        className="co-page-btn"
                         onClick={() => handlePageChange(currentPage + 1)}
+                        aria-label="Next page"
                       >
-                        <i class="fi fi-rr-angle-small-right page_icon"></i>
+                        <ChevronRightIcon fontSize="small" />
                       </button>
                     </div>
-                  </div>
+                  )}
                 </div>
               </div>
+
             </div>
           </div>
         </div>

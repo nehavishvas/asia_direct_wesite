@@ -5,8 +5,12 @@ import Footer from '../homepage/Footer';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import image1from from "../../assestss/logoasia.png"
 import { MyContext } from '../../MyContext';
+import SaveIcon from '@mui/icons-material/Save';
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
+import "./Updateprofile.css";
+
+const DEFAULT_AVATAR = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23cbd5e1'><circle cx='12' cy='8' r='4'/><path d='M12 14c-6.1 0-8 4-8 4v2h16v-2s-1.9-4-8-4z'/></svg>";
 
 
 export default function UpdateProfile() {
@@ -143,178 +147,319 @@ export default function UpdateProfile() {
         <>
             <Topbar />
             <Navbar />
-            <section
-                className="bannerBg"
-                style={{
-                    backgroundImage: `url($))`,
-                    position: "relative"
-                }}
-            >
-                <div className="container">
-                    <div className="row">
-                        <div className="col-lg-12">
-                            <h1>Profile </h1>
-                            
-                        </div>
+            <div className="up-wrapper">
+                <div className="up-container">
+                    
+                    {/* Header */}
+                    <div className="up-header">
+                        <h1 className="up-title">Update Profile</h1>
+                        <p className="up-subtitle">Modify your personal settings and contact coordinates</p>
                     </div>
-                </div>
-            </section>
-            <div className="profileSec">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-lg-4">
-                            <div className="profileBgImg d-flex align-self-center h-100 justify-content-center">
-                                <div className="profileFrontImg">
-                                    {
-                                        userData.profile ? (
-                                            <img src={`${process.env.REACT_APP_BASE_URL_image}${userData.profile}`} style={{ maxWidth: '100%' }} />
-                                        ) : (
-                                            <img src={image1from} style={{ maxWidth: '100%' }} />
-                                        )
-                                    }
 
+                    <div className="up-card">
+                        <div className="row">
+                            {/* Left Column (Avatar Upload) */}
+                            <div className="col-lg-4 mb-4">
+                                <div className="up-left-card">
+                                    <div className="up-avatar-wrapper">
+                                        <img
+                                            src={
+                                                selectedImage && selectedImage !== 'default-image-url.jpg'
+                                                    ? selectedImage.startsWith('blob:')
+                                                        ? selectedImage
+                                                        : `${process.env.REACT_APP_BASE_URL_image}${selectedImage}`
+                                                    : userData.profile && userData.profile !== "null" && userData.profile !== "undefined"
+                                                        ? `${process.env.REACT_APP_BASE_URL_image}${userData.profile}`
+                                                        : DEFAULT_AVATAR
+                                            }
+                                            className="up-avatar"
+                                            alt="profile preview"
+                                            onError={(e) => {
+                                                e.target.src = DEFAULT_AVATAR;
+                                            }}
+                                        />
+                                    </div>
+                                    <div className="up-form-group w-100 align-items-center">
+                                        <label className="up-upload-btn">
+                                            <CameraAltIcon fontSize="small" className="me-2" />
+                                            Choose Profile Photo
+                                            <input
+                                                type="file"
+                                                name="profile"
+                                                onChange={handleImageChange}
+                                                style={{ display: "none" }}
+                                                accept="image/*"
+                                            />
+                                        </label>
+                                        {file && <span className="up-file-name">{file.name}</span>}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="col-lg-8">
-                            <div className="mainRightForm">
+
+                            {/* Right Column (Form Inputs) */}
+                            <div className="col-lg-8">
                                 <div className="row">
-                                    <div className="row">
-                                        <div className="col">
-                                            <label htmlFor="">Full Name</label>
-                                            <input type="text" name='full_name' value={userData?.full_name} onChange={handleChange} className="form-control" />
-                                        </div>
-                                        <div className="col">
-                                            <label>Email <span className='redStar'>*</span> </label>
-                                            <input type="email" name='email' value={userData?.email} onChange={handleChange} className="form-control" />
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col">
-                                            <label htmlFor="">Address 1</label>
-                                            <input type="text" name='address_1' value={userData?.address_1} onChange={handleChange} className="form-control" />
-                                        </div>
-                                        <div className="col">
-                                            <label>Address 2</label>
-                                            <input type="text" name='address_2' value={userData?.address_2} onChange={handleChange} className="form-control" />
+                                    <div className="col-md-6">
+                                        <div className="up-form-group">
+                                            <label className="up-label">Full Name</label>
+                                            <input
+                                                type="text"
+                                                name="full_name"
+                                                value={userData?.full_name || ""}
+                                                onChange={handleChange}
+                                                className="up-input"
+                                            />
                                         </div>
                                     </div>
-                                    <div className="row">
-                                        <div className="col">
-                                            <label htmlFor="">City</label>
-                                            <input type="text" name='city' value={userData?.city} onChange={handleChange} className="form-control" />
-                                        </div>
-                                        <div className="col">
-                                            <label htmlFor="">Code</label>
-                                            <input type="text" name='code' value={userData?.code} onChange={handleChange} className="form-control" />
+                                    <div className="col-md-6">
+                                        <div className="up-form-group">
+                                            <label className="up-label">
+                                                Email <span className="up-required">*</span>
+                                            </label>
+                                            <input
+                                                type="email"
+                                                name="email"
+                                                value={userData?.email || ""}
+                                                onChange={handleChange}
+                                                className="up-input"
+                                            />
                                         </div>
                                     </div>
-                                    <div className="row">
-                                           <div className="col d-flex">
-                                           <div className="col-2">
-                                            <label>Code</label>
-                                            {/* <input type="text" name='country' value={userData?.country} onChange={handleChange} className="form-control" /> */}
-                                            <select id="country"  onChange={handleChange} className="form-control" name="country_code" >
-                                                <option>Select...</option>
-                                                {
-                                                    country && country.length > 0 && country.map((item, index) => {
-                                                        return (<>
+                                </div>
 
-                                                            <option key={index} value={item.id}>{item.phonecode}</option>
-                                                        </>)
-                                                    })
-                                                }
-                                            </select>
+                                <div className="row">
+                                    <div className="col-md-6">
+                                        <div className="up-form-group">
+                                            <label className="up-label">Address 1</label>
+                                            <input
+                                                type="text"
+                                                name="address_1"
+                                                value={userData?.address_1 || ""}
+                                                onChange={handleChange}
+                                                className="up-input"
+                                            />
                                         </div>
-                                        <div className="col-10">
-                                            <label htmlFor="">Cellphone <span className='redStar'>*</span></label>
-                                            <input type="text" name='cellphone' value={userData?.cellphone} onKeyPress={handlekeypreaa} maxLength={13} onChange={handleChange} className="form-control" />
+                                    </div>
+                                    <div className="col-md-6">
+                                        <div className="up-form-group">
+                                            <label className="up-label">Address 2</label>
+                                            <input
+                                                type="text"
+                                                name="address_2"
+                                                value={userData?.address_2 || ""}
+                                                onChange={handleChange}
+                                                className="up-input"
+                                            />
                                         </div>
-                                           </div>
-                                        <div className="col">
-                                              <div className="col d-flex">
-                                           <div className="col-2">
-                                            <label>Code</label>
-                                            {/* <input type="text" name='country' value={userData?.country} onChange={handleChange} className="form-control" /> */}
-                                            <select id="country"  onChange={handleChange} className="form-control" name="country_code" >
-                                                <option>Select...</option>
-                                                {
-                                                    country && country.length > 0 && country.map((item, index) => {
-                                                        return (<>
+                                    </div>
+                                </div>
 
-                                                            <option key={index} value={item.id}>{item.phonecode}</option>
-                                                        </>)
-                                                    })
-                                                }
-                                            </select>
+                                <div className="row">
+                                    <div className="col-md-6">
+                                        <div className="up-form-group">
+                                            <label className="up-label">City</label>
+                                            <input
+                                                type="text"
+                                                name="city"
+                                                value={userData?.city || ""}
+                                                onChange={handleChange}
+                                                className="up-input"
+                                            />
                                         </div>
-                                        <div className='col-10'>
-                                            <label htmlFor="">Telephone <span className='redStar'>*</span></label>
-                                            <input type="text" name='telephone' value={userData?.telephone} onKeyPress={handlekeypreaa} maxLength={13} onChange={handleChange} className="form-control" />
-                                        </div>
-                                        </div>
-                                        </div>
-                                  
                                     </div>
-                                    <div className="row mb-3">
-                                        <div className="col">
-                                            <label>Country</label>
-                                            {/* <input type="text" name='country' value={userData?.country} onChange={handleChange} className="form-control" /> */}
-                                            <select id="country" value={userData?.country} onChange={handleChange} className="form-control" name="country" >
-                                                <option>Select...</option>
-                                                {
-                                                    country && country.length > 0 && country.map((item, index) => {
-                                                        return (<>
+                                    <div className="col-md-6">
+                                        <div className="up-form-group">
+                                            <label className="up-label">Postal Code</label>
+                                            <input
+                                                type="text"
+                                                name="code"
+                                                value={userData?.code || ""}
+                                                onChange={handleChange}
+                                                className="up-input"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
 
-                                                            <option key={index} value={item.id}>{item.name}</option>
-                                                        </>)
-                                                    })
-                                                }
-                                            </select>
-                                        </div>
-                                        <div className="col">
-                                            <label>Province</label>
-                                            <input type="text" name='province' value={userData?.province} onChange={handleChange} className="form-control" />
+                                <div className="row">
+                                    {/* Cellphone Input */}
+                                    <div className="col-md-6">
+                                        <div className="up-form-group">
+                                            <label className="up-label">
+                                                Cellphone <span className="up-required">*</span>
+                                            </label>
+                                            <div className="d-flex gap-2">
+                                                <div style={{ flex: "0 0 90px" }}>
+                                                    <select
+                                                        name="country_code"
+                                                        value={userData?.country_code || ""}
+                                                        onChange={handleChange}
+                                                        className="up-select"
+                                                    >
+                                                        <option value="">Code</option>
+                                                        {country &&
+                                                            country.length > 0 &&
+                                                            country.map((item, index) => (
+                                                                <option key={index} value={item.id}>
+                                                                    +{item.phonecode}
+                                                                </option>
+                                                            ))}
+                                                    </select>
+                                                </div>
+                                                <div className="flex-grow-1">
+                                                    <input
+                                                        type="text"
+                                                        name="cellphone"
+                                                        value={userData?.cellphone || ""}
+                                                        onKeyPress={handlekeypreaa}
+                                                        maxLength={13}
+                                                        onChange={handleChange}
+                                                        className="up-input"
+                                                    />
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="row mb-3">
-                                        <div className="col">
-                                            <label>Company ID</label>
-                                            <input type="text" name='company_id' value={userData?.company_id} onChange={handleChange} className="form-control" />
-                                        </div>
-                                        <div className="col">
-                                            <label>Tax Ref</label>
-                                            <input type="text" name='tax_ref' value={userData?.tax_ref} onChange={handleChange} className="form-control" />
-                                        </div>
-                                    </div>
-                                    <div className="row mb-3">
-                                        <div className="col">
-                                            <label>Importer Ref</label>
-                                            <input type="text" name='importers_ref' value={userData?.importers_ref} onChange={handleChange} className="form-control" />
-                                        </div>
 
-                                        <div className="col">
-                                            <label>Contact Person</label>
-                                            <input type="text" name='contact_person' value={userData?.contact_person} onChange={handleChange} className="form-control" />
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col">
-                                            <label htmlFor="">Choose Image</label>
-                                            <input type="file" name='profile' onChange={handleImageChange} className='col form-control' accept="image/*" />
-                                        </div>
-                                    </div>
-                                    <div className='row'>
-                                        <div className="col">
-                                            <div className='text-center'>
-                                                <button className='btn btn-danger px-5' onClick={handleUpdate}>Update</button>
+                                    {/* Telephone Input */}
+                                    <div className="col-md-6">
+                                        <div className="up-form-group">
+                                            <label className="up-label">
+                                                Telephone <span className="up-required">*</span>
+                                            </label>
+                                            <div className="d-flex gap-2">
+                                                <div style={{ flex: "0 0 90px" }}>
+                                                    <select
+                                                        name="country_code"
+                                                        value={userData?.country_code || ""}
+                                                        onChange={handleChange}
+                                                        className="up-select"
+                                                    >
+                                                        <option value="">Code</option>
+                                                        {country &&
+                                                            country.length > 0 &&
+                                                            country.map((item, index) => (
+                                                                <option key={index} value={item.id}>
+                                                                    +{item.phonecode}
+                                                                </option>
+                                                            ))}
+                                                    </select>
+                                                </div>
+                                                <div className="flex-grow-1">
+                                                    <input
+                                                        type="text"
+                                                        name="telephone"
+                                                        value={userData?.telephone || ""}
+                                                        onKeyPress={handlekeypreaa}
+                                                        maxLength={13}
+                                                        onChange={handleChange}
+                                                        className="up-input"
+                                                    />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
+                                <div className="row">
+                                    <div className="col-md-6">
+                                        <div className="up-form-group">
+                                            <label className="up-label">Country</label>
+                                            <select
+                                                name="country"
+                                                value={userData?.country || ""}
+                                                onChange={handleChange}
+                                                className="up-select"
+                                            >
+                                                <option value="">Select country...</option>
+                                                {country &&
+                                                    country.length > 0 &&
+                                                    country.map((item, index) => (
+                                                        <option key={index} value={item.id}>
+                                                            {item.name}
+                                                        </option>
+                                                    ))}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-6">
+                                        <div className="up-form-group">
+                                            <label className="up-label">Province</label>
+                                            <input
+                                                type="text"
+                                                name="province"
+                                                value={userData?.province || ""}
+                                                onChange={handleChange}
+                                                className="up-input"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="row">
+                                    <div className="col-md-6">
+                                        <div className="up-form-group">
+                                            <label className="up-label">Company ID</label>
+                                            <input
+                                                type="text"
+                                                name="company_id"
+                                                value={userData?.company_id || ""}
+                                                onChange={handleChange}
+                                                className="up-input"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="col-md-6">
+                                        <div className="up-form-group">
+                                            <label className="up-label">Tax Ref</label>
+                                            <input
+                                                type="text"
+                                                name="tax_ref"
+                                                value={userData?.tax_ref || ""}
+                                                onChange={handleChange}
+                                                className="up-input"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="row">
+                                    <div className="col-md-6">
+                                        <div className="up-form-group">
+                                            <label className="up-label">Importer Ref</label>
+                                            <input
+                                                type="text"
+                                                name="importers_ref"
+                                                value={userData?.importers_ref || ""}
+                                                onChange={handleChange}
+                                                className="up-input"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="col-md-6">
+                                        <div className="up-form-group">
+                                            <label className="up-label">Contact Person</label>
+                                            <input
+                                                type="text"
+                                                name="contact_person"
+                                                value={userData?.contact_person || ""}
+                                                onChange={handleChange}
+                                                className="up-input"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="up-action-area">
+                                    <button className="up-btn" onClick={handleUpdate}>
+                                        <SaveIcon fontSize="small" />
+                                        Save Changes
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
             <ToastContainer />

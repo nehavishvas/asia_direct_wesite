@@ -23,6 +23,7 @@ import FooterWeb from "../homepage/FooterWeb";
 import CloseIcon from "@mui/icons-material/Close";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
+import "./Customclearence.css";
 const pageSize = 5;
 export default function Customclearence() {
   const navigate = useNavigate();
@@ -30,6 +31,8 @@ export default function Customclearence() {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [openModal, setOpenModal] = useState(false);
+  const [openUpdateModal, setOpenUpdateModal] = useState(false);
+  const handleUpdateModalClose = () => setOpenUpdateModal(false);
   const [files, setFiles] = useState(null);
   const [formData2, setFormData2] = useState(null);
   const [country, setCountry] = useState([]);
@@ -217,6 +220,7 @@ export default function Customclearence() {
       .then((response) => {
         getdatat();
         toast.success("Update clearance successfully");
+        setOpenUpdateModal(false);
         console.log(response.data);
       })
       .catch((error) => {
@@ -399,6 +403,14 @@ export default function Customclearence() {
                           style={{ minHeight: "50vh" }}
                         >
                           <table className="table table-striped tableICon">
+                            <thead>
+                              <tr>
+                                <th style={{ width: "35%" }}>Client & Cargo</th>
+                                <th style={{ width: "35%" }}>Route</th>
+                                <th style={{ width: "15%" }}>Documents</th>
+                                <th style={{ width: "15%", textAlign: "right" }}>Actions</th>
+                              </tr>
+                            </thead>
                             <tbody>
                               {currentdata &&
                                 currentdata.length > 0 &&
@@ -549,10 +561,9 @@ export default function Customclearence() {
                                                     ) : (
                                                       <div
                                                         className="drpIcons dropdown-item item_drop drop_item1"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#exampleModal"
                                                         onClick={() => {
                                                           handleidvali(item.id);
+                                                          setOpenUpdateModal(true);
                                                         }}
                                                       >
                                                         <i className="fa fa-edit icon_align"></i>
@@ -587,156 +598,106 @@ export default function Customclearence() {
                             >
                               <i class="fi fi-rr-angle-small-right page_icon"></i>
                             </button>
-                          </div>
-                          <div
-                            className="modal fade"
-                            id="exampleModal"
-                            tabIndex={-1}
-                            aria-labelledby="exampleModalLabel"
-                            aria-hidden="true"
-                          >
-                            <div className="modal-dialog modal-lg  modal-dialog-centered modal-dialog-scrollable">
-                              <div className="modal-content">
-                                <div className="customHeader">
-                                  <h5
-                                    className="modal-title"
-                                    id="exampleModalLabel"
-                                  >
-                                    Update Custom Clearance
-                                  </h5>
-
-                                  <div className="crossBtn">
-                                    <i
-                                      data-bs-dismiss="modal"
-                                      aria-hidden="true"
-                                    >
-                                      <CloseIcon />
-                                    </i>
-                                  </div>
+                          </div>                          <Modal open={openUpdateModal} onClose={handleUpdateModalClose}>
+                            <Box
+                              sx={{
+                                position: "absolute",
+                                top: "50%",
+                                left: "50%",
+                                transform: "translate(-50%, -50%)",
+                                width: { xs: "95%", sm: 650, md: 800 },
+                                maxHeight: "90vh",
+                                display: "flex",
+                                flexDirection: "column",
+                                bgcolor: "background.paper",
+                                boxShadow: 24,
+                                borderRadius: "16px",
+                                overflow: "hidden",
+                                outline: "none",
+                              }}
+                            >
+                              <div className="customHeader">
+                                <h5>Update Custom Clearance</h5>
+                                <div className="crossBtn">
+                                  <i onClick={handleUpdateModalClose} aria-hidden="true">
+                                    <CloseIcon />
+                                  </i>
                                 </div>
-                                <div className="modal-body pt-0">
-                                  <section className="frightFormSec manageModal my-0">
+                              </div>
+                              <section className="manageModal flex-grow-1 overflow-auto">
+                                <div className="container px-0">
+                                  <div className="borderShip mt-0">
+                                    <h3 className="mb-3">Clearance Details</h3>
                                     <div className="row">
-                                      <div className="col-md-6">
-                                        <label htmlFor="" className="text-dark">
-                                          Freight
-                                        </label>
+                                      <div className="col-md-6 mb-3">
+                                        <label className="text-dark">Freight</label>
                                         <select
-                                          className=" mb-3"
                                           onChange={hanldechange}
                                           value={predata.freight}
                                           name="freight"
                                         >
-                                          <option>Select...</option>
+                                          <option value="">Select...</option>
                                           <option value="Sea">Sea</option>
                                           <option value="Air">Air</option>
                                           <option value="Road">Road</option>
                                           <option value="Rail">Rail</option>
                                         </select>
                                       </div>
-                                      {predata.freight_option ? (
-                                        <>
-                                          <div className="col-md-6">
-                                            <label
-                                              htmlFor=""
-                                              className="text-dark"
-                                            >
-                                              freight Option
-                                            </label>
-                                            <input
-                                              type="text"
-                                              className="form-control mb-3"
-                                              value={predata.freight_option}
-                                              onChange={hanldechange}
-                                              name="freight_option"
-                                              placeholder="freight_option"
-                                            />
-                                          </div>
-                                        </>
-                                      ) : (
-                                        ""
+                                      {predata.freight_option && (
+                                        <div className="col-md-6 mb-3">
+                                          <label className="text-dark">Freight Option</label>
+                                          <input
+                                            type="text"
+                                            value={predata.freight_option}
+                                            onChange={hanldechange}
+                                            name="freight_option"
+                                            placeholder="Freight Option"
+                                          />
+                                        </div>
                                       )}
-                                    </div>
-                                    <div className="row">
-                                      <div className="col-md-6">
-                                        <label htmlFor="" className="text-dark">
-                                          I would like to
-                                        </label>
+                                      <div className="col-md-6 mb-3">
+                                        <label className="text-dark">I would like to</label>
                                         <select
-                                          className="form-control mb-3"
                                           value={predata.is_Import_Export}
                                           onChange={hanldechange}
                                           name="is_Import_Export"
                                         >
-                                          <option>Select...</option>
+                                          <option value="">Select...</option>
                                           <option value="import">Import</option>
                                           <option value="export">Export</option>
                                         </select>
                                       </div>
-                                      <div className="col-md-6">
-                                        <label htmlFor="" className="text-dark">
-                                          I am the
-                                        </label>
+                                      <div className="col-md-6 mb-3">
+                                        <label className="text-dark">I am the</label>
                                         <select
-                                          className="form-control mb-3"
                                           value={predata.is_cong_shipp}
                                           onChange={hanldechange}
                                           name="is_cong_shipp"
                                         >
-                                          <option>Select...</option>
-                                          <option value="Shipper">
-                                            Shipper
-                                          </option>
-                                          <option value="Consignee">
-                                            Consignee
-                                          </option>
+                                          <option value="">Select...</option>
+                                          <option value="Shipper">Shipper</option>
+                                          <option value="Consignee">Consignee</option>
                                         </select>
                                       </div>
                                     </div>
+                                  </div>
+
+                                  <div className="borderShip">
+                                    <h3 className="mb-3">Port Clearing Details</h3>
                                     <div className="row">
-                                      <div className="col-md-6 autoComplete mb-3">
-                                        <label htmlFor="" className="text-dark">
-                                          Port of Entry Country
-                                        </label>
-                                        {/* <select
-                                          name="loading_country"
-                                          value={predata.loading_country}
-                                          onChange={hanldechange}
-                                          className="form-control mb-3"
-                                        >
-                                          <option>Select...</option>
-                                          {country.map((option, index) => {
-                                            return (
-                                              <>
-                                                <option
-                                                  key={index}
-                                                  value={option.country_id}
-                                                >
-                                                  {option.country_name}
-                                                </option>
-                                              </>
-                                            );
-                                          })}
-                                        </select> */}
+                                      <div className="col-md-6 mb-3 autoComplete">
+                                        <label className="text-dark">Port of Entry Country</label>
                                         <Autocomplete
-                                          options={country || []} // your country array
-                                          getOptionLabel={(option) =>
-                                            option.country_name || ""
-                                          } // show name
+                                          options={country || []}
+                                          getOptionLabel={(option) => option.country_name || ""}
                                           value={
-                                            country.find(
-                                              (c) =>
-                                                c.country_id ===
-                                                predata.loading_country
-                                            ) || null
+                                            country.find((c) => c.country_id === predata.loading_country) || null
                                           }
                                           onChange={(event, newValue) => {
                                             hanldechange({
                                               target: {
                                                 name: "loading_country",
-                                                value: newValue
-                                                  ? newValue.country_id
-                                                  : "",
+                                                value: newValue ? newValue.country_id : "",
                                               },
                                             });
                                           }}
@@ -748,54 +709,20 @@ export default function Customclearence() {
                                             />
                                           )}
                                         />
-                                        {/* <input type='text' className="form-control" value={predata.loading_country} onChange={hanldechange} name='loading_country' placeholder='client id' /> */}
                                       </div>
-                                      <div className="col-md-6 autoComplete mb-3">
-                                        <label htmlFor="" className="text-dark">
-                                          Port of Exit Country
-                                        </label>
-                                        {/* <select
-                                          name="discharge_country"
-                                          value={predata.discharge_country}
-                                          onChange={hanldechange}
-                                          className="form-control mb-3"
-                                        >
-                                          <option>Select...</option>
-                                          {country.map((option, index) => {
-                                            console.log(
-                                              predata.discharge_country
-                                            );
-                                            return (
-                                              <>
-                                                <option
-                                                  key={index}
-                                                  value={option.country_id}
-                                                >
-                                                  {option.country_name}
-                                                </option>
-                                              </>
-                                            );
-                                          })}
-                                        </select> */}
+                                      <div className="col-md-6 mb-3 autoComplete">
+                                        <label className="text-dark">Port of Exit Country</label>
                                         <Autocomplete
                                           options={country || []}
-                                          getOptionLabel={(option) =>
-                                            option.country_name || ""
-                                          }
+                                          getOptionLabel={(option) => option.country_name || ""}
                                           value={
-                                            country.find(
-                                              (c) =>
-                                                c.country_id ===
-                                                predata.discharge_country
-                                            ) || null
+                                            country.find((c) => c.country_id === predata.discharge_country) || null
                                           }
                                           onChange={(event, newValue) => {
                                             hanldechange({
                                               target: {
                                                 name: "discharge_country",
-                                                value: newValue
-                                                  ? newValue.country_id
-                                                  : "",
+                                                value: newValue ? newValue.country_id : "",
                                               },
                                             });
                                           }}
@@ -807,144 +734,172 @@ export default function Customclearence() {
                                             />
                                           )}
                                         />
-                                        {/* <input type='text' className="form-control" value={predata.port_of_exit} onChange={hanldechange} name='port_of_exit' /> */}
                                       </div>
-                                    </div>
-                                    <div className="row">
-                                      <div className="col-md-6">
-                                        <label htmlFor="" className="text-dark">
-                                          Port of Origin
-                                        </label>
+                                      <div className="col-md-6 mb-3">
+                                        <label className="text-dark">Port of Origin</label>
                                         <input
                                           name="port_of_loading"
                                           value={predata.port_of_loading}
                                           onChange={hanldechange}
-                                          className="form-control mb-3"
-                                        ></input>
-
-                                        {/* <select
-                                            name="discharge_country"
-                                            value={predata.discharge_country}
-                                            onChange={hanldechange}
-                                          >
-                                            <option>Select...</option>
-                                            {country.map((option, index) => {
-                                              console.log(predata.discharge_country);
-                                              return (
-                                                <>
-                                                  <option
-                                                    key={index}
-                                                    value={option.country_id}
-                                                  >
-                                                    {option.country_name}
-                                                  </option>
-                                                </>
-                                              );
-                                            })}
-                                          </select> */}
-                                        {/* <input type='text' className="form-control" value={predata.port_of_exit} onChange={hanldechange} name='port_of_exit' /> */}
+                                        />
                                       </div>
-                                      <div className="col-md-6">
-                                        <label htmlFor="" className="text-dark">
-                                          Port of Entry Country
-                                        </label>
+                                      <div className="col-md-6 mb-3">
+                                        <label className="text-dark">Port of Entry Port</label>
                                         <input
                                           name="port_of_discharge"
                                           value={predata.port_of_discharge}
                                           onChange={hanldechange}
-                                          className="form-control mb-3"
-                                        ></input>
-                                        {/* <s elect
-                                            name="port_of_discharge"
-                                            value={predata.port_of_discharge}
-                                            onChange={hanldechange}
-                                          >
-                                            <option>Select...</option>
-                                            {country.map((option, index) => {
-                                              return (
-                                                <>
-                                                  <option
-                                                    key={index}
-                                                    value={option.country_id}
-                                                  >
-                                                    {option.country_name}
-                                                  </option>
-                                                </>
-                                              );
-                                            })}
-                                          </select> */}
-                                        {/* <input type='text' className="form-control" value={predata.loading_country} onChange={hanldechange} name='loading_country' placeholder='client id' /> */}
+                                        />
                                       </div>
                                     </div>
+                                  </div>
+
+                                  <div className="borderShip d-flex justify-content-between flex-wrap gap-3 align-items-center">
+                                    <div>
+                                      <h3 className="mb-0" style={{ borderLeft: "none", paddingLeft: 0 }}>Document Section</h3>
+                                    </div>
+                                    <div>
+                                      <button className="btn btn_add_web" onClick={handleShow}>
+                                        Upload Documents
+                                      </button>
+                                      {show1 && (
+                                        <Modal
+                                          open={show1}
+                                          onClose={handleClose}
+                                          slotProps={{
+                                            backdrop: {
+                                              sx: { backgroundColor: "rgba(0,0,0,0.5)" },
+                                            },
+                                          }}
+                                        >
+                                          <Box
+                                            sx={{
+                                              p: 4,
+                                              bgcolor: "white",
+                                              borderRadius: 3,
+                                              width: 500,
+                                              mx: "auto",
+                                              mt: 10,
+                                              boxShadow: 24,
+                                              textAlign: "center",
+                                              backgroundImage: "linear-gradient(135deg, #e3f2fd, #ffffff)",
+                                            }}
+                                          >
+                                            <h2 style={{ marginBottom: "20px", color: "#1976d2" }}>
+                                              📂 Upload Documents
+                                            </h2>
+                                            <FormControl fullWidth sx={{ mt: 2 }}>
+                                              <InputLabel id="doc-select-label">Select Document Type</InputLabel>
+                                              <Select
+                                                labelId="doc-select-label"
+                                                onChange={handleSelect}
+                                                sx={{ borderRadius: 2, bgcolor: "#f5f5f5" }}
+                                              >
+                                                {docOptions.map((option) => (
+                                                  <MenuItem key={option.id} value={option.id}>
+                                                    {option.label}
+                                                  </MenuItem>
+                                                ))}
+                                              </Select>
+                                            </FormControl>
+                                            <div className="mt-3">
+                                              {selectedDocs.map((doc, index) => (
+                                                <div key={index} className="mb-3" style={{ textAlign: "left" }}>
+                                                  <label className="fw-bold">{doc.name}</label>
+                                                  <input
+                                                    type="file"
+                                                    className="form-control"
+                                                    multiple
+                                                    accept="image/*,application/pdf"
+                                                    onChange={(e) => handleFileChangefil(e, doc.name)}
+                                                  />
+                                                </div>
+                                              ))}
+                                            </div>
+                                            <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2, mt: 4 }}>
+                                              <Button onClick={handleClose} variant="outlined" sx={{ borderRadius: 2, px: 3 }}>
+                                                Cancel
+                                              </Button>
+                                              <Button
+                                                variant="contained"
+                                                color="success"
+                                                onClick={handleSave}
+                                                sx={{
+                                                  borderRadius: 2,
+                                                  px: 3,
+                                                  backgroundImage: "linear-gradient(45deg, #43a047, #66bb6a)",
+                                                }}
+                                              >
+                                                Save
+                                              </Button>
+                                            </Box>
+                                          </Box>
+                                        </Modal>
+                                      )}
+                                    </div>
+                                  </div>
+
+                                  <div className="borderShip">
+                                    <h3 className="mb-3">Cargo Details</h3>
                                     <div className="row">
-                                      <div className="col-md-6">
-                                        <label htmlFor="" className="text-dark">
-                                          Nature of Goods
-                                        </label>
+                                      <div className="col-md-6 mb-3">
+                                        <label className="text-dark">Goods Description</label>
+                                        <input
+                                          type="text"
+                                          value={predata.goods_desc}
+                                          onChange={hanldechange}
+                                          name="goods_desc"
+                                          placeholder="Description"
+                                        />
+                                      </div>
+                                      <div className="col-md-6 mb-3">
+                                        <label className="text-dark">Nature of Goods</label>
                                         <select
-                                          className="form-select form-control mb-3"
                                           value={predata.nature_of_goods}
                                           onChange={hanldechange}
                                           name="nature_of_goods"
                                         >
-                                          <option> Select...</option>
-                                          <option> General Cargo</option>
-                                          <option> Battery</option>
-                                          <option> Liquid</option>
-                                          <option> Powder</option>
-                                          <option> Harzadous</option>
+                                          <option value="">Select...</option>
+                                          <option value="General Cargo">General Cargo</option>
+                                          <option value="Battery">Battery</option>
+                                          <option value="Liquid">Liquid</option>
+                                          <option value="Powder">Powder</option>
+                                          <option value="Harzadous">Hazardous</option>
                                         </select>
                                       </div>
-                                      <div className="col-md-6">
-                                        <label htmlFor="" className="text-dark">
-                                          Packing Type
-                                        </label>
+                                      <div className="col-md-6 mb-3">
+                                        <label className="text-dark">Packing Type</label>
                                         <select
-                                          className="form-control mb-0 form-select"
                                           value={predata.packing_type}
                                           onChange={hanldechange}
                                           name="packing_type"
                                         >
-                                          <option>Select...</option>
-                                          <option>Box</option>
-                                          <option>Crate</option>
-                                          <option>Pallet</option>
-                                          <option>Bags</option>
+                                          <option value="">Select...</option>
+                                          <option value="Box">Box</option>
+                                          <option value="Crate">Crate</option>
+                                          <option value="Pallet">Pallet</option>
+                                          <option value="Bags">Bags</option>
                                         </select>
                                       </div>
-                                    </div>
-                                    <div className="row">
-                                      <div className="col-md-6">
-                                        <label htmlFor="" className="text-dark">
-                                          Goods Description
-                                        </label>
+                                      <div className="col-md-6 mb-3">
+                                        <label className="text-dark">No of Packages</label>
                                         <input
-                                          type="text"
-                                          className="form-control mb-3"
-                                          value={predata.goods_desc}
+                                          value={predata.total_box}
                                           onChange={hanldechange}
-                                          name="goods_desc"
-                                          placeholder="client id"
+                                          placeholder="0"
+                                          name="total_box"
                                         />
                                       </div>
-
-                                      <div className="col-md-6">
-                                        <label htmlFor="" className="text-dark">
-                                          Total Weight
-                                        </label>
+                                      <div className="col-md-6 mb-3">
+                                        <label className="text-dark">Total Weight</label>
                                         <div className="unitDimention">
                                           <input
-                                            className="form-control mb-3"
                                             value={predata.total_weight}
                                             onChange={hanldechange}
                                             placeholder="0.00"
                                             name="total_weight"
-                                          ></input>
-                                          <select
-                                            class="form-select"
-                                            name="weight_unit"
-                                          >
-                                            <option value="">Unit</option>
+                                          />
+                                          <select name="weight_unit" onChange={hanldechange} value={predata.weight_unit || "kg"}>
                                             <option value="kg">kg</option>
                                             <option value="g">g</option>
                                             <option value="lbs">lbs</option>
@@ -952,227 +907,16 @@ export default function Customclearence() {
                                           </select>
                                         </div>
                                       </div>
-                                      {/* <div className="col-md-6">
-                                        <label
-                                          htmlFor="clearing_agent"
-                                          className="form-label"
-                                        >
-                                          Select Document
-                                        </label>
-                                        <select
-                                          name="documentName"
-                                          onChange={hanldechange}
-                                        >
-                                          <option value="">Select...</option>
-                                          <option value="Customs Documents">
-                                            Customs docs
-                                          </option>
-                                          <option value="Supporting Documents">
-                                            Supporting docs
-                                          </option>
-                                          <option value="Invoice, Packing List">
-                                            Invoice / Packing L
-                                          </option>
-                                          <option value="Product Literature">
-                                            Product Literature
-                                          </option>
-                                          <option value="Letters of authority">
-                                            LOA
-                                          </option>
-                                          <option value="Waybills">
-                                            Freight Docs
-                                          </option>
-                                          <option value="Waybills">
-                                            Shipping instruction
-                                          </option>
-                                          <option value="Supplier Invoices">
-                                            Freight Invoices{" "}
-                                          </option>
-                                          <option value="AD_Quotations">
-                                            Attach Quote
-                                          </option>
-                                        </select>
-                                      </div>
-                                      <div className="col-md-6">
-                                        <label className="form-label">
-                                          Add Document{" "}
-                                        </label>
-                                        <input
-                                          type="file"
-                                          name="licenses"
-                                          className="w-100 rounded"
-                                          onChange={handleFileChange2}
-                                          multiple
-                                        />
-                                      </div> */}
-
-                                      <div className="d-flex justify-content-between flex-wrap gap-3 mt-4">
-                                        <div className="">
-                                          <h4 className="freight_hd">
-                                            Document Section
-                                          </h4>
-                                          <span class="line"></span>
-                                        </div>
-                                        <div>
-                                          <button
-                                            className="btn btn_add_web "
-                                            onClick={handleShow}
-                                          >
-                                            Upload Documents
-                                          </button>
-
-                                          {show1 && (
-                                            <Modal
-                                              open={show1}
-                                              onClose={handleClose}
-                                              slotProps={{
-                                                backdrop: {
-                                                  sx: {
-                                                    backgroundColor:
-                                                      "rgba(0,0,0,0.5)",
-                                                  }, // darker overlay background
-                                                },
-                                              }}
-                                            >
-                                              <Box
-                                                sx={{
-                                                  p: 4,
-                                                  bgcolor: "white",
-                                                  borderRadius: 3,
-                                                  width: 500,
-                                                  mx: "auto",
-                                                  mt: 10,
-                                                  boxShadow: 24, // nice shadow effect
-                                                  textAlign: "center",
-                                                  backgroundImage:
-                                                    "linear-gradient(135deg, #e3f2fd, #ffffff)", // gradient background
-                                                }}
-                                              >
-                                                {/* Title */}
-                                                <h2
-                                                  style={{
-                                                    marginBottom: "20px",
-                                                    color: "#1976d2",
-                                                  }}
-                                                >
-                                                  📂 Upload Documents
-                                                </h2>
-
-                                                {/* Dropdown */}
-                                                <FormControl
-                                                  fullWidth
-                                                  sx={{ mt: 2 }}
-                                                >
-                                                  <InputLabel id="doc-select-label">
-                                                    Select Document Type
-                                                  </InputLabel>
-                                                  <Select
-                                                    labelId="doc-select-label"
-                                                    onChange={handleSelect}
-                                                    sx={{
-                                                      borderRadius: 2,
-                                                      bgcolor: "#f5f5f5",
-                                                    }}
-                                                  >
-                                                    {docOptions.map(
-                                                      (option) => (
-                                                        <MenuItem
-                                                          key={option.id}
-                                                          value={option.id}
-                                                        >
-                                                          {option.label}
-                                                        </MenuItem>
-                                                      )
-                                                    )}
-                                                  </Select>
-                                                </FormControl>
-                                                <div className="mt-3">
-                                                  {selectedDocs.map(
-                                                    (doc, index) => (
-                                                      <div
-                                                        key={index}
-                                                        className="mb-3"
-                                                        style={{
-                                                          textAlign: "left",
-                                                        }}
-                                                      >
-                                                        <label className="fw-bold">
-                                                          {doc.name}
-                                                        </label>
-                                                        <input
-                                                          type="file"
-                                                          className="form-control"
-                                                          multiple
-                                                          accept="image/*,application/pdf"
-                                                          onChange={(e) =>
-                                                            handleFileChangefil(
-                                                              e,
-                                                              doc.name
-                                                            )
-                                                          }
-                                                        />
-                                                      </div>
-                                                    )
-                                                  )}
-                                                </div>
-
-                                                {/* Footer buttons */}
-                                                <Box
-                                                  sx={{
-                                                    display: "flex",
-                                                    justifyContent: "flex-end",
-                                                    gap: 2,
-                                                    mt: 4,
-                                                  }}
-                                                >
-                                                  <Button
-                                                    onClick={handleClose}
-                                                    variant="outlined"
-                                                    sx={{
-                                                      borderRadius: 2,
-                                                      px: 3,
-                                                    }}
-                                                  >
-                                                    Cancel
-                                                  </Button>
-                                                  <Button
-                                                    variant="contained"
-                                                    color="success"
-                                                    onClick={handleSave}
-                                                    sx={{
-                                                      borderRadius: 2,
-                                                      px: 3,
-                                                      backgroundImage:
-                                                        "linear-gradient(45deg, #43a047, #66bb6a)",
-                                                    }}
-                                                  >
-                                                    Save
-                                                  </Button>
-                                                </Box>
-                                              </Box>
-                                            </Modal>
-                                          )}
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div className="row mt-3">
-                                      <div className="col-md-6">
-                                        <label htmlFor="" className="text-dark">
-                                          Total Dimension
-                                        </label>
+                                      <div className="col-md-6 mb-3">
+                                        <label className="text-dark">Total Dimension</label>
                                         <div className="unitDimention">
                                           <input
-                                            className="form-control mb-3"
                                             onChange={hanldechange}
                                             value={predata.total_dimension}
                                             placeholder="0.00"
                                             name="total_dimension"
-                                          ></input>
-                                          <select
-                                            className="form-select"
-                                            name="dimension_unit"
-                                          >
-                                            <option value="">Unit</option>
+                                          />
+                                          <select name="dimension_unit" onChange={hanldechange} value={predata.dimension_unit || "cm³"}>
                                             <option value="cm³">cm³</option>
                                             <option value="m³">m³</option>
                                             <option value="in³">in³</option>
@@ -1180,122 +924,38 @@ export default function Customclearence() {
                                           </select>
                                         </div>
                                       </div>
-                                      <div className="col-md-6">
-                                        <label htmlFor="" className="text-dark">
-                                          No of packages
-                                        </label>
-                                        <input
-                                          className="form-control mb-3"
-                                          value={predata.total_box}
-                                          onChange={hanldechange}
-                                          placeholder="0.00"
-                                          name="total_box"
-                                        ></input>
-                                      </div>
-                                    </div>
-                                    <div className="row">
-                                      <div className="col-md-6">
-                                        <label htmlFor="" className="text-dark">
-                                          Destination
-                                        </label>
-
-                                        {/* <input
-                                            type="text"
-                                            className="form-control"
-                                            value={predata.destination}
-                                            onChange={hanldechange}
-                                            name="destination"
-                                          /> */}
+                                      <div className="col-md-6 mb-3">
+                                        <label className="text-dark">Destination</label>
                                         <input
                                           type="text"
-                                          className="form-control mb-0"
                                           value={predata.destination}
                                           onChange={hanldechange}
                                           name="destination"
                                         />
                                       </div>
-                                      <div className="col-md-6">
-                                        <label htmlFor="" className="text-dark">
-                                          Comment On Docs
-                                        </label>
+                                      <div className="col-md-6 mb-3">
+                                        <label className="text-dark">Comment On Docs</label>
                                         <input
                                           type="text"
-                                          className="form-control mb-0"
                                           value={predata.comment_on_docs}
                                           onChange={hanldechange}
                                           name="comment_on_docs"
                                         />
-                                        {/* <label
-                                            htmlFor=""
-                                            className="text-dark"
-                                          >
-                                            Port of Entry Country
-                                          </label>
-                                          <select
-                                            name="loading_country"
-                                            value={predata.loading_country}
-                                            onChange={hanldechange}
-                                          >
-                                            <option>Select...</option>
-                                            {country.map((option, index) => {
-                                              return (
-                                                <>
-                                                  <option
-                                                    key={index}
-                                                    value={option.country_id}
-                                                  >
-                                                    {option.country_name}
-                                                  </option>
-                                                </>
-                                              );
-                                            })}
-                                          </select> */}
-                                        {/* <input type='text' className="form-control" value={predata.loading_country} onChange={hanldechange} name='loading_country' placeholder='client id' /> */}
                                       </div>
                                     </div>
-
-                                    {/* <label
-                                            htmlFor=""
-                                            className="text-dark"
-                                          >
-                                            Port of Exit
-                                          </label>
-                                          <select
-                                            name="discharge_country"
-                                            value={predata.discharge_country}
-                                            onChange={hanldechange}
-                                          >
-                                            <option>Select...</option>
-                                            {country.map((option, index) => {
-                                              console.log(predata.discharge_country);
-                                              return (
-                                                <>
-                                                  <option
-                                                    key={index}
-                                                    value={option.country_id}
-                                                  >
-                                                    {option.country_name}
-                                                  </option>
-                                                </>
-                                              );
-                                            })}
-                                          </select> */}
-                                    {/* <input type='text' className="form-control" value={predata.port_of_exit} onChange={hanldechange} name='port_of_exit' /> */}
-                                  </section>
+                                  </div>
                                 </div>
-                                <div className="modal-footer modal_footer">
-                                  <button
-                                    type="button"
-                                    data-bs-dismiss="modal"
-                                    className="allFreFilter btn btn_add_web"
-                                    onClick={updatedata}
-                                  >
-                                    Submit
-                                  </button>
-                                </div>
+                              </section>
+                              <div className="modalFooterActions">
+                                <button className="btn-cancel" onClick={handleUpdateModalClose}>
+                                  Cancel
+                                </button>
+                                <button className="btn-submit" onClick={updatedata}>
+                                  Submit
+                                </button>
                               </div>
-                            </div>
-                          </div>
+                            </Box>
+                          </Modal>
                         </div>
                       </div>
                     </div>

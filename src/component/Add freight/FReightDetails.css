@@ -1,0 +1,151 @@
+/* Premium Freight Details Styles */
+
+.fd-container {
+  padding: 40px 24px;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+/* Page titles */
+.fd-heading {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #0f172a;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+/* Custom premium card modules */
+.fd-card {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+  padding: 30px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.fd-card-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #1e293b;
+  margin: 0 0 20px 0;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #f1f5f9;
+}
+
+/* Form section headers */
+.fd-section-header {
+  font-size: 0.775rem;
+  font-weight: 800;
+  color: #4f46e5;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 24px 0 12px 0;
+  border-top: 1px dashed #e2e8f0;
+  padding-top: 16px;
+}
+
+.fd-section-header:first-of-type {
+  border-top: none;
+  padding-top: 0;
+  margin-top: 0;
+}
+
+/* Details Table grid layout */
+.fd-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.fd-row {
+  border-bottom: 1px solid #f8fafc;
+}
+
+.fd-row:last-child {
+  border-bottom: none;
+}
+
+.fd-label-cell {
+  padding: 8px 12px 8px 0;
+  vertical-align: top;
+  width: 45%;
+  font-size: 0.875rem;
+  font-weight: 800;
+  color: #334155;
+}
+
+.fd-value-cell {
+  padding: 8px 0;
+  vertical-align: top;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #475569;
+}
+
+/* Document items container */
+.fd-doc-group {
+  margin-bottom: 20px;
+}
+
+.fd-doc-group-label {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 8px;
+}
+
+.fd-doc-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fd-doc-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  gap: 12px;
+}
+
+.fd-doc-link {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #2563eb;
+  text-decoration: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fd-doc-link:hover {
+  text-decoration: underline;
+}
+
+.fd-delete-btn {
+  color: #dc2626;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.fd-delete-btn:hover {
+  color: #ef4444;
+}
+
+.fd-empty-docs {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  font-style: italic;
+  margin-top: 4px;
+}

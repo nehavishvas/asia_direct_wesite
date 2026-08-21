@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import image1 from "../../assestss/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import "./Navbar.css";
 
 export default function Navbar() {
   const [addFreightVisible, setAddFreightVisible] = useState(true);

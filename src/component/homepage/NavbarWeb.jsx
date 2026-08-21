@@ -1,11 +1,11 @@
- import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import image1 from "../../assestss/logo.png";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import Flag from "../../assestss/Frame2.png";
 import imagelogouser from "../../assestss/logoasia.png";
-
 import axios from "axios";
+import "./NavbarWeb.css";
 export default function Navbar() {
   const location = useLocation();
 

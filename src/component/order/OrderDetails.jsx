@@ -941,13 +941,16 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import SidebarWeb from "../homepage/SidebarwWeb";
 import NavbarWeb from "../homepage/NavbarWeb";
-import Arrow from "../../assestss/Group 2.png";
 import { toast, ToastContainer } from "react-toastify";
 import { Box, Modal } from "@mui/material";
-import { Button } from "react-bootstrap";
 import { Delete, Edit } from "@mui/icons-material";
+import FlightIcon from "@mui/icons-material/Flight";
+import DirectionsBoatIcon from "@mui/icons-material/DirectionsBoat";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import FilterListIcon from "@mui/icons-material/FilterList";
 import FooterWeb from "../homepage/FooterWeb";
 import CloseIcon from "@mui/icons-material/Close";
+import "./OrderDetails.css";
 const pageSize = 5;
 export default function OrderDetails() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -1032,6 +1035,7 @@ export default function OrderDetails() {
   };
   useEffect(() => {
     getdata();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -1095,9 +1099,6 @@ export default function OrderDetails() {
   const handleclickfunc = () => {
     handleUpdateClose();
     updatefunction3();
-  };
-  const handleclickfunc3 = () => {
-    handleUpdateClose3();
   };
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -1240,7 +1241,7 @@ export default function OrderDetails() {
       Supplier_Contact: objectdata.Supplier_Contact,
       supplier_Email: objectdata.supplier_Email,
     };
-    const response = await axios
+    await axios
       .post(`${process.env.REACT_APP_BASE_URL}updateWarehouseProduct`, datapost)
       .then((response) => {
         toast.success(response.data.message);
@@ -1255,760 +1256,649 @@ export default function OrderDetails() {
     <div>
       <NavbarWeb />
       <SidebarWeb />
-      <>
-        <section className="manageFrightSec">
-          <div className="container-fluid">
-            <div className="row">
-              <div className="col-lg-12">
-                {data.length == 0 ? (
-                  <p className="text-center my-5">
+      <section className="od-section">
+        <div className="od-container">
+          <div className="row">
+            <div className="col-lg-12">
+              <div className="od-header-wrapper">
+                <div className="od-title-area">
+                  <h1 className="od-title">Order Details</h1>
+                </div>
+                <div className="od-controls">
+                  <div className="od-search-wrapper">
+                    <input
+                      className="od-search-input"
+                      value={searchQuery}
+                      onChange={handleSearch}
+                      placeholder="Search orders..."
+                    />
+                  </div>
+                  <button
+                    onClick={openmodalopen}
+                    className="od-filter-btn"
+                  >
+                    <FilterListIcon fontSize="small" />
+                    Filter
+                  </button>
+                </div>
+              </div>
+
+              {data.length === 0 ? (
+                <div className="od-card text-center p-5">
+                  <p className="my-5 text-muted fw-semibold fs-5">
                     !!! Please Add freight & clearance to get our service !!!
                   </p>
-                ) : (
-                  <>
-                    <div className="tableManageFright">
-                      <div className="d-flex justify-content-between flex-wrap  my-3 align-items-center ">
-                        <div>
-                          <h4 className="para_det me-4">Order Details</h4>
-                        </div>
-                        <div className="d-flex fretDeatilBtn">
-                          <div>
-                            <input
-                              className=" py-1 px-2 rounded"
-                              value={searchQuery}
-                              onChange={handleSearch}
-                              placeholder="Search"
-                            ></input>
-                          </div>
-                          <div>
-                            <button
-                              onClick={openmodalopen}
-                              className="py-2  add_button"
-                            >
-                              Filter
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="card border-0">
-                        <div className="card-body">
-                          <div
-                            className="table-responsive"
-                            style={{ minHeight: "50vh" }}
-                          >
-                            <table className="table table-striped tableICon">
-                              <tbody>
-                                {currentdata &&
-                                  currentdata.length > 0 &&
-                                  currentdata.map((item, index) => {
-                                    console.log(item);
-                                    const datenw = new Date(item.date);
-                                    const options = {
-                                      year: "numeric",
-                                      month: "2-digit",
-                                      day: "2-digit",
-                                    };
-                                    const formattedDate =
-                                      datenw.toLocaleDateString(
-                                        "en-GB",
-                                        options
-                                      );
-                                    console.log(formattedDate);
-                                    return (
-                                      <>
-                                        <tr key={index}>
-                                          <td className="list_bd">
-                                            <div className="d-flex align-items-center">
-                                              <p
-                                                className="client_nm"
-                                                onClick={() => {
-                                                  handleclickorder(item.id);
-                                                }}
-                                              >
-                                                {item.full_name}
-                                              </p>
-                                              <p
-                                                className="fright_no mx-2"
-                                                onClick={() => {
-                                                  handleclickorder(item.id);
-                                                }}
-                                              >
-                                                {item.freight_number} /{" "}
-                                                {item.order_id}
-                                              </p>
-                                            </div>
-                                            <div className="">
-                                              <p className="origin">
-                                                {item.product_desc}
-                                              </p>
-                                            </div>
-                                          </td>
-                                          <td>
-                                            <div
-                                              onClick={() => {
-                                                handleclickorder(item.id);
-                                              }}
-                                            >
-                                              <div className="country_mnge justify-content-start">
-                                                <img
-                                                  src={`${process.env.REACT_APP_FLAGURL}${item.collection_from_country_flag_url}`}
-                                                  alt="flag img"
-                                                  className="flag_img"
-                                                />
-                                                {item.collection_from_country}
-                                                <img
-                                                  src={Arrow}
-                                                  className="flag_img1"
-                                                />
-                                                <img
-                                                  src={`${process.env.REACT_APP_FLAGURL}${item.delivery_to_country_flag_url}`}
-                                                  alt="flag img"
-                                                  className="flag_img"
-                                                />
-                                                {item.delivery_to_country}{" "}
-                                                &nbsp;
-                                                <span className="fright_type">
-                                                  - ({item.freight})
-                                                </span>
-                                              </div>
-                                            </div>
-                                          </td>
-                                          <td>
-                                            <p className="origin">
-                                              {item.nature_of_goods}
-                                            </p>
-                                          </td>
+                </div>
+              ) : (
+                <div className="od-card">
+                  <div className="od-table-container table-responsive">
+                    <table className="od-table">
+                      <thead>
+                        <tr>
+                          <th>Client & Order Info</th>
+                          <th>Route & Mode</th>
+                          <th>Nature of Goods</th>
+                          <th className="text-end">Date & Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {currentdata &&
+                          currentdata.length > 0 &&
+                          currentdata.map((item, index) => {
+                            return (
+                              <tr key={item.id || index} className="od-row">
+                                <td>
+                                  <div className="od-client-info">
+                                    <span
+                                      className="od-client-name"
+                                      onClick={() => handleclickorder(item.id)}
+                                    >
+                                      {item.full_name}
+                                    </span>
+                                    <span
+                                      className="od-order-ids"
+                                      onClick={() => handleclickorder(item.id)}
+                                    >
+                                      {item.freight_number} / {item.order_id}
+                                    </span>
+                                    <p className="od-product-desc" title={item.product_desc}>
+                                      {item.product_desc}
+                                    </p>
+                                  </div>
+                                </td>
+                                <td>
+                                  <div
+                                    className="od-route-container"
+                                    onClick={() => handleclickorder(item.id)}
+                                  >
+                                    <div className="od-country-badge" title={item.collection_from_country}>
+                                      {item.collection_from_country_flag_url && (
+                                        <img
+                                          src={`${process.env.REACT_APP_FLAGURL}${item.collection_from_country_flag_url}`}
+                                          alt=""
+                                          className="od-flag-img"
+                                        />
+                                      )}
+                                      <span>{item.collection_from_country}</span>
+                                    </div>
+                                    
+                                    <div className="od-route-connector">
+                                      <div className="od-route-line"></div>
+                                      <div className="od-route-icon-circle">
+                                        {String(item.freight).toLowerCase() === "air" ? (
+                                          <FlightIcon fontSize="inherit" />
+                                        ) : String(item.freight).toLowerCase() === "sea" ? (
+                                          <DirectionsBoatIcon fontSize="inherit" />
+                                        ) : (
+                                          <LocalShippingIcon fontSize="inherit" />
+                                        )}
+                                      </div>
+                                    </div>
 
-                                          <td>
-                                            <div
-                                              className="fright_no mx-2 fs-6"
-                                              onClick={() => {
-                                                handleclickorder(item.id);
-                                              }}
-                                            >
-                                              <p className="port_date">
-                                                {new Date(
-                                                  item.created_at
-                                                ).toLocaleDateString("en-GB")}
-                                              </p>
-                                            </div>
-
-                                            <div className="d-flex justify-content-end">
-                                              <div className="dropdown">
-                                                <a
-                                                  href=""
-                                                  type="button"
-                                                  className="act_btn dropdown-toggle"
-                                                  data-bs-toggle="dropdown"
-                                                  aria-expanded="false"
-                                                >
-                                                  Action
-                                                </a>
-                                                <div
-                                                  className="dropdown-menu drop_down"
-                                                  aria-labelledby="dropdownMenuButton1"
-                                                >
-                                                  <div className="btnManageFreight">
-                                                    <div className="drpIcons dropdown-item item_drop">
-                                                      <div
-                                                        className=" "
-                                                        onClick={() => {
-                                                          setAssignwarehouseid(
-                                                            item.warehouse_assign_order_id
-                                                          );
-                                                          updatefunction(
-                                                            item.warehouse_assign_order_id,
-                                                            item
-                                                          );
-                                                        }}
-                                                      >
-                                                        {item.warehouse_status ==
-                                                        1 ? (
-                                                          <i
-                                                            onClick={() => {
-                                                              setAssignwarehouseid(
-                                                                item.warehouse_assign_order_id
-                                                              );
-                                                              updatefunction(
-                                                                item.warehouse_assign_order_id,
-                                                                item
-                                                              );
-                                                            }}
-                                                            className="fi fi-ss-warehouse-alt"
-                                                            style={{
-                                                              cursor: "pointer",
-                                                            }}
-                                                          />
-                                                        ) : (
-                                                          <p
-                                                            onClick={() => {
-                                                              handleclickschangestatus11(
-                                                                item.freight_id,
-                                                                item.ORDER_ID
-                                                              );
-                                                              console.log(
-                                                                "ASDFG"
-                                                              );
-                                                            }}
-                                                            className="fi fi-ss-warehouse-alt fright_no mx-2 fs-6"
-                                                            style={{
-                                                              cursor: "pointer",
-                                                            }}
-                                                          ></p>
-                                                        )}
-                                                        Send Warehouse
-                                                      </div>
-                                                    </div>
-
-                                                    <div className="drpIcons dropdown-item item_drop">
-                                                      <i
-                                                        className="fi fi-rs-document-signed"
-                                                        style={{
-                                                          cursor: "pointer",
-                                                        }}
-                                                      />
-                                                      Assin for Clearing
-                                                    </div>
-                                                    <div className="drpIcons dropdown-item item_drop">
-                                                      <div
-                                                        className=""
-                                                        onClick={() => {
-                                                          handleclcick(
-                                                            item.id,
-                                                            item.order_id
-                                                          );
-                                                        }}
-                                                      >
-                                                        <i
-                                                          className="fi fi-br-track"
-                                                          style={{
-                                                            cursor: "pointer",
-                                                          }}
-                                                        />
-                                                        Track order
-                                                      </div>
-                                                    </div>
-
-                                                    {/* <div className="drpIcons dropdown-item item_drop">
-                                                          <div className="">
-                                                            <i
-                                                              className="fi fi-br-copy"
-                                                              style={{
-                                                                cursor:
-                                                                  "pointer",
-                                                              }}
-                                                              // onClick={() => {
-                                                              //   handleclcick(
-                                                              //     item.id,
-                                                              //     item.order_id
-                                                              //   );
-                                                              // }}
-                                                            />
-                                                            Copy
-                                                          </div>
-                                                        </div> */}
-                                                    {/* <div className="drpIcons dropdown-item item_drop">
-                                                          <div className="">
-                                                            <i
-                                                              className="fi fi-br-query"
-                                                              style={{
-                                                                cursor:
-                                                                  "pointer",
-                                                              }}
-                                                                onClick={() => {
-                                                                  handleclcick(
-                                                                    item.id,
-                                                                    item.order_id
-                                                                  );
-                                                                }}
-                                                            />
-                                                            Query
-                                                          </div>
-                                                        </div> */}
-                                                  </div>
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </td>
-                                        </tr>
-                                      </>
-                                    );
-                                  })}
-                              </tbody>
-                            </table>
-                            <div className="text-center">
-                              <button
-                                disabled={currentPage === 1}
-                                className="btn rounded"
-                                onClick={() =>
-                                  handlePageChange(currentPage - 1)
-                                }
-                              >
-                                <i class="fi fi-rr-angle-small-left page_icon"></i>
-                              </button>
-                              <span>{` ${currentPage}`}</span>
-                              <button
-                                disabled={currentPage === totalPage}
-                                className="btn rounded"
-                                onClick={() =>
-                                  handlePageChange(currentPage + 1)
-                                }
-                              >
-                                <i class="fi fi-rr-angle-small-right page_icon"></i>
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                                    <div className="od-country-badge" title={item.delivery_to_country}>
+                                      {item.delivery_to_country_flag_url && (
+                                        <img
+                                          src={`${process.env.REACT_APP_FLAGURL}${item.delivery_to_country_flag_url}`}
+                                          alt=""
+                                          className="od-flag-img"
+                                        />
+                                      )}
+                                      <span>{item.delivery_to_country}</span>
+                                    </div>
+                                    
+                                    <span className={`od-freight-badge ${
+                                      String(item.freight).toLowerCase() === "air" ? "od-freight-air" :
+                                      String(item.freight).toLowerCase() === "sea" ? "od-freight-sea" :
+                                      "od-freight-road"
+                                    }`}>
+                                      {item.freight}
+                                    </span>
+                                  </div>
+                                </td>
+                                <td>
+                                  <span className="od-goods-category">
+                                    {item.nature_of_goods || "N/A"}
+                                  </span>
+                                </td>
+                                <td className="text-end">
+                                  <div className="od-date-wrapper" onClick={() => handleclickorder(item.id)}>
+                                    <p className="od-created-date">
+                                      {new Date(item.created_at).toLocaleDateString("en-GB")}
+                                    </p>
+                                  </div>
+                                  
+                                  <div className="od-action-dropdown">
+                                    <button
+                                      type="button"
+                                      className="od-action-trigger dropdown-toggle"
+                                      data-bs-toggle="dropdown"
+                                      aria-expanded="false"
+                                    >
+                                      Action
+                                    </button>
+                                    <div className="dropdown-menu od-dropdown-menu dropdown-menu-end">
+                                      <button
+                                        className="od-dropdown-item"
+                                        onClick={() => {
+                                          if (Number(item.warehouse_status) === 1) {
+                                            setAssignwarehouseid(item.warehouse_assign_order_id);
+                                            updatefunction(item.warehouse_assign_order_id, item);
+                                          } else {
+                                            handleclickschangestatus11(item.freight_id, item.ORDER_ID);
+                                          }
+                                        }}
+                                      >
+                                        <i className="fi fi-ss-warehouse-alt"></i>
+                                        Send Warehouse
+                                      </button>
+                                      <button className="od-dropdown-item">
+                                        <i className="fi fi-rs-document-signed"></i>
+                                        Assign for Clearing
+                                      </button>
+                                      <button
+                                        className="od-dropdown-item"
+                                        onClick={() => handleclcick(item.id, item.order_id)}
+                                      >
+                                        <i className="fi fi-br-track"></i>
+                                        Track Order
+                                      </button>
+                                    </div>
+                                  </div>
+                                </td>
+                              </tr>
+                            );
+                          })}
+                      </tbody>
+                    </table>
+                    
+                    <div className="od-pagination">
+                      <button
+                        disabled={currentPage === 1}
+                        className="od-page-btn"
+                        onClick={() => handlePageChange(currentPage - 1)}
+                      >
+                        <i className="fi fi-rr-angle-small-left page_icon"></i>
+                      </button>
+                      <span className="od-page-indicator">{currentPage}</span>
+                      <button
+                        disabled={currentPage === totalPage || totalPage === 0}
+                        className="od-page-btn"
+                        onClick={() => handlePageChange(currentPage + 1)}
+                      >
+                        <i className="fi fi-rr-angle-small-right page_icon"></i>
+                      </button>
                     </div>
-                  </>
-                )}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+      <FooterWeb />
+
+      {/* Modal 99: Edit/Update Warehouse Product */}
+      <Modal open={openmodal99} onClose={handleUpdateClose99}>
+        <Box
+          className="od-modal-box"
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: { xs: "90%", sm: 600, md: 750 },
+          }}
+        >
+          <div className="od-modal-header">
+            <h5>Update Order Product</h5>
+            <button className="od-modal-close-btn" onClick={handleUpdateClose99}>
+              <CloseIcon />
+            </button>
+          </div>
+          
+          <div className="od-modal-body frightFormSec">
+            <div className="row od-form-row">
+              <div className="col-lg-6">
+                <div className="od-form-group">
+                  <label htmlFor="edit-product_description">Product Description</label>
+                  <input
+                    type="text"
+                    id="edit-product_description"
+                    value={objectdata.product_description || ""}
+                    placeholder="Enter product description"
+                    name="product_description"
+                    onChange={handleChangeedit}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="col-lg-6">
+                <div className="od-form-group">
+                  <label htmlFor="edit-Hazardous">Hazardous</label>
+                  <input
+                    type="text"
+                    id="edit-Hazardous"
+                    name="Hazardous"
+                    value={objectdata.Hazardous || ""}
+                    placeholder="Yes/No or Category"
+                    onChange={handleChangeedit}
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+            
+            <div className="row od-form-row">
+              <div className="col-lg-6">
+                <div className="od-form-group">
+                  <label htmlFor="edit-date_received">Date Received</label>
+                  <input
+                    type="date"
+                    id="edit-date_received"
+                    name="date_received"
+                    value={objectdata.date_received || ""}
+                    onChange={handleChangeedit}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="col-lg-6">
+                <div className="od-form-group">
+                  <label htmlFor="edit-package_type">Package Type</label>
+                  <input
+                    type="text"
+                    id="edit-package_type"
+                    value={objectdata.package_type || ""}
+                    placeholder="e.g. Carton, Pallet"
+                    name="package_type"
+                    onChange={handleChangeedit}
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="row od-form-row">
+              <div className="col-lg-6">
+                <div className="od-form-group">
+                  <label htmlFor="edit-packages">Packages</label>
+                  <input
+                    type="text"
+                    id="edit-packages"
+                    value={objectdata.packages || ""}
+                    placeholder="Number of packages"
+                    name="packages"
+                    onChange={handleChangeedit}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="col-lg-6">
+                <div className="od-form-group">
+                  <label htmlFor="edit-dimension">Dimension</label>
+                  <input
+                    type="text"
+                    id="edit-dimension"
+                    value={objectdata.dimension || ""}
+                    name="dimension"
+                    placeholder="e.g. 1.2 x 0.8 x 1.0"
+                    onChange={handleChangeedit}
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="row od-form-row">
+              <div className="col-lg-6">
+                <div className="od-form-group">
+                  <label htmlFor="edit-weight">Weight (kg)</label>
+                  <input
+                    type="text"
+                    id="edit-weight"
+                    value={objectdata.weight || ""}
+                    placeholder="Gross weight"
+                    name="weight"
+                    onChange={handleChangeedit}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="col-lg-6">
+                <div className="od-form-group">
+                  <label htmlFor="edit-warehouse_ref">Warehouse Ref.</label>
+                  <input
+                    type="text"
+                    id="edit-warehouse_ref"
+                    value={objectdata.warehouse_ref || ""}
+                    placeholder="Warehouse reference"
+                    name="warehouse_ref"
+                    onChange={handleChangeedit}
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="row od-form-row">
+              <div className="col-lg-6">
+                <div className="od-form-group">
+                  <label htmlFor="edit-supplier">Supplier</label>
+                  <input
+                    type="text"
+                    id="edit-supplier"
+                    name="supplier"
+                    value={objectdata.supplier || ""}
+                    placeholder="Supplier name"
+                    onChange={handleChangeedit}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="col-lg-6">
+                <div className="od-form-group">
+                  <label htmlFor="edit-warehouse_receipt_number">Warehouse Receipt Number</label>
+                  <input
+                    type="text"
+                    id="edit-warehouse_receipt_number"
+                    value={objectdata.warehouse_receipt_number || ""}
+                    placeholder="Receipt number"
+                    name="warehouse_receipt_number"
+                    onChange={handleChangeedit}
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="row od-form-row">
+              <div className="col-lg-6">
+                <div className="od-form-group">
+                  <label htmlFor="edit-tracking_number">Tracking Number</label>
+                  <input
+                    type="text"
+                    id="edit-tracking_number"
+                    value={objectdata.tracking_number || ""}
+                    placeholder="Tracking number"
+                    name="tracking_number"
+                    onChange={handleChangeedit}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="col-lg-6">
+                <div className="od-form-group">
+                  <label htmlFor="edit-supplier_address">Supplier Address</label>
+                  <input
+                    type="text"
+                    id="edit-supplier_address"
+                    value={objectdata.supplier_address || ""}
+                    name="supplier_address"
+                    placeholder="Supplier address"
+                    onChange={handleChangeedit}
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="row od-form-row">
+              <div className="col-lg-6">
+                <div className="od-form-group">
+                  <label htmlFor="edit-Supplier_Contact">Supplier Contact</label>
+                  <input
+                    type="text"
+                    id="edit-Supplier_Contact"
+                    value={objectdata.Supplier_Contact || ""}
+                    placeholder="Phone number"
+                    name="Supplier_Contact"
+                    onChange={handleChangeedit}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="col-lg-6">
+                <div className="od-form-group">
+                  <label htmlFor="edit-supplier_Email">Supplier Email</label>
+                  <input
+                    type="text"
+                    id="edit-supplier_Email"
+                    value={objectdata.supplier_Email || ""}
+                    name="supplier_Email"
+                    placeholder="Email address"
+                    onChange={handleChangeedit}
+                    required
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </section>
-        <FooterWeb />
-        <Modal open={openmodal99} onClose={handleUpdateClose99}>
-          <Box
-            sx={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: 750,
-              bgcolor: "background.paper",
-              boxShadow: 24,
-              borderRadius: "5px",
-            }}
-          >
-            <div className="d-flex justify-content-between">
-              <div className="customHeader">
-                <h5>Update Order List</h5>
-                <div className="crossBtn">
-                  <i onClick={handleUpdateClose99} aria-hidden="true">
-                    <CloseIcon />
-                  </i>
-                </div>
-              </div>
+          
+          <div className="od-modal-footer">
+            <button
+              onClick={handleUpdateClose99}
+              className="od-btn od-btn-secondary"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handlepostdataedit}
+              className="od-btn od-btn-primary"
+            >
+              Update Details
+            </button>
+          </div>
+        </Box>
+      </Modal>
 
-              <div>
-                {/* <button
-                  className="fs-2 px-3 rounded-circle bg-dark text-white"
-                  onClick={() => {
-                    handleclickfunc();
-                  }}
-                >
-                  +
-                </button> */}
-              </div>
-            </div>
-            {/* <div className="d-flex justify-content-between">
-              <div className="text-center mb-2 mb-4"></div>
-              <div>
-                <button
-                  className="fs-2 px-3 rounded-circle bg-dark text-white"
-                  onClick={handleclickfunc3}
-                >
-                  +
-                </button>
-              </div> 
-            </div>
-            */}
-            <div className="frightFormSec manageModal">
-              <div className="row mt-3">
-                <div className="col-lg-6">
-                  <label htmlFor="clientName">Product Description </label>
-                  <input
-                    type="text"
-                    id="clientName w-100"
-                    className="w-100"
-                    value={objectdata.product_description}
-                    placeholder="Product Description"
-                    name="product_description"
-                    onChange={handleChangeedit}
-                    required
-                  />
-                </div>
-                <div className="col-lg-6">
-                  <label htmlFor="contactPerson">Hazardous </label>
-                  <input
-                    type="text"
-                    id="contactPerson"
-                    className="w-100"
-                    name="Hazardous"
-                    value={objectdata.Hazardous}
-                    placeholder="Hazardous"
-                    onChange={handleChangeedit}
-                    required
-                  />
-                </div>
-              </div>
-              <div className="row mt-3">
-                <div className="col-lg-6">
-                  <label htmlFor="clientName">Date Received </label>
-                  <input
-                    type="date"
-                    id="clientName w-100"
-                    className="w-100 py-2 px-3 rounded"
-                    name="date_received"
-                    value={objectdata.date_received}
-                    onChange={handleChangeedit}
-                    required
-                  />
-                </div>
-                <div className="col-lg-6">
-                  <label htmlFor="contactPerson">Package Type </label>
-                  <input
-                    type="text"
-                    id="contactPerson"
-                    value={objectdata.package_type}
-                    placeholder="Package Type"
-                    className="w-100"
-                    name="package_type"
-                    onChange={handleChangeedit}
-                    required
-                  />
-                </div>
-              </div>
-              <div className="row mt-3">
-                <div className="col-lg-6">
-                  <label htmlFor="clientName">Packages </label>
-                  <input
-                    type="text"
-                    id="clientName w-100"
-                    className="w-100"
-                    value={objectdata.packages}
-                    placeholder="Package"
-                    name="packages"
-                    onChange={handleChangeedit}
-                    required
-                  />
-                </div>
-                <div className="col-lg-6">
-                  <label htmlFor="contactPerson">Dimension </label>
-                  <input
-                    type="text"
-                    id="contactPerson"
-                    className="w-100"
-                    value={objectdata.dimension}
-                    name="dimension"
-                    placeholder="Dimension"
-                    onChange={handleChangeedit}
-                    required
-                  />
-                </div>
-              </div>
-              <div className="row mt-3">
-                <div className="col-lg-6">
-                  <label htmlFor="clientName">Weight </label>
-                  <input
-                    type="text"
-                    id="clientName w-100"
-                    value={objectdata.weight}
-                    className="w-100"
-                    placeholder="Weight"
-                    name="weight"
-                    onChange={handleChangeedit}
-                    required
-                  />
-                </div>
-                <div className="col-lg-6">
-                  <label htmlFor="contactPerson">Warehouse Ref. </label>
-                  <input
-                    type="text"
-                    id="contactPerson"
-                    className="w-100"
-                    value={objectdata.warehouse_ref}
-                    placeholder="Warehouse Reference"
-                    name="warehouse_ref"
-                    onChange={handleChangeedit}
-                    required
-                  />
-                </div>
-              </div>
-
-              <div className="row mt-3">
-                <div className="col-lg-6">
-                  <label htmlFor="clientName">supplier </label>
-                  <input
-                    type="text"
-                    id="clientName w-100"
-                    className="w-100"
-                    name="supplier"
-                    value={objectdata.supplier}
-                    placeholder="Supplier"
-                    onChange={handleChangeedit}
-                    required
-                  />
-                </div>
-                <div className="col-lg-6">
-                  <label htmlFor="contactPerson">
-                    Warehouse Receipt Number{" "}
-                  </label>
-                  <input
-                    type="text"
-                    value={objectdata.warehouse_receipt_number}
-                    id="contactPerson"
-                    className="w-100"
-                    placeholder="Warehouse reciept number"
-                    name="warehouse_receipt_number"
-                    onChange={handleChangeedit}
-                    required
-                  />
-                </div>
-              </div>
-
-              <div className="row mt-3">
-                <div className="col-lg-6">
-                  <label htmlFor="clientName">Tracking Number </label>
-                  <input
-                    type="text"
-                    id="clientName w-100"
-                    className="w-100"
-                    value={objectdata.tracking_number}
-                    placeholder="Tracking number"
-                    name="tracking_number"
-                    onChange={handleChangeedit}
-                    required
-                  />
-                </div>
-                <div className="col-lg-6">
-                  <label htmlFor="clientName">Supplier Address </label>
-                  <input
-                    type="text"
-                    id="clientName w-100"
-                    className="w-100"
-                    value={objectdata.supplier_address}
-                    name="supplier_address"
-                    placeholder="Supplier Address"
-                    onChange={handleChangeedit}
-                    required
-                  />
-                </div>
-              </div>
-              <div className="row mt-3">
-                <div className="col-lg-6">
-                  <label htmlFor="clientName">Supplier Contact </label>
-                  <input
-                    type="text"
-                    id="clientName w-100"
-                    className="w-100"
-                    value={objectdata.Supplier_Contact}
-                    placeholder="Supplier Contact"
-                    name="Supplier_Contact"
-                    onChange={handleChangeedit}
-                    required
-                  />
-                </div>
-                <div className="col-lg-6">
-                  <label htmlFor="clientName">supplier Email </label>
-                  <input
-                    type="text"
-                    id="clientName w-100"
-                    className="w-100"
-                    value={objectdata.supplier_Email}
-                    name="supplier_Email"
-                    placeholder="Supplier Email"
-                    onChange={handleChangeedit}
-                    required
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="text-center my-3">
-              <button
-                onClick={handlepostdataedit}
-                className="allFreFilter btn btn_add_web"
-              >
-                Update
-              </button>
-            </div>
-          </Box>
-        </Modal>
-        <Modal open={showModal} onClose={handleUpdateClose}>
-          <Box
-            sx={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              bgcolor: "background.paper",
-              boxShadow: 24,
-             width: { sx: "90%", sm: 600, md: 900 }
-            }}
-          >
-            <div className="customHeader  d-flex justify-content-between">
-              <h5>Warehouse Order List</h5>
-              <div>
-                <button
-                  className="circlePlus"
-                  onClick={() => {
-                    handleclickfunc();
-                  }}
-                >
-                  +
-                </button>
-              </div>
-            </div>
-            <div className="tableModal">
-              <div className="table-responsive">
-                <table className="table  table-striped tableICon">
-                  <thead>
-                    <tr>
-                      <th scope="col">Sr.No.</th>
-                      <th scope="col">Package</th>
-                      <th scope="col">Description</th>
-                      <th scope="col">Weight (kgs)</th>
-                      <th scope="col">Dim (Cbm)</th>
-                      <th scope="col">Packs</th>
-                      <th scope="col">Waybill</th>
-                      <th scope="col">Received</th>
-                      <th scope="col">Action</th>
+      {/* Modal 1: Warehouse Order Products List */}
+      <Modal open={showModal} onClose={handleUpdateClose}>
+        <Box
+          className="od-modal-box"
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: { xs: "95%", sm: 680, md: 950 }
+          }}
+        >
+          <div className="od-modal-header">
+            <h5>Warehouse Order List</h5>
+            <button
+              className="od-circle-plus"
+              onClick={handleclickfunc}
+              title="Add warehouse product"
+            >
+              +
+            </button>
+          </div>
+          <div className="od-modal-table-container table-responsive">
+            <table className="od-modal-table">
+              <thead>
+                <tr>
+                  <th>Sr.</th>
+                  <th>Package</th>
+                  <th>Description</th>
+                  <th>Weight (kg)</th>
+                  <th>Dim (Cbm)</th>
+                  <th>Packs</th>
+                  <th>Waybill</th>
+                  <th>Received</th>
+                  <th className="text-end">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {clickdata && clickdata.length > 0 ? (
+                  clickdata.map((item, index) => (
+                    <tr key={item.warehouse_products_id || index}>
+                      <td>{index + 1}</td>
+                      <td className="fw-semibold">{item.package_type}</td>
+                      <td style={{ maxWidth: "160px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                        {item.product_description}
+                      </td>
+                      <td>{item.weight}</td>
+                      <td>{item.dimension}</td>
+                      <td>{item.packages}</td>
+                      <td>{item.tracking_number}</td>
+                      <td>
+                        {item.date_received ? new Date(item.date_received).toLocaleDateString("en-GB") : "N/A"}
+                      </td>
+                      <td>
+                        <div className="od-action-cell justify-content-end">
+                          <button
+                            className="od-action-icon-btn edit"
+                            onClick={() => handledeleteit(item.warehouse_products_id)}
+                            title="Edit item"
+                          >
+                            <Edit fontSize="small" />
+                          </button>
+                          <button
+                            className="od-action-icon-btn delete"
+                            onClick={() => handledeleteitem(item.warehouse_products_id)}
+                            title="Delete item"
+                          >
+                            <Delete fontSize="small" />
+                          </button>
+                        </div>
+                      </td>
                     </tr>
-                  </thead>
-                  <tbody style={{ border: "none" }}>
-                    {clickdata &&
-                      clickdata.length > 0 &&
-                      clickdata.map((item, index) => {
-                        console.log(item);
-                        return (
-                          <>
-                            <tr key={index}>
-                              <td>{index + 1}</td>
-                              <td>{item.package_type}</td>
-                              <td className="col-2">
-                                {item.product_description}{" "}
-                              </td>
-                              <td>{item.weight}</td>
-                              <td>{item.dimension}</td>
-                              <td>{item.packages}</td>
-                              <td>{item.tracking_number}</td>
-                              <td>
-                                {new Date(
-                                  item.date_received
-                                ).toLocaleDateString("EN-gb")}
-                              </td>
-                              <td className="wareAction">
-                                <Delete
-                                  onClick={() => {
-                                    handledeleteitem(
-                                      item.warehouse_products_id
-                                    );
-                                  }}
-                                />
-                                <Edit
-                                  onClick={() => {
-                                    handledeleteit(item.warehouse_products_id);
-                                  }}
-                                />
-                              </td>
-                            </tr>
-                          </>
-                        );
-                      })}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </Box>
-        </Modal>
-        <Modal open={showModal3} onClose={handleUpdateClose3}>
-          <Box
-            sx={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              bgcolor: "background.paper",
-              boxShadow: 24,
-              borderRadius: "5px",
-            }}
-          >
-            <div className=" customHeader d-flex justify-content-between">
-              <h5 className="text-center">Add Warehouse Order</h5>
-              <div>
-                {/* <button className="circlePlus" onClick={handleclickfunc3}>
-                  +
-                </button> */}
-                <div className="crossBtn">
-                  <i onClick={handleUpdateClose3} aria-hidden="true">
-                    <CloseIcon />
-                  </i>
-                </div>
-              </div>
-            </div>
-            <div className="frightFormSec manageModal">
-              <div className="row">
-                <div className="col-lg-6">
-                  <label htmlFor="clientName">Product Description </label>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="9" className="text-center py-4 text-muted">
+                      No products associated with this warehouse order yet. Click "+" above to add.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+          <div className="od-modal-footer">
+            <button onClick={handleUpdateClose} className="od-btn od-btn-secondary">
+              Close
+            </button>
+          </div>
+        </Box>
+      </Modal>
+
+      {/* Modal 3: Add Warehouse Product */}
+      <Modal open={showModal3} onClose={handleUpdateClose3}>
+        <Box
+          className="od-modal-box"
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: { xs: "90%", sm: 600, md: 750 },
+          }}
+        >
+          <div className="od-modal-header">
+            <h5>Add Warehouse Product</h5>
+            <button className="od-modal-close-btn" onClick={handleUpdateClose3}>
+              <CloseIcon />
+            </button>
+          </div>
+          
+          <div className="od-modal-body frightFormSec">
+            <div className="row od-form-row">
+              <div className="col-lg-6">
+                <div className="od-form-group">
+                  <label htmlFor="add-product_description">Product Description</label>
                   <input
                     type="text"
-                    id="clientName w-100"
-                    className="w-100"
+                    id="add-product_description"
                     placeholder="Product Description"
                     name="product_description"
                     onChange={handleChange}
                     required
                   />
                 </div>
-                <div className="col-lg-6">
-                  <label htmlFor="contactPerson">Hazardous </label>
+              </div>
+              <div className="col-lg-6">
+                <div className="od-form-group">
+                  <label htmlFor="add-Hazardous">Hazardous</label>
                   <input
                     type="text"
-                    id="contactPerson"
-                    className="w-100"
+                    id="add-Hazardous"
                     name="Hazardous"
-                    placeholder="Hazardous"
+                    placeholder="e.g. Yes/No"
                     onChange={handleChange}
                     required
                   />
                 </div>
               </div>
-              <div className="row mt-3">
-                <div className="col-lg-6">
-                  <label htmlFor="clientName">Date Received </label>
+            </div>
+            
+            <div className="row od-form-row">
+              <div className="col-lg-6">
+                <div className="od-form-group">
+                  <label htmlFor="add-date_received">Date Received</label>
                   <input
                     type="date"
-                    id="clientName w-100"
-                    className="w-100 py-2 px-3 rounded"
+                    id="add-date_received"
                     name="date_received"
                     onChange={handleChange}
                     required
                   />
                 </div>
-                <div className="col-lg-6">
-                  <label htmlFor="contactPerson">Package Type </label>
+              </div>
+              <div className="col-lg-6">
+                <div className="od-form-group">
+                  <label htmlFor="add-package_type">Package Type</label>
                   <input
                     type="text"
-                    id="contactPerson"
-                    placeholder="Package Type"
-                    className="w-100"
+                    id="add-package_type"
+                    placeholder="Package Type (e.g. Box, Carton)"
                     name="package_type"
                     onChange={handleChange}
                     required
                   />
                 </div>
               </div>
-              <div className="row mt-3">
-                <div className="col-lg-6">
-                  <label htmlFor="clientName">Packages </label>
+            </div>
+
+            <div className="row od-form-row">
+              <div className="col-lg-6">
+                <div className="od-form-group">
+                  <label htmlFor="add-packages">Packages</label>
                   <input
                     type="text"
-                    id="clientName w-100"
-                    className="w-100"
-                    placeholder="Package"
+                    id="add-packages"
+                    placeholder="Number of Packages"
                     name="packages"
                     onChange={handleChange}
                     required
                   />
                 </div>
-                <div className="col-lg-6">
-                  <label htmlFor="contactPerson">Dimension </label>
+              </div>
+              <div className="col-lg-6">
+                <div className="od-form-group">
+                  <label htmlFor="add-dimension">Dimension</label>
                   <input
                     type="text"
-                    id="contactPerson"
-                    className="w-100"
+                    id="add-dimension"
                     name="dimension"
                     placeholder="Dimension"
                     onChange={handleChange}
@@ -2016,25 +1906,28 @@ export default function OrderDetails() {
                   />
                 </div>
               </div>
-              <div className="row mt-3">
-                <div className="col-lg-6">
-                  <label htmlFor="clientName">Weight </label>
+            </div>
+
+            <div className="row od-form-row">
+              <div className="col-lg-6">
+                <div className="od-form-group">
+                  <label htmlFor="add-weight">Weight (kg)</label>
                   <input
                     type="text"
-                    id="clientName w-100"
-                    className="w-100"
+                    id="add-weight"
                     placeholder="Weight"
                     name="weight"
                     onChange={handleChange}
                     required
                   />
                 </div>
-                <div className="col-lg-6">
-                  <label htmlFor="contactPerson">Warehouse Ref. </label>
+              </div>
+              <div className="col-lg-6">
+                <div className="od-form-group">
+                  <label htmlFor="add-warehouse_ref">Warehouse Ref.</label>
                   <input
                     type="text"
-                    id="contactPerson"
-                    className="w-100"
+                    id="add-warehouse_ref"
                     placeholder="Warehouse Reference"
                     name="warehouse_ref"
                     onChange={handleChange}
@@ -2042,55 +1935,57 @@ export default function OrderDetails() {
                   />
                 </div>
               </div>
+            </div>
 
-              <div className="row mt-3">
-                <div className="col-lg-6">
-                  <label htmlFor="clientName">supplier </label>
+            <div className="row od-form-row">
+              <div className="col-lg-6">
+                <div className="od-form-group">
+                  <label htmlFor="add-supplier">Supplier</label>
                   <input
                     type="text"
-                    id="clientName w-100"
-                    className="w-100"
+                    id="add-supplier"
                     name="supplier"
                     placeholder="Supplier"
                     onChange={handleChange}
                     required
                   />
                 </div>
-                <div className="col-lg-6">
-                  <label htmlFor="contactPerson">
-                    Warehouse Receipt Number{" "}
-                  </label>
+              </div>
+              <div className="col-lg-6">
+                <div className="od-form-group">
+                  <label htmlFor="add-warehouse_receipt_number">Warehouse Receipt Number</label>
                   <input
                     type="text"
-                    id="contactPerson"
-                    className="w-100"
-                    placeholder="Warehouse reciept number"
+                    id="add-warehouse_receipt_number"
+                    placeholder="Warehouse receipt number"
                     name="warehouse_receipt_number"
                     onChange={handleChange}
                     required
                   />
                 </div>
               </div>
+            </div>
 
-              <div className="row mt-3">
-                <div className="col-lg-6">
-                  <label htmlFor="clientName">Tracking Number </label>
+            <div className="row od-form-row">
+              <div className="col-lg-6">
+                <div className="od-form-group">
+                  <label htmlFor="add-tracking_number">Tracking Number</label>
                   <input
                     type="text"
-                    id="clientName w-100"
-                    className="w-100"
+                    id="add-tracking_number"
                     placeholder="Tracking number"
                     name="tracking_number"
                     onChange={handleChange}
                     required
                   />
                 </div>
-                <div className="col-lg-6">
-                  <label htmlFor="clientName">Supplier Address </label>
+              </div>
+              <div className="col-lg-6">
+                <div className="od-form-group">
+                  <label htmlFor="add-supplier_address">Supplier Address</label>
                   <input
                     type="text"
-                    id="clientName w-100"
-                    className="w-100"
+                    id="add-supplier_address"
                     name="supplier_address"
                     placeholder="Supplier Address"
                     onChange={handleChange}
@@ -2098,25 +1993,28 @@ export default function OrderDetails() {
                   />
                 </div>
               </div>
-              <div className="row mt-3">
-                <div className="col-lg-6">
-                  <label htmlFor="clientName">Supplier Contact </label>
+            </div>
+
+            <div className="row od-form-row">
+              <div className="col-lg-6">
+                <div className="od-form-group">
+                  <label htmlFor="add-Supplier_Contact">Supplier Contact</label>
                   <input
                     type="text"
-                    id="clientName w-100"
-                    className="w-100"
+                    id="add-Supplier_Contact"
                     placeholder="Supplier Contact"
                     name="Supplier_Contact"
                     onChange={handleChange}
                     required
                   />
                 </div>
-                <div className="col-lg-6">
-                  <label htmlFor="clientName">supplier Email </label>
+              </div>
+              <div className="col-lg-6">
+                <div className="od-form-group">
+                  <label htmlFor="add-supplier_email">Supplier Email</label>
                   <input
                     type="text"
-                    id="clientName w-100"
-                    className="w-100"
+                    id="add-supplier_email"
                     name="supplier_Email"
                     placeholder="Supplier Email"
                     onChange={handleChange}
@@ -2125,47 +2023,53 @@ export default function OrderDetails() {
                 </div>
               </div>
             </div>
-            <div className="text-center">
-              <button
-                className="btn allFreFilter btn_add_web my-3"
-                onClick={handleclickpostdataitem}
-              >
-                Add Item
-              </button>
-            </div>
-          </Box>
-        </Modal>
-        <Modal open={showModald5} onClose={handleUpdateClose5}>
-          <Box
-            sx={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: { xs: "90%", sm: 600, md: 750 },
-              bgcolor: "background.paper",
-              boxShadow: 24,
-              borderRadius: "5px",
-            }}
-          >
-            <div className="customHeader">
-              <h5>Filter</h5>
-              <div className="crossBtn">
-                <i onClick={handleUpdateClose5} aria-hidden="true">
-                  <CloseIcon />
-                </i>
-              </div>
-            </div>
-            <div className="frightFormSec manageModal">
-              <div className="row d-flex mb-3">
-                <div className="col-6">
-                  <h5 className="labelTitle">Collection from</h5>
+          </div>
+          
+          <div className="od-modal-footer">
+            <button onClick={handleUpdateClose3} className="od-btn od-btn-secondary">
+              Cancel
+            </button>
+            <button
+              className="od-btn od-btn-primary"
+              onClick={handleclickpostdataitem}
+            >
+              Add Item
+            </button>
+          </div>
+        </Box>
+      </Modal>
+
+      {/* Modal 5: Filter Modal */}
+      <Modal open={showModald5} onClose={handleUpdateClose5}>
+        <Box
+          className="od-modal-box"
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: { xs: "90%", sm: 600, md: 700 },
+          }}
+        >
+          <div className="od-modal-header">
+            <h5>Filter Orders</h5>
+            <button className="od-modal-close-btn" onClick={handleUpdateClose5}>
+              <CloseIcon />
+            </button>
+          </div>
+          
+          <div className="od-modal-body frightFormSec">
+            <div className="row od-form-row">
+              <div className="col-6">
+                <div className="od-form-group">
+                  <label htmlFor="filter-origin">Collection from</label>
                   <select
-                    className="py-2 w-100"
+                    id="filter-origin"
                     name="origin"
                     onChange={handechangefilter}
+                    value={inputval.origin || ""}
                   >
-                    <option value="">Select...</option>
+                    <option value="">Select country...</option>
                     {country?.map((item) => (
                       <option key={item.id} value={item.id}>
                         {item.name}
@@ -2173,14 +2077,17 @@ export default function OrderDetails() {
                     ))}
                   </select>
                 </div>
-                <div className="col-6">
-                  <h5 className="labelTitle">Destination</h5>
+              </div>
+              <div className="col-6">
+                <div className="od-form-group">
+                  <label htmlFor="filter-destination">Destination</label>
                   <select
-                    className="py-2 w-100"
+                    id="filter-destination"
                     name="destination"
                     onChange={handechangefilter}
+                    value={inputval.destination || ""}
                   >
-                    <option value="">Select...</option>
+                    <option value="">Select country...</option>
                     {country?.map((item) => (
                       <option key={item.id} value={item.id}>
                         {item.name}
@@ -2189,83 +2096,85 @@ export default function OrderDetails() {
                   </select>
                 </div>
               </div>
-              <div className="row d-flex mb-3">
-                <div className="col-6 ">
-                  <h5 className="labelTitle">Start Date</h5>
-
+            </div>
+            
+            <div className="row od-form-row">
+              <div className="col-6">
+                <div className="od-form-group">
+                  <label htmlFor="filter-startDate">Start Date</label>
                   <input
-                    className="py-2 w-100"
                     type="date"
+                    id="filter-startDate"
                     name="startDate"
                     onChange={handechangefilter}
-                  ></input>
-                </div>
-                <div className="col-6 ">
-                  <h5 className="labelTitle">End Date</h5>
-                  <input
-                    className="py-2 w-100"
-                    type="date"
-                    name="endDate"
-                    onChange={handechangefilter}
-                  ></input>
+                    value={inputval.startDate || ""}
+                  />
                 </div>
               </div>
-              <div className="row d-flex mb-3">
-                <div className="col-6">
-                  <h5 className="labelTitle">Freight</h5>
+              <div className="col-6">
+                <div className="od-form-group">
+                  <label htmlFor="filter-endDate">End Date</label>
+                  <input
+                    type="date"
+                    id="filter-endDate"
+                    name="endDate"
+                    onChange={handechangefilter}
+                    value={inputval.endDate || ""}
+                  />
+                </div>
+              </div>
+            </div>
+            
+            <div className="row od-form-row">
+              <div className="col-6">
+                <div className="od-form-group">
+                  <label htmlFor="filter-freight">Freight Mode</label>
                   <select
-                    className="py-2 w-100"
+                    id="filter-freight"
                     name="freight"
                     onChange={handechangefilter}
+                    value={inputval.freight || ""}
                   >
-                    <option>Select...</option>
+                    <option value="">All Modes</option>
                     <option value="Sea">Sea</option>
                     <option value="Air">Air</option>
-                    <option value="Sea">Sea</option>
                   </select>
                 </div>
-                {/* <div className="col-6">
-                <h5 className="labelTitle">Freight Type</h5>
-                <select
-                  className="py-2 w-100"
-                  name="type"
-                  onChange={handechangefilter}
-                >
-                  <option value="">Select Co</option>
-                  <option value="express">Express</option>
-                  <option value="normal">Consolidation</option>
-                </select>
-              </div> */}
-                <div className="col-6">
-                  <h5 className="labelTitle">Freight Type</h5>
+              </div>
+              <div className="col-6">
+                <div className="od-form-group">
+                  <label htmlFor="filter-type">Freight Type</label>
                   <select
-                    className="py-2 w-100"
+                    id="filter-type"
                     name="type"
                     onChange={handechangefilter}
-                    defaultValue=""
+                    value={inputval.type || ""}
                   >
-                    <option value="" disabled>
-                      Select Co
-                    </option>
+                    <option value="">All Types</option>
                     <option value="express">Express</option>
                     <option value="normal">Consolidation</option>
                   </select>
                 </div>
-
-                <div className="d-flex justify-content-center">
-                  <button
-                    onClick={postapi}
-                    className="mt-4 allFreFilter btn_add_web"
-                  >
-                    Apply
-                  </button>
-                </div>
               </div>
             </div>
-            <div className="row d-flex"></div>
-          </Box>
-        </Modal>
-      </>
+          </div>
+          
+          <div className="od-modal-footer">
+            <button
+              onClick={handleUpdateClose5}
+              className="od-btn od-btn-secondary"
+            >
+              Close
+            </button>
+            <button
+              onClick={postapi}
+              className="od-btn od-btn-primary"
+            >
+              Apply Filters
+            </button>
+          </div>
+        </Box>
+      </Modal>
       <ToastContainer />
     </div>
   );

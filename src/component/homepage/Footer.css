@@ -1,0 +1,241 @@
+/* Premium Footer CSS Styles */
+
+.premium-footer {
+  background-color: #0b0f19;
+  color: #94a3b8;
+  font-family: 'Inter', sans-serif;
+  position: relative;
+  overflow: hidden;
+  border-top: 4px solid #800020; /* elegant maroon border */
+}
+
+/* Newsletter Subscription Bar */
+.newsletter-bar {
+  background-color: #0f172a;
+  padding: 48px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.newsletter-card {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.5) 0%, rgba(15, 23, 42, 0.5) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 32px 40px;
+}
+
+.newsletter-text h3 {
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.newsletter-text p {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.newsletter-form {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+
+.newsletter-form input {
+  flex: 1;
+  height: 48px;
+  background-color: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 0 16px;
+  color: #ffffff;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.newsletter-form input:focus {
+  border-color: #800020;
+  box-shadow: 0 0 0 3px rgba(128, 0, 32, 0.25);
+  outline: none;
+}
+
+.newsletter-form button {
+  height: 48px;
+  padding: 0 24px;
+  background-color: #800020; /* maroon accent */
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.newsletter-form button:hover {
+  background-color: #990026;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(128, 0, 32, 0.3);
+}
+
+/* Main Footer Content */
+.footer-main-content {
+  padding: 50px 0 50px;
+}
+
+.footer-brand-sec img {
+  height: 55px;
+  margin-bottom: 20px;
+  filter: brightness(1.1);
+}
+
+.footer-brand-desc {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  color: #cbd5e1;
+}
+
+.footer-offices-badge {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #800020;
+  background-color: rgba(128, 0, 32, 0.08);
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 1px solid rgba(128, 0, 32, 0.15);
+  margin-bottom: 24px;
+}
+
+.footer-offices-badge span {
+  color: #94a3b8;
+}
+
+.footer-social-links {
+  display: flex;
+  gap: 12px;
+}
+
+.footer-social-links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 50%;
+  color: #cbd5e1;
+  font-size: 1.1rem;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.footer-social-links a:hover {
+  background-color: #800020;
+  color: #ffffff;
+  border-color: #800020;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(128, 0, 32, 0.3);
+}
+
+/* Links Columns */
+.footer-links-column h4 {
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  position: relative;
+  padding-bottom: 8px;
+}
+
+.footer-links-column h4::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 35px;
+  height: 2px;
+  background-color: #800020;
+}
+
+.footer-links-column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links-column ul li {
+  margin-bottom: 14px;
+}
+
+.footer-links-column ul a {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  display: inline-block;
+}
+
+.footer-links-column ul a:hover {
+  color: #ffffff;
+  padding-left: 6px;
+}
+
+/* Contact Info Column */
+.contact-info-col p {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.95rem;
+  margin-bottom: 16px;
+  color: #cbd5e1;
+}
+
+.contact-info-col i {
+  color: #800020;
+  font-size: 1.1rem;
+  width: 20px;
+}
+
+/* Footer Bottom Bar */
+.footer-bottom-bar {
+  background-color: #080c14;
+  padding: 24px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.footer-bottom-bar p {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin: 0;
+}
+
+.footer-legal-links {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .footer-legal-links {
+    justify-content: flex-end;
+  }
+}
+
+.footer-legal-links a {
+  color: #64748b;
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.footer-legal-links a:hover {
+  color: #cbd5e1;
+}

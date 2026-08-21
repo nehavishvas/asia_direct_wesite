@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import Arrow from "../../assestss/Group 2.png";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
+import "./Managefreight.css";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import Box from "@mui/material/Box";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+import SmsIcon from '@mui/icons-material/Sms';
 import {
   Button,
   FormControl,
@@ -19,6 +21,8 @@ import SidebarWeb from "../homepage/SidebarwWeb";
 import NavbarWeb from "../homepage/NavbarWeb";
 import FooterWeb from "../homepage/FooterWeb";
 import CloseIcon from "@mui/icons-material/Close";
+import EastIcon from "@mui/icons-material/East";
+import SearchIcon from "@mui/icons-material/Search";
 const pageSize = 5;
 export default function Managefreight() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -483,310 +487,308 @@ export default function Managefreight() {
         {currentuser !== null || undefined ? (
           <>
             <section className="manageFrightSec">
-              <div className="container-fluid">
-                <div className="row">
-                  <div className="col-lg-12 ">
-                    <div className="d-flex justify-content-between align-items-center flex-wrap  my-3">
-                      <div className="">
-                        <h4 className="para_det me-4">All Freight Details</h4>
-                      </div>
-                      <div className="d-flex justify-content-end align-items-center flex-wrap fretDeatilBtn ">
-                        <div>
-                          <input
-                            className="px-2 py-1 rounded border customSearch"
-                            value={searchQuery}
-                            onChange={handleSearch}
-                            placeholder="Search"
-                          ></input>
-                        </div>
-                        <div>
-                          <button
-                            className="btn allFreFilter btn_add_web"
-                            onClick={openmodal}
-                          >
-                            Filter
-                          </button>
-                        </div>
-                        <div>
-                          <select
-                            class="filter_sel"
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={age}
-                            label="Shipment"
-                            onChange={handleChange}
-                            aria-label="Default select example"
-                          >
-                            <option selected id="demo-simple-select-label">
-                              Status
-                            </option>
-                            <option value={"0"}>Pending</option>
-                            <option value={1}>Accepted</option>
-                            <option value={2}>Declined</option>
-                            <option value={"4"}>Estimate</option>
-                          </select>
-                        </div>
-                        <div>
-                          <button
-                            className="btn btn_add_web"
-                            onClick={handleNavigate}
-                          >
-                            Add Freight
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="card border-0 freightDetalCard">
-                      <div className="card-body">
-                        <div className="table-responsive">
-                          <table className="table table-striped tableICon">
-                            <tbody>
-                              {currentdata &&
-                                currentdata.length > 0 &&
-                                currentdata.map((item, index) => {
-                                  const date = new Date(item.date);
-                                  const formatteddate = date.toLocaleDateString(
-                                    "en-GB",
-                                    {
-                                      day: "numeric",
-                                      month: "numeric",
-                                      year: "numeric",
-                                    }
-                                  );
-                                  return (
-                                    <tr key={index}>
-                                      <td className="list_bd">
-                                        <div className="d-flex">
-                                          <p
-                                            className="client_nm"
-                                            onClick={() => {
-                                              handleclicknavigfh(item.id);
-                                            }}
-                                          >
-                                            {item.client_name}
-                                          </p>
-                                          <p
-                                            className="fright_no mx-2"
-                                            onClick={() => {
-                                              handleclicknavigfh(item.id);
-                                            }}
-                                          >
-                                            {" "}
-                                            {item.freight_number}
-                                          </p>
-                                        </div>
-                                        <div className="">
-                                          <p
-                                            className="origin"
-                                            onClick={() => {
-                                              handleclicknavigfh(item.id);
-                                            }}
-                                          >
-                                            {item.product_desc}
-                                          </p>
-                                        </div>
-                                        <div className="">
-                                          {item.status == 0 ? (
-                                            <button className="dec_btn123 dot_icon">
-                                              <FiberManualRecordIcon />
-                                              Pending
-                                            </button>
-                                          ) : item.status === 2 ? (
-                                            <button className="dec_btn dot_icon">
-                                              <FiberManualRecordIcon />
-                                              Decline
-                                            </button>
-                                          ) : item.status == 3 ? (
-                                            "Rejected"
-                                          ) : item.status == 4 ? (
-                                            <button className="dec_btn123blue  dot_icon">
-                                              <FiberManualRecordIcon />
-                                              Estimated
-                                            </button>
-                                          ) : item.status == 1 ? (
-                                            <button className="acc_btn dot_icon">
-                                              <FiberManualRecordIcon />
-                                              Accepted
-                                            </button>
-                                          ) : item.status == 6 ? (
-                                            <button className="dec_btn123red dot_icon">
-                                              <FiberManualRecordIcon />
-                                              Quotation Rejected
-                                            </button>
-                                          ) : item.status == 5 ? (
-                                            <button className="dec_btn123green dot_icon">
-                                              <FiberManualRecordIcon />
-                                              Quotation Accepted
-                                            </button>
+              <div className="mf-container">
+              <div className="mf-header">
+                <h4 className="mf-title">All Freight Details</h4>
+                <div className="mf-controls">
+                  <div className="mf-search-wrapper">
+                    <SearchIcon className="mf-search-icon" />
+                    <input
+                      className="mf-search-input"
+                      value={searchQuery}
+                      onChange={handleSearch}
+                      placeholder="Search..."
+                    />
+                  </div>
+                  <button
+                    className="mf-btn-filter"
+                    onClick={openmodal}
+                  >
+                    Filter
+                  </button>
+                  <select
+                    className="mf-select"
+                    value={age}
+                    onChange={handleChange}
+                  >
+                    <option value="Status">Status</option>
+                    <option value="0">Pending</option>
+                    <option value="1">Accepted</option>
+                    <option value="2">Declined</option>
+                    <option value="4">Estimate</option>
+                  </select>
+                  <button
+                    className="mf-btn-add"
+                    onClick={handleNavigate}
+                  >
+                    + Add Freight
+                  </button>
+                </div>
+              </div>
+
+              <div className="mf-card">
+                <div className="table-responsive">
+                  <table className="mf-table">
+                    <thead>
+                      <tr>
+                        <th className="mf-th" style={{ width: "35%" }}>Shipment & Cargo</th>
+                        <th className="mf-th" style={{ width: "35%" }}>Route</th>
+                        <th className="mf-th" style={{ width: "15%" }}>Nature</th>
+                        <th className="mf-th" style={{ width: "15%", textAlign: "right" }}>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {currentdata && currentdata.length > 0 ? (
+                        currentdata.map((item, index) => {
+                          const date = new Date(item.date);
+                          const formatteddate = date.toLocaleDateString(
+                            "en-GB",
+                            {
+                              day: "numeric",
+                              month: "numeric",
+                              year: "numeric",
+                            }
+                          );
+                          return (
+                            <tr key={index} className="mf-tr">
+                              <td className="mf-td">
+                                <div className="mf-client-wrapper">
+                                  <div className="mf-client-header mb-1">
+                                    <span 
+                                      className="mf-client-name"
+                                      onClick={() => handleclicknavigfh(item.id)}
+                                    >
+                                      {item.client_name}
+                                    </span>
+                                  </div>
+                                  <div className="d-flex align-items-center flex-wrap gap-2 mb-2">
+                                    <span 
+                                      className="mf-badge"
+                                      onClick={() => handleclicknavigfh(item.id)}
+                                    >
+                                      {item.freight_number}
+                                    </span>
+                                    <div>
+                                      {item.status == 0 ? (
+                                        <span className="mf-status-badge mf-status-pending">
+                                          Pending
+                                        </span>
+                                      ) : item.status == 2 ? (
+                                        <span className="mf-status-badge mf-status-decline">
+                                          Decline
+                                        </span>
+                                      ) : item.status == 3 ? (
+                                        <span className="mf-status-badge mf-status-decline">
+                                          Rejected
+                                        </span>
+                                      ) : item.status == 4 ? (
+                                        <span className="mf-status-badge mf-status-estimate">
+                                          Estimated
+                                        </span>
+                                      ) : item.status == 1 ? (
+                                        <span className="mf-status-badge mf-status-accepted">
+                                          Accepted
+                                        </span>
+                                      ) : item.status == 6 ? (
+                                        <span className="mf-status-badge mf-status-decline">
+                                          Quotation Rejected
+                                        </span>
+                                      ) : item.status == 5 ? (
+                                        <span className="mf-status-badge mf-status-accepted">
+                                          Quotation Accepted
+                                        </span>
+                                      ) : (
+                                        ""
+                                      )}
+                                    </div>
+                                  </div>
+                                  <p 
+                                    className="mf-desc"
+                                    onClick={() => handleclicknavigfh(item.id)}
+                                  >
+                                    Description: {item.product_desc || "No Description"}
+                                  </p>
+                                </div>
+                              </td>
+                              
+                              <td className="mf-td">
+                                <div 
+                                  className="mf-route"
+                                  onClick={() => handleclicknavigfh(item.id)}
+                                >
+                                  <img
+                                    src={`${process.env.REACT_APP_FLAGURL}${item.flag_url_f}`}
+                                    className="mf-flag-img"
+                                    onError={(e) => { e.target.style.display = 'none'; }}
+                                    alt=""
+                                  />
+                                  <span className="ms-1">{item?.collection_from_country}</span>
+                                  <span className="mf-route-arrow mx-2">
+                                    <EastIcon fontSize="inherit" />
+                                  </span>
+                                  <img
+                                    src={`${process.env.REACT_APP_FLAGURL}${item.flag_url_d}`}
+                                    className="mf-flag-img"
+                                    onError={(e) => { e.target.style.display = 'none'; }}
+                                    alt=""
+                                  />
+                                  <span className="ms-1">{item?.delivery_to_country}</span>
+                                  <span className="text-muted ms-1" style={{ fontSize: "0.75rem" }}>
+                                    ({item?.freight})
+                                  </span>
+                                </div>
+                              </td>
+                              
+                              <td className="mf-td">
+                                <p 
+                                  className="mf-nature"
+                                  onClick={() => handleclicknavigfh(item.id)}
+                                >
+                                  {item.nature_of_goods}
+                                </p>
+                              </td>
+                              
+                              <td className="mf-td">
+                                <div className="d-flex flex-column align-items-end">
+                                  <p className="mf-date">
+                                    {new Date(item.created_at).toLocaleDateString("en-GB")}
+                                  </p>
+                                  
+                                  <div className="dropdown">
+                                    <a
+                                      href="/"
+                                      type="button"
+                                      className="mf-action-btn dropdown-toggle"
+                                      data-bs-toggle="dropdown"
+                                      aria-expanded="false"
+                                      onClick={(e) => e.preventDefault()}
+                                    >
+                                      Action
+                                    </a>
+                                    <div
+                                      className="dropdown-menu drop_down"
+                                      aria-labelledby="dropdownMenuButton1"
+                                    >
+                                      <div className="btnManageFreight">
+                                        <div className="drpIcons dropdown-item item_drop">
+                                          {item?.status == 4 ? (
+                                            <Link
+                                              className="text-primary text-dark"
+                                              onClick={() => {
+                                                hanldedhgjdh(item.id);
+                                              }}
+                                            >
+                                              <i className="fi fi-br-download dr"></i>
+                                              Download PDF
+                                            </Link>
                                           ) : (
-                                            ""
+                                            <Link className="text-danger"></Link>
                                           )}
                                         </div>
-                                      </td>
-                                      <td>
-                                        <div
-                                          className="country_mnge"
-                                          onClick={() => {
-                                            handleclicknavigfh(item.id);
-                                          }}
-                                        >
-                                          <img
-                                            src={`${process.env.REACT_APP_FLAGURL}${item.flag_url_f}`}
-                                            className="flag_img"
-                                          />
-                                          {item?.collection_from_country}
-                                          <img
-                                            src={Arrow}
-                                            className="flag_img1"
-                                          />
-                                          <img
-                                            src={`${process.env.REACT_APP_FLAGURL}${item.flag_url_d}`}
-                                            className="flag_img"
-                                          />
-                                          {item?.delivery_to_country}
-                                          <span className="fright_type">
-                                            ({item?.freight})
-                                          </span>
-                                        </div>
-                                      </td>
-                                      <td className="text-center">
-                                        <p
-                                          className="origin"
-                                          onClick={() => {
-                                            handleclicknavigfh(item.id);
-                                          }}
-                                        >
-                                          {item.nature_of_goods}
-                                        </p>
-                                      </td>
-                                      <td className="text-end">
-                                        <p className="port_date">
-                                          {new Date(
-                                            item.created_at
-                                          ).toLocaleDateString("en-GB")}
-                                        </p>
-                                        <div className="text-end">
-                                          <div className="dropdown">
+                                        <div className="drpIcons dropdown-item item_drop">
+                                          {item.status === "2" ? (
+                                            <p></p>
+                                          ) : (
                                             <a
-                                              href=""
-                                              type="button"
-                                              className="act_btn dropdown-toggle"
-                                              data-bs-toggle="dropdown"
-                                              aria-expanded="false"
+                                              className="link_bdy"
+                                              href="https://chat.whatsapp.com/C1SiwQek53B434FSz4BjQo"
+                                              target="_blank"
+                                              rel="noreferrer"
                                             >
-                                              Action
+                                              <WhatsAppIcon className="text-success" />
+                                              Whatsapp
                                             </a>
-                                            <div
-                                              className="dropdown-menu drop_down"
-                                              aria-labelledby="dropdownMenuButton1"
-                                            >
-                                              <div className="btnManageFreight">
-                                                <div className="drpIcons dropdown-item item_drop">
-                                                  {item?.status == 4 ? (
-                                                    <Link
-                                                      className="text-primary text-dark"
-                                                      onClick={() => {
-                                                        hanldedhgjdh(item.id);
-                                                      }}
-                                                    >
-                                                      <i class="fi fi-br-download dr"></i>
-                                                      Download PDF
-                                                    </Link>
-                                                  ) : (
-                                                    <Link className="text-danger"></Link>
-                                                  )}
-                                                </div>
-                                                <div className="drpIcons dropdown-item item_drop">
-                                                  {item.status === "2" ? (
-                                                    <p></p>
-                                                  ) : (
-                                                    <a
-                                                      className="link_bdy"
-                                                      href="https://chat.whatsapp.com/C1SiwQek53B434FSz4BjQo"
-                                                      target="_blank"
-                                                    >
-                                                      <WhatsAppIcon className="text-success" />
-                                                      Whatsapp
-                                                    </a>
-                                                  )}
-                                                </div>
-                                                <div className="drpIcons dropdown-item item_drop">
-                                                  <p
-                                                    className="link_bdy mb-0"
-                                                    onClick={() => {
-                                                      handledelete(item.id);
-                                                    }}
-                                                  >
-                                                    <i className="fa fa-trash icon_align" />
-                                                    Delete
-                                                  </p>
-                                                </div>
-                                                {item.staff_name ? (
-                                                  <div className="drpIcons dropdown-item item_drop">
-                                                    <p
-                                                      className="link_bdy mb-0"
-                                                      onClick={() => {
-                                                        handleChat(item);
-                                                      }}
-                                                    >
-                                                      <i className="fa-solid fa-message icon_align" />
-                                                      Chat
-                                                    </p>
-                                                  </div>
-                                                ) : (
-                                                  <p></p>
-                                                )}
-
-                                                {item.status === "2" ? (
-                                                  <p></p>
-                                                ) : (
-                                                  <div
-                                                    className="drpIcons dropdown-item item_drop drop_item1"
-                                                    onClick={() => {
-                                                      updatefunction(item.id);
-                                                    }}
-                                                  >
-                                                    <i className="fa fa-edit icon_align" />
-                                                    Edit
-                                                  </div>
-                                                )}
-                                              </div>
-                                            </div>
-                                          </div>
+                                          )}
                                         </div>
-                                        <p className="link_bdy mb-0">
-                                          {item?.assigned_supplier_name}
-                                        </p>
-                                      </td>
-                                    </tr>
-                                  );
-                                })}
-                            </tbody>
-                          </table>
-                          <div className="text-center d-flex justify-content-center align-items-center">
-                            <button
-                              disabled={currentPage === 1}
-                              className="bg_page"
-                              onClick={() => handlePageChange(currentPage - 1)}
-                            >
-                              <i class="fi fi-rr-angle-small-left page_icon"></i>
-                            </button>
-                            <span className="mx-2">{` ${currentPage}`}</span>
-                            <button
-                              disabled={currentPage === totalPage}
-                              className="bg_page"
-                              onClick={() => handlePageChange(currentPage + 1)}
-                            >
-                              <i class="fi fi-rr-angle-small-right page_icon"></i>
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                                        <div className="drpIcons dropdown-item item_drop">
+                                          <p
+                                            className="link_bdy mb-0"
+                                            onClick={() => {
+                                              handledelete(item.id);
+                                            }}
+                                            style={{ cursor: "pointer" }}
+                                          >
+                                            <i className="fa fa-trash icon_align" />
+                                            Delete
+                                          </p>
+                                        </div>
+                                        {item.staff_name ? (
+                                          <div className="drpIcons dropdown-item item_drop">
+                                            <p
+                                              className="link_bdy mb-0"
+                                              onClick={() => {
+                                                handleChat(item);
+                                              }}
+                                              style={{ cursor: "pointer" }}
+                                            >
+                                              <SmsIcon className="text-primary icon_align" style={{ fontSize: "18px", paddingRight:"5px" }}/>{" "}
+                                              Chat
+                                            </p>
+                                          </div>
+                                        ) : (
+                                          <p></p>
+                                        )}
+
+                                        {item.status === "2" ? (
+                                          <p></p>
+                                        ) : (
+                                          <div
+                                            className="drpIcons dropdown-item item_drop drop_item1"
+                                            onClick={() => {
+                                              updatefunction(item.id);
+                                            }}
+                                            style={{ cursor: "pointer" }}
+                                          >
+                                            <i className="fa fa-edit icon_align" />
+                                            Edit
+                                          </div>
+                                        )}
+                                      </div>
+                                    </div>
+                                  </div>
+                                  
+                                  {item?.assigned_supplier_name && (
+                                    <span className="text-xs text-muted mt-1" style={{ fontSize: "0.75rem" }}>
+                                      {item?.assigned_supplier_name}
+                                    </span>
+                                  )}
+                                </div>
+                              </td>
+                            </tr>
+                          );
+                        })
+                      ) : (
+                        <tr>
+                          <td colSpan="4" className="text-center mf-empty-state">
+                            No Freight Details Found.
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                  
+                  {/* Pagination */}
+                  <div className="mf-pagination">
+                    <button
+                      disabled={currentPage === 1}
+                      className="mf-page-btn"
+                      onClick={() => handlePageChange(currentPage - 1)}
+                    >
+                      <i className="fi fi-rr-angle-small-left page_icon"></i>
+                    </button>
+                    <span className="mf-page-num">{currentPage}</span>
+                    <button
+                      disabled={currentPage === totalPage}
+                      className="mf-page-btn"
+                      onClick={() => handlePageChange(currentPage + 1)}
+                    >
+                      <i className="fi fi-rr-angle-small-right page_icon"></i>
+                    </button>
                   </div>
                 </div>
               </div>
-            </section>
+            </div>
+          </section>
           </>
         ) : (
           <>
@@ -1566,347 +1568,330 @@ export default function Managefreight() {
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            width: { xs: "90%", sm: 600, md: 750 },
+            width: { xs: "95%", sm: 650, md: 800 },
+            maxHeight: "90vh",
+            display: "flex",
+            flexDirection: "column",
             bgcolor: "background.paper",
             boxShadow: 24,
-            borderRadius: "5px",
+            borderRadius: "16px",
+            overflow: "hidden",
+            outline: "none",
           }}
         >
           <div className="customHeader">
-            <h5>Update Freight </h5>
+            <h5>Update Freight</h5>
             <div className="crossBtn">
               <i onClick={handleUpdateClose} aria-hidden="true">
                 <CloseIcon />
               </i>
             </div>
           </div>
-          <section className="frightFormSec manageModal">
-            <div className="container ps-0">
-              <div className="frightFormSec my-0">
-                <div className="borderShip mt-0">
-                  <h3 className="mb-3">Freight Details</h3>
-                  <div className="row">
-                    <div className="col-lg-6  mb-3 mb-lg-0">
-                      <h5 className="labelTitle">Freight Type</h5>
-                      <select
-                        name="freight"
-                        onChange={handklechangeas}
-                        id="freightOption"
-                        value={inputData.freight}
-                      >
-                        <option value="">Select...</option>
-                        <option value="Sea">Sea</option>
-                        <option value="Air">Air</option>
-                        <option value="Road">Road</option>
-                        <option value="Rail">Rail</option>
-                      </select>
-                      <p className="text-danger mb-0"></p>
-                    </div>
-                    <div className="col-lg-6">
-                      <h5 className="labelTitle">Freight Option</h5>
-                      <select
-                        name="freight_type"
-                        onChange={handklechangeas}
-                        value={inputData.freight_type}
-                      >
-                        <option value="">Select...</option>
-                        <option value="express">Express</option>
-                        <option value="normal">Normal</option>
-                      </select>
-                    </div>
+          <section className="manageModal flex-grow-1 overflow-auto">
+            <div className="container px-0">
+              <div className="borderShip mt-0">
+                <h3 className="mb-3">Freight Details</h3>
+                <div className="row">
+                  <div className="col-md-6 mb-3 mb-md-0">
+                    <h5 className="labelTitle">Freight Type</h5>
+                    <select
+                      name="freight"
+                      onChange={handklechangeas}
+                      id="freightOption"
+                      value={inputData.freight}
+                    >
+                      <option value="">Select...</option>
+                      <option value="Sea">Sea</option>
+                      <option value="Air">Air</option>
+                      <option value="Road">Road</option>
+                      <option value="Rail">Rail</option>
+                    </select>
+                  </div>
+                  <div className="col-md-6">
+                    <h5 className="labelTitle">Freight Option</h5>
+                    <select
+                      name="freight_type"
+                      onChange={handklechangeas}
+                      value={inputData.freight_type}
+                    >
+                      <option value="">Select...</option>
+                      <option value="express">Express</option>
+                      <option value="normal">Normal</option>
+                    </select>
                   </div>
                 </div>
-                <div className="borderShip">
-                  <h3 className="mb-3">Shipment details</h3>
-                  <div className="row">
-                    <div className="col-lg-6">
-                      <h5 className="labelTitle">Origin</h5>
-                      <div className="parentShipper">
-                        <div className="childshipper">
-                          <div className="d-flex">
-                            <div className="me-2">
-                              <input
-                                type="radio"
-                                id="origin1"
-                                name="origin"
-                                onChange={secondradi}
-                                checked={
-                                  secondRadio ===
-                                  "Shipper will deliver at Asia Direct - Africa warehouse"
-                                }
-                                value="Shipper will deliver at Asia Direct - Africa warehouse"
-                              />
-                            </div>
-                            <div className="col-md-10 ps-0">
-                              <label for="origin1" className="my-0">
-                                Shipper will deliver at Asia Direct - Africa
-                                warehouse
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="parentShipper">
-                        <div className="childshipper">
-                          <div className="d-flex">
-                            <div className="me-2">
-                              <input
-                                type="radio"
-                                id="origin2"
-                                name="origin"
-                                onChange={secondradi}
-                                value="Asia Direct will collect from shipper address"
-                                checked={
-                                  secondRadio ===
-                                  "Asia Direct will collect from shipper address"
-                                }
-                              />
-                            </div>
-                            <div className="col-md-10 ps-0">
-                              <label for="origin2" className="my-0">
-                                Asia Direct will collect from shipper address
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="parentShipper">
-                        <div className="childshipper">
-                          <div className="d-flex">
-                            <div className="me-2">
-                              <input
-                                type="radio"
-                                id="origin3"
-                                name="origin"
-                                onChange={secondradi}
-                                value="Shipper will deliver to the port of loading"
-                                checked={
-                                  secondRadio ===
-                                  "Shipper will deliver to the port of loading"
-                                }
-                              />
-                            </div>
-                            <div className="col-md-10 ps-0">
-                              <label for="origin3" className="my-0">
-                                Shipper will deliver to the port of loading,
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="parentShipper">
-                        <div className="childshipper">
-                          <div className="d-flex">
-                            <div className="me-2">
-                              <input
-                                type="radio"
-                                id="origin4"
-                                name="origin"
-                                onChange={secondradi}
-                                value="Shipper will deliver and facilitate export at the Port of loading"
-                                checked={
-                                  secondRadio ===
-                                  "Shipper will deliver and facilitate export at the Port of loading"
-                                }
-                              />
-                            </div>
-                            <div className="col-md-10 ps-0">
-                              <label for="origin4" className="my-0">
-                                Shipper will deliver and facilitate export at
-                                the Port of loading
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <p className="text-danger mb-0"></p>
-                    </div>
-                    <div className="col-lg-6">
-                      <h5 className="labelTitle top10M">Destination</h5>
-                      <div className="parentShipper">
-                        <div className="childshipper">
-                          <div className="d-flex">
-                            <div className="me-2">
-                              <input
-                                type="radio"
-                                id="Destination1"
-                                name="Destination"
-                                onChange={handlethird}
-                                checked={
-                                  thirdRadio ===
-                                  "Asia Direct will deliver to the Address"
-                                }
-                                value="Asia Direct will deliver to the Address"
-                              />
-                            </div>
-                            <div className="col-md-10 ps-0">
-                              <label for="Destination1" className="my-0">
-                                Asia Direct will deliver to the Address.
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="parentShipper">
-                        <div className="childshipper">
-                          <div className="d-flex">
-                            <div className="me-2">
-                              <input
-                                type="radio"
-                                id="Destination2"
-                                name="Destination"
-                                onChange={handlethird}
-                                checked={
-                                  thirdRadio ===
-                                  "Consignee will collect at Asia Direct - Africa warehouse"
-                                }
-                                value="Consignee will collect at Asia Direct - Africa warehouse"
-                              />
-                            </div>
-                            <div className="col-md-10 ps-0">
-                              <label for="Destination2" className="my-0">
-                                Consignee will collect at Asia Direct - Africa
-                                warehouse
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="parentShipper">
-                        <div className="childshipper">
-                          <div className="d-flex">
-                            <div className="me-2">
-                              <input
-                                type="radio"
-                                id="Destination3"
-                                name="Destination"
-                                onChange={handlethird}
-                                value="Consignee will collect at the nearest port"
-                                checked={
-                                  thirdRadio ===
-                                  "Consignee will collect at the nearest port"
-                                }
-                              />
-                            </div>
-                            <div className="col-md-10 ps-0">
-                              <label for="Destination3" className="my-0">
-                                Consignee will collect at the nearest port
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="parentShipper">
-                        <div className="childshipper">
-                          <div className="d-flex">
-                            <div className="me-2">
-                              <input
-                                type="radio"
-                                id="Destination4"
-                                name="Destination"
-                                onChange={handlethird}
-                                checked={
-                                  thirdRadio ===
-                                  "Consignee will collect and facilitate import at destination port"
-                                }
-                                value="Consignee will collect and facilitate import at destination port"
-                              />
-                            </div>
-                            <div className="col-md-10 ps-0">
-                              <label for="Destination4" className="my-0">
-                                Consignee will collect and facilitate import at
-                                destination port
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <p className="text-danger mb-0"></p>
-                    </div>
-                  </div>
-                </div>
-                <div className="borderShip">
-                  <h3 className="mb-3">Your Shipment reference</h3>
-                  <div className="row">
-                    <div className="col-lg-6 ">
-                      <h5 className="labelTitle">Are you the</h5>
-                      <div className="mt-2 shipRefer d-flex align-items-center">
-                        <input
-                          type="radio"
-                          id="shipper"
-                          name="shipper"
-                          value="shipper"
-                          checked={radioButton === "shipper"}
-                          onChange={dddd}
-                        />
-                        <label htmlFor="shipper" className="mb-0">
-                          Shipper
-                        </label>
-                        <input
-                          type="radio"
-                          id="consignee"
-                          name="shipperOrConsignee"
-                          value="consignee"
-                          checked={radioButton === "consignee"}
-                          onChange={dddd}
-                        />
-                        <label htmlFor="consignee" className="mb-0">
-                          Consignee
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="borderShip updateLoading">
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="row align-items-center"></div>
-                    </div>
-                    <div className="col-md-12">
-                      <div className="row align-items-center">
-                        <div className="col-md-12">
-                          <h5>Insurance</h5>
-                        </div>
-                        <div className="col-md-6">
-                          <div className="shipRefer d-flex align-items-center">
+              </div>
+
+              <div className="borderShip">
+                <h3 className="mb-3">Shipment Details</h3>
+                <div className="row">
+                  <div className="col-md-6 mb-3 mb-md-0">
+                    <h5 className="labelTitle">Origin</h5>
+                    <div className="parentShipper">
+                      <div className="childshipper">
+                        <div className="d-flex">
+                          <div className="me-2">
                             <input
                               type="radio"
-                              onChange={handleInsuranceChange}
-                              id="estYes1"
-                              name="insurance"
-                              value="Yes"
-                              checked={insurance === "Yes"} // Set checked state
+                              id="origin1"
+                              name="origin"
+                              onChange={secondradi}
+                              checked={
+                                secondRadio ===
+                                "Shipper will deliver at Asia Direct - Africa warehouse"
+                              }
+                              value="Shipper will deliver at Asia Direct - Africa warehouse"
                             />
-                            <label htmlFor="estYes1" className="mb-0">
-                              Yes
-                            </label>
-                            <input
-                              type="radio"
-                              onChange={handleInsuranceChange}
-                              id="estNo1"
-                              name="insurance"
-                              value="No"
-                              checked={insurance === "No"} // Set checked state
-                            />
-                            <label htmlFor="estNo1" className="mb-0">
-                              No
+                          </div>
+                          <div className="ps-0">
+                            <label htmlFor="origin1" className="my-0">
+                              Shipper will deliver at Asia Direct - Africa warehouse
                             </label>
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div className="col-md-12">
-                      <div className="row align-items-center"></div>
+                    <div className="parentShipper">
+                      <div className="childshipper">
+                        <div className="d-flex">
+                          <div className="me-2">
+                            <input
+                              type="radio"
+                              id="origin2"
+                              name="origin"
+                              onChange={secondradi}
+                              value="Asia Direct will collect from shipper address"
+                              checked={
+                                secondRadio ===
+                                "Asia Direct will collect from shipper address"
+                              }
+                            />
+                          </div>
+                          <div className="ps-0">
+                            <label htmlFor="origin2" className="my-0">
+                              Asia Direct will collect from shipper address
+                            </label>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <div className="col-md-12">
-                      <div className="row align-items-center"></div>
+                    <div className="parentShipper">
+                      <div className="childshipper">
+                        <div className="d-flex">
+                          <div className="me-2">
+                            <input
+                              type="radio"
+                              id="origin3"
+                              name="origin"
+                              onChange={secondradi}
+                              value="Shipper will deliver to the port of loading"
+                              checked={
+                                secondRadio ===
+                                "Shipper will deliver to the port of loading"
+                              }
+                            />
+                          </div>
+                          <div className="ps-0">
+                            <label htmlFor="origin3" className="my-0">
+                              Shipper will deliver to the port of loading
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="parentShipper">
+                      <div className="childshipper">
+                        <div className="d-flex">
+                          <div className="me-2">
+                            <input
+                              type="radio"
+                              id="origin4"
+                              name="origin"
+                              onChange={secondradi}
+                              value="Shipper will deliver and facilitate export at the Port of loading"
+                              checked={
+                                secondRadio ===
+                                "Shipper will deliver and facilitate export at the Port of loading"
+                              }
+                            />
+                          </div>
+                          <div className="ps-0">
+                            <label htmlFor="origin4" className="my-0">
+                              Shipper will deliver and facilitate export at the Port of loading
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-md-6">
+                    <h5 className="labelTitle">Destination</h5>
+                    <div className="parentShipper">
+                      <div className="childshipper">
+                        <div className="d-flex">
+                          <div className="me-2">
+                            <input
+                              type="radio"
+                              id="Destination1"
+                              name="Destination"
+                              onChange={handlethird}
+                              checked={
+                                thirdRadio ===
+                                "Asia Direct will deliver to the Address"
+                              }
+                              value="Asia Direct will deliver to the Address"
+                            />
+                          </div>
+                          <div className="ps-0">
+                            <label htmlFor="Destination1" className="my-0">
+                              Asia Direct will deliver to the Address
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="parentShipper">
+                      <div className="childshipper">
+                        <div className="d-flex">
+                          <div className="me-2">
+                            <input
+                              type="radio"
+                              id="Destination2"
+                              name="Destination"
+                              onChange={handlethird}
+                              checked={
+                                thirdRadio ===
+                                "Consignee will collect at Asia Direct - Africa warehouse"
+                              }
+                              value="Consignee will collect at Asia Direct - Africa warehouse"
+                            />
+                          </div>
+                          <div className="ps-0">
+                            <label htmlFor="Destination2" className="my-0">
+                              Consignee will collect at Asia Direct - Africa warehouse
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="parentShipper">
+                      <div className="childshipper">
+                        <div className="d-flex">
+                          <div className="me-2">
+                            <input
+                              type="radio"
+                              id="Destination3"
+                              name="Destination"
+                              onChange={handlethird}
+                              value="Consignee will collect at the nearest port"
+                              checked={
+                                thirdRadio ===
+                                "Consignee will collect at the nearest port"
+                              }
+                            />
+                          </div>
+                          <div className="ps-0">
+                            <label htmlFor="Destination3" className="my-0">
+                              Consignee will collect at the nearest port
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="parentShipper">
+                      <div className="childshipper">
+                        <div className="d-flex">
+                          <div className="me-2">
+                            <input
+                              type="radio"
+                              id="Destination4"
+                              name="Destination"
+                              onChange={handlethird}
+                              checked={
+                                thirdRadio ===
+                                "Consignee will collect and facilitate import at destination port"
+                              }
+                              value="Consignee will collect and facilitate import at destination port"
+                            />
+                          </div>
+                          <div className="ps-0">
+                            <label htmlFor="Destination4" className="my-0">
+                              Consignee will collect and facilitate import at destination port
+                            </label>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div className=" borderShip updateLoading mt-3">
-                  <div className="col-6">
-                    <h5>Send to Warehouse</h5>
-                    <div className="shipRefer d-flex align-items-center">
+              </div>
+
+              <div className="borderShip">
+                <h3 className="mb-3">Your Shipment Reference</h3>
+                <div className="row">
+                  <div className="col-md-12">
+                    <h5 className="labelTitle">Are you the</h5>
+                    <div className="mt-2 shipRefer d-flex align-items-center">
+                      <input
+                        type="radio"
+                        id="shipper"
+                        name="shipper"
+                        value="shipper"
+                        checked={radioButton === "shipper"}
+                        onChange={dddd}
+                      />
+                      <label htmlFor="shipper" className="mb-0">
+                        Shipper
+                      </label>
+                      <input
+                        type="radio"
+                        id="consignee"
+                        name="shipperOrConsignee"
+                        value="consignee"
+                        checked={radioButton === "consignee"}
+                        onChange={dddd}
+                      />
+                      <label htmlFor="consignee" className="mb-0">
+                        Consignee
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="borderShip">
+                <h3 className="mb-3">Shipment Options</h3>
+                <div className="row">
+                  <div className="col-md-4 mb-3 mb-md-0">
+                    <h5 className="labelTitle">Insurance Required?</h5>
+                    <div className="shipRefer d-flex align-items-center mt-2">
+                      <input
+                        type="radio"
+                        onChange={handleInsuranceChange}
+                        id="estYes1"
+                        name="insurance"
+                        value="Yes"
+                        checked={insurance === "Yes"}
+                      />
+                      <label htmlFor="estYes1" className="mb-0">
+                        Yes
+                      </label>
+                      <input
+                        type="radio"
+                        onChange={handleInsuranceChange}
+                        id="estNo1"
+                        name="insurance"
+                        value="No"
+                        checked={insurance === "No"}
+                      />
+                      <label htmlFor="estNo1" className="mb-0">
+                        No
+                      </label>
+                    </div>
+                  </div>
+                  <div className="col-md-4 mb-3 mb-md-0">
+                    <h5 className="labelTitle">Send to Warehouse?</h5>
+                    <div className="shipRefer d-flex align-items-center mt-2">
                       <input
                         type="radio"
                         id="warehouseOne"
@@ -1931,437 +1916,402 @@ export default function Managefreight() {
                       </label>
                     </div>
                   </div>
-                </div>
-                <div className="borderShip updateLoading mt-3">
-                  <div className="row">
-                    <div className="col-6">
-                      <h5>Assign to Clearing</h5>
-                      <div className="shipRefer d-flex align-items-center">
-                        <input
-                          type="radio"
-                          id="clearingOne"
-                          name="assign_to_clearing"
-                          defaultValue="Yes"
-                          checked={clearings === "Yes"}
-                          onChange={clearing2}
-                        />
-                        <label htmlFor="clearingOne" className="mb-0">
-                          Yes
-                        </label>
-                        <input
-                          type="radio"
-                          id="clearingTwo"
-                          name="assign_to_clearing"
-                          checked={clearings === "No"}
-                          defaultValue="No"
-                          onChange={clearing2}
-                        />
-                        <label htmlFor="clearingTwo" className="mb-0">
-                          No
-                        </label>
-                      </div>
+                  <div className="col-md-4">
+                    <h5 className="labelTitle">Assign to Clearing?</h5>
+                    <div className="shipRefer d-flex align-items-center mt-2">
+                      <input
+                        type="radio"
+                        id="clearingOne"
+                        name="assign_to_clearing"
+                        value="Yes"
+                        checked={clearings === "Yes"}
+                        onChange={clearing2}
+                      />
+                      <label htmlFor="clearingOne" className="mb-0">
+                        Yes
+                      </label>
+                      <input
+                        type="radio"
+                        id="clearingTwo"
+                        name="assign_to_clearing"
+                        checked={clearings === "No"}
+                        value="No"
+                        onChange={clearing2}
+                      />
+                      <label htmlFor="clearingTwo" className="mb-0">
+                        No
+                      </label>
                     </div>
                   </div>
                 </div>
-                <div className="borderShip">
-                  <div>
-                    <h3 className="mb-3">Location details</h3>
-                  </div>
-                  <div className="row">
-                    <div className="col-lg-6">
-                      <div className="col-lg-12">
-                        <h5 className="labelTitle">Collection from</h5>
-                        <select
-                          value={inputData.collection_from}
-                          name="collection_from"
-                          onChange={handleInputChange}
-                        >
-                          <option>select...</option>
-                          {country.map((option, index) => {
-                            return (
-                              <>
-                                <option key={index} value={option.id}>
-                                  {option.name}
-                                </option>
-                              </>
-                            );
-                          })}
-                        </select>
-                        <p className="text-danger mb-0"></p>
-                      </div>
-                      <div className="col-lg-12 my-3">
-                        <h5 className="labelTitle">Port of Loading</h5>
-                        <input
-                          type="text"
-                          name="port_of_loading"
-                          onChange={handleInputChange}
-                          value={inputData.port_of_loading}
-                        />
-                      </div>
-                      <div className="my-3">
-                        <h5 className="labelTitle">Collection Address</h5>
-                        <input
-                          type="text"
-                          name="collection_address"
-                          onChange={handleInputChange}
-                          value={inputData.collection_address}
-                        />
-                      </div>
+              </div>
+
+              <div className="borderShip">
+                <h3 className="mb-3">Location Details</h3>
+                <div className="row">
+                  <div className="col-md-6 mb-3 mb-md-0">
+                    <div className="mb-3">
+                      <h5 className="labelTitle">Collection from</h5>
+                      <select
+                        value={inputData.collection_from}
+                        name="collection_from"
+                        onChange={handleInputChange}
+                      >
+                        <option value="">Select...</option>
+                        {country.map((option, index) => (
+                          <option key={index} value={option.id}>
+                            {option.name}
+                          </option>
+                        ))}
+                      </select>
                     </div>
-                    <div className="col-lg-6">
+                    <div className="mb-3">
+                      <h5 className="labelTitle">Port of Loading</h5>
+                      <input
+                        type="text"
+                        name="port_of_loading"
+                        onChange={handleInputChange}
+                        value={inputData.port_of_loading}
+                      />
+                    </div>
+                    <div>
+                      <h5 className="labelTitle">Collection Address</h5>
+                      <input
+                        type="text"
+                        name="collection_address"
+                        onChange={handleInputChange}
+                        value={inputData.collection_address}
+                      />
+                    </div>
+                  </div>
+                  <div className="col-md-6">
+                    <div className="mb-3">
                       <h5 className="labelTitle">Delivery To</h5>
                       <select
                         value={inputData.delivery_to}
                         name="delivery_to"
                         onChange={handleInputChange}
                       >
-                        <option>select...</option>
-                        {country.map((option, index) => {
-                          return (
-                            <>
-                              <option key={index} value={option.id}>
-                                {option.name}
-                              </option>
-                            </>
-                          );
-                        })}
+                        <option value="">Select...</option>
+                        {country.map((option, index) => (
+                          <option key={index} value={option.id}>
+                            {option.name}
+                          </option>
+                        ))}
                       </select>
-                      <p className="text-danger mb-0"></p>
-                      <div className="my-3">
-                        <h5 className="labelTitle">Port of Discharge</h5>
-                        <input
-                          type="text"
-                          onChange={handleInputChange}
-                          name="post_of_discharge"
-                          value={inputData.post_of_discharge}
-                        />
-                      </div>
-                      <div className="col-lg-12 my-3">
-                        <h5 className="labelTitle">Delivery Address</h5>
-                        <input
-                          type="text"
-                          onChange={handleInputChange}
-                          name="delivery_address"
-                          value={inputData.delivery_address}
-                        />
-                      </div>
+                    </div>
+                    <div className="mb-3">
+                      <h5 className="labelTitle">Port of Discharge</h5>
+                      <input
+                        type="text"
+                        onChange={handleInputChange}
+                        name="post_of_discharge"
+                        value={inputData.post_of_discharge}
+                      />
+                    </div>
+                    <div>
+                      <h5 className="labelTitle">Delivery Address</h5>
+                      <input
+                        type="text"
+                        onChange={handleInputChange}
+                        name="delivery_address"
+                        value={inputData.delivery_address}
+                      />
                     </div>
                   </div>
                 </div>
-                <div className="d-flex justify-content-between flex-wrap gap-3 mt-4">
-                  <div>
-                    <h4 className="freight_hd">Document Section</h4>
-                    <span class="line"></span>
-                  </div>
-                  <div>
-                    <button className="btn btn_add_web" onClick={handleShow}>
-                      Upload Documents
-                    </button>
-                    {show1 && (
-                      <Modal
-                        open={show1}
-                        onClose={handleClose}
-                        slotProps={{
-                          backdrop: {
-                            sx: { backgroundColor: "rgba(0,0,0,0.5)" }, // darker overlay background
-                          },
+              </div>
+
+              <div className="borderShip d-flex justify-content-between flex-wrap gap-3 align-items-center">
+                <div>
+                  <h3 className="mb-0" style={{ borderLeft: "none", paddingLeft: 0 }}>Document Section</h3>
+                </div>
+                <div>
+                  <button className="btn btn_add_web" onClick={handleShow}>
+                    Upload Documents
+                  </button>
+                  {show1 && (
+                    <Modal
+                      open={show1}
+                      onClose={handleClose}
+                      slotProps={{
+                        backdrop: {
+                          sx: { backgroundColor: "rgba(0,0,0,0.5)" },
+                        },
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          p: 4,
+                          bgcolor: "white",
+                          borderRadius: 3,
+                          width: 500,
+                          mx: "auto",
+                          mt: 10,
+                          boxShadow: 24,
+                          textAlign: "center",
+                          backgroundImage:
+                            "linear-gradient(135deg, #e3f2fd, #ffffff)",
                         }}
                       >
+                        <h2 style={{ marginBottom: "20px", color: "#1976d2" }}>
+                          📂 Upload Documents
+                        </h2>
+                        <FormControl fullWidth sx={{ mt: 2 }}>
+                          <InputLabel id="doc-select-label">
+                            Select Document Type
+                          </InputLabel>
+                          <Select
+                            labelId="doc-select-label"
+                            onChange={handleSelect}
+                            sx={{ borderRadius: 2, bgcolor: "#f5f5f5" }}
+                          >
+                            {docOptions.map((option) => (
+                              <MenuItem key={option.id} value={option.id}>
+                                {option.label}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </FormControl>
+                        <div className="mt-3">
+                          {selectedDocs.map((doc, index) => (
+                            <div
+                              key={index}
+                              className="mb-3"
+                              style={{ textAlign: "left" }}
+                            >
+                              <label className="fw-bold">{doc.name}</label>
+                              <input
+                                type="file"
+                                className="form-control"
+                                multiple
+                                accept="image/*,application/pdf"
+                                onChange={(e) =>
+                                  handleFileChangefil(e, doc.name)
+                                }
+                              />
+                            </div>
+                          ))}
+                        </div>
                         <Box
                           sx={{
-                            p: 4,
-                            bgcolor: "white",
-                            borderRadius: 3,
-                            width: 500,
-                            mx: "auto",
-                            mt: 10,
-                            boxShadow: 24, // nice shadow effect
-                            textAlign: "center",
-                            backgroundImage:
-                              "linear-gradient(135deg, #e3f2fd, #ffffff)", // gradient background
+                            display: "flex",
+                            justifyContent: "flex-end",
+                            gap: 2,
+                            mt: 4,
                           }}
                         >
-                          <h2
-                            style={{ marginBottom: "20px", color: "#1976d2" }}
-                          >
-                            📂 Upload Documents
-                          </h2>
-                          <FormControl fullWidth sx={{ mt: 2 }}>
-                            <InputLabel id="doc-select-label">
-                              Select Document Type
-                            </InputLabel>
-                            <Select
-                              labelId="doc-select-label"
-                              onChange={handleSelect}
-                              sx={{ borderRadius: 2, bgcolor: "#f5f5f5" }}
-                            >
-                              {docOptions.map((option) => (
-                                <MenuItem key={option.id} value={option.id}>
-                                  {option.label}
-                                </MenuItem>
-                              ))}
-                            </Select>
-                          </FormControl>
-                          <div className="mt-3">
-                            {selectedDocs.map((doc, index) => (
-                              <div
-                                key={index}
-                                className="mb-3"
-                                style={{ textAlign: "left" }}
-                              >
-                                <label className="fw-bold">{doc.name}</label>
-                                <input
-                                  type="file"
-                                  className="form-control"
-                                  multiple
-                                  accept="image/*,application/pdf"
-                                  onChange={(e) =>
-                                    handleFileChangefil(e, doc.name)
-                                  }
-                                />
-                              </div>
-                            ))}
-                          </div>
-                          <Box
+                          <Button
+                            onClick={handleClose}
+                            variant="outlined"
                             sx={{
-                              display: "flex",
-                              justifyContent: "flex-end",
-                              gap: 2,
-                              mt: 4,
+                              borderRadius: 2,
+                              px: 3,
                             }}
                           >
-                            <Button
-                              onClick={handleClose}
-                              variant="outlined"
-                              sx={{
-                                borderRadius: 2,
-                                px: 3,
-                              }}
-                            >
-                              Cancel
-                            </Button>
-                            <Button
-                              variant="contained"
-                              color="success"
-                              onClick={handleSave}
-                              sx={{
-                                borderRadius: 2,
-                                px: 3,
-                                backgroundImage:
-                                  "linear-gradient(45deg, #43a047, #66bb6a)",
-                              }}
-                            >
-                              Save
-                            </Button>
-                          </Box>
+                            Cancel
+                          </Button>
+                          <Button
+                            variant="contained"
+                            color="success"
+                            onClick={handleSave}
+                            sx={{
+                              borderRadius: 2,
+                              px: 3,
+                              backgroundImage:
+                                "linear-gradient(45deg, #43a047, #66bb6a)",
+                            }}
+                          >
+                            Save
+                          </Button>
                         </Box>
-                      </Modal>
-                    )}
-                  </div>
+                      </Box>
+                    </Modal>
+                  )}
                 </div>
-                <div className="borderShip">
-                  <h3 className="mb-3">Cargo details</h3>
-                  <div className="row">
-                    <div className="col-lg-6">
-                      <div className="shipRefer col-lg-12">
-                        <h5 className="labelTitle">Product Description</h5>
-                        <input
-                          type="text"
-                          onChange={handleInputChange}
-                          name="product_desc"
-                          value={inputData.product_desc}
-                          className="w-100"
-                        />
-                      </div>
-                    </div>
-                    <div className="col-lg-6 mt-3 mt-lg-0">
-                      <h5 className="labelTitle">Nature of Goods</h5>
-                      <select
-                        name="nature_of_goods"
+              </div>
+
+              <div className="borderShip">
+                <h3 className="mb-3">Cargo Details</h3>
+                <div className="row">
+                  <div className="col-md-6 mb-3">
+                    <h5 className="labelTitle">Product Description</h5>
+                    <input
+                      type="text"
+                      onChange={handleInputChange}
+                      name="product_desc"
+                      value={inputData.product_desc}
+                    />
+                  </div>
+                  <div className="col-md-6 mb-3">
+                    <h5 className="labelTitle">Nature of Goods</h5>
+                    <select
+                      name="nature_of_goods"
+                      onChange={handleInputChange}
+                      value={inputData.nature_of_goods}
+                    >
+                      <option value="">Select...</option>
+                      <option value="generalCargo">General cargo</option>
+                      <option value="battery">Battery</option>
+                      <option value="liquids">Liquids</option>
+                      <option value="powders">Powders</option>
+                      <option value="hazardous">Hazardous</option>
+                    </select>
+                  </div>
+
+                  <div className="col-md-6 mb-3">
+                    <h5 className="labelTitle">Package Type</h5>
+                    <select
+                      name="package_type"
+                      onChange={handleInputChange}
+                      value={inputData.package_type}
+                    >
+                      <option value="">Select...</option>
+                      <option value="box">Box</option>
+                      <option value="crate">Crate</option>
+                      <option value="pallet">Pallet</option>
+                      <option value="bags">Bags</option>
+                    </select>
+                  </div>
+                  <div className="col-md-6 mb-3">
+                    <h5 className="labelTitle">Commodity</h5>
+                    <select
+                      name="commodity"
+                      onChange={handleInputChange}
+                      value={inputData.commodity}
+                    >
+                      <option value="">Select...</option>
+                      {apidata &&
+                        apidata.length > 0 &&
+                        apidata.map((item, index) => (
+                          <option key={index} value={item.id}>
+                            {item.name}
+                          </option>
+                        ))}
+                    </select>
+                  </div>
+
+                  <div className="col-md-6 mb-3">
+                    <h5 className="labelTitle">Total Packages</h5>
+                    <input
+                      type="text"
+                      name="no_of_packages"
+                      onChange={handleInputChange}
+                      value={inputData.no_of_packages}
+                    />
+                  </div>
+                  <div className="col-md-6 mb-3">
+                    <h5 className="labelTitle">Auto Calculate</h5>
+                    <input
+                      type="text"
+                      name="autoCalculate"
+                      onChange={handleInputChange}
+                      value={totaldimension}
+                      disabled
+                    />
+                  </div>
+
+                  <div className="col-md-6 mb-3">
+                    <h5 className="labelTitle">Total Dimension</h5>
+                    <div className="unitDimention">
+                      <input
+                        type="text"
+                        name="dimension"
                         onChange={handleInputChange}
-                        value={inputData.nature_of_goods}
+                        value={inputData.dimension}
+                      />
+                      <select
+                        className="form-select"
+                        name="dimension_unit"
+                        onChange={handleInputChange}
                       >
-                        <option value="">Select...</option>
-                        <option value="generalCargo">General cargo</option>
-                        <option value="battery">Battery</option>
-                        <option value="liquids">Liquids</option>
-                        <option value="powders">Powders</option>
-                        <option value="hazardous">Hazardous</option>
+                        <option value="">Unit</option>
+                        <option value="cm³">cm³</option>
+                        <option value="m³">m³</option>
+                        <option value="in³">in³</option>
+                        <option value="ft³">ft³</option>
                       </select>
                     </div>
                   </div>
-                  <div className="row">
-                    <div className="col-lg-6 mt-3">
-                      <h5 className="labelTitle">Package Type</h5>
-                      <select
-                        name="package_type"
-                        onChange={handleInputChange}
-                        value={inputData.package_type}
-                      >
-                        <option value="">Select...</option>
-                        <option value="box">Box</option>
-                        <option value="crate">Crate</option>
-                        <option value="pallet">Pallet</option>
-                        <option value="bags">Bags</option>
-                      </select>
-                    </div>
-                    <div className="col-lg-6 mt-3">
-                      <h5 className="labelTitle">Commodity</h5>
-                      <select
-                        name="commodity"
-                        onChange={handleInputChange}
-                        placeholder="commodity"
-                        value={inputData.commodity}
-                        className="form-control"
-                      >
-                        <option>Select...</option>
-                        {apidata &&
-                          apidata.length > 0 &&
-                          apidata.map((item, index) => {
-                            return (
-                              <>
-                                <option key={index} value={item.id}>
-                                  {item.name}
-                                </option>
-                              </>
-                            );
-                          })}
-                      </select>
-                    </div>
-                    <div className="col-lg-6 mt-3">
-                      <h5 className="labelTitle">Total Packages</h5>
+                  <div className="col-md-6 mb-3">
+                    <h5 className="labelTitle">Total Weight</h5>
+                    <div className="unitDimention">
                       <input
                         type="text"
-                        name="no_of_packages"
+                        name="weight"
                         onChange={handleInputChange}
-                        value={inputData.no_of_packages}
+                        value={inputData.weight}
                       />
+                      <select
+                        className="form-select"
+                        name="weight_unit"
+                        onChange={handleInputChange}
+                      >
+                        <option value="">Unit</option>
+                        <option value="kg">kg</option>
+                        <option value="g">g</option>
+                        <option value="lbs">lbs</option>
+                        <option value="ton">ton</option>
+                      </select>
                     </div>
                   </div>
-                  <div className="row">
-                    <div className="col-lg-6 mt-3">
-                      <h5 className="labelTitle">Total Dimension</h5>
-                      <div className="unitDimention">
-                        <input
-                          type="text"
-                          name="dimension"
-                          onChange={handleInputChange}
-                          value={inputData.dimension}
-                        />
-                        <select
-                          className="form-select"
-                          name="dimension_unit"
-                          onChange={handleInputChange}
-                        >
-                          <option value="">Unit</option>
-                          <option value="cm³">cm³</option>
-                          <option value="m³">m³</option>
-                          <option value="in³">in³</option>
-                          <option value="ft³">ft³</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div className="col-lg-6 mt-3">
-                      <h5 className="labelTitle">Total Weight</h5>
-                      <div className="unitDimention">
-                        <input
-                          type="text"
-                          name="weight"
-                          onChange={handleInputChange}
-                          value={inputData.weight}
-                        />
-                        <select
-                          className="form-select"
-                          name="weight_unit"
-                          onChange={handleInputChange}
-                        >
-                          <option value="">Unit</option>
-                          <option value="kg">kg</option>
-                          <option value="g">g</option>
-                          <option value="lbs">lbs</option>
-                          <option value="ton">ton</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div className="col-lg-6 mt-3">
-                      <h5 className="labelTitle">Auto Calculate</h5>
-                      <input
-                        type="text"
-                        name="autoCalculate"
-                        onChange={handleInputChange}
-                        value={totaldimension}
-                      />
-                    </div>
-                    <div className="col-lg-6 mt-3">
-                      <label htmlFor="clearing_agent" className="form-label">
-                        Select Document
-                      </label>
-                      <select name="documentName" onChange={handleInputChange}>
-                        <option value="">Select...</option>
-                        <option value="Customs Documents">Customs docs</option>
-                        <option value="Supporting Documents">
-                          Supporting docs
-                        </option>
-                        <option value="Invoice, Packing List">
-                          Invoice / Packing L
-                        </option>
-                        <option value="Product Literature">
-                          Product Literature
-                        </option>
-                        <option value="Letters of authority">LOA</option>
-                        <option value="Waybills">Freight Docs</option>
-                        <option value="Waybills">Shipping instruction</option>
-                        <option value="Supplier Invoices">
-                          Freight Invoices{" "}
-                        </option>
-                        <option value="AD_Quotations">Attach Quote</option>
-                      </select>
-                    </div>
-                    <div className="col-lg-6 mt-3">
-                      <h5 className="labelTitle">Comment</h5>
-                      <input
-                        type="text"
-                        name="comment"
-                        className=""
-                        onChange={handleInputChange}
-                        value={inputData.comment}
-                      />
-                    </div>
-                    <div className="col-lg-6 mt-3">
-                      <h5 className="labelTitle">Type</h5>
-                      <select
-                        name="fcl_lcl"
-                        value={inputData.fcl_lcl}
-                        onChange={handleInputChange}
-                      >
-                        <option value="">Select...</option>
-                        <option value="FCL">FCL</option>
-                        <option value="LCL">LCL</option>
-                      </select>
-                    </div>
-                                      <div className="row">
-                      <div className="col-6 mt-3">
-                        <h5>licenses</h5>
-                        <input
-                          type="file"
-                          name="licenses"
-                          className="mb-3 w-100 rounded"
-                          onChange={handleFileChange2}
-                          multiple
-                        />
-                      </div>
-                    </div>
+
+                  <div className="col-md-6 mb-3">
+                    <h5 className="labelTitle">Select Document</h5>
+                    <select name="documentName" onChange={handleInputChange} value={inputData.documentName}>
+                      <option value="">Select...</option>
+                      <option value="Customs Documents">Customs docs</option>
+                      <option value="Supporting Documents">Supporting docs</option>
+                      <option value="Invoice, Packing List">Invoice / Packing L</option>
+                      <option value="Product Literature">Product Literature</option>
+                      <option value="Letters of authority">LOA</option>
+                      <option value="Waybills">Freight Docs</option>
+                      <option value="Waybills">Shipping instruction</option>
+                      <option value="Supplier Invoices">Freight Invoices</option>
+                      <option value="AD_Quotations">Attach Quote</option>
+                    </select>
+                  </div>
+                  <div className="col-md-6 mb-3">
+                    <h5 className="labelTitle">Type</h5>
+                    <select
+                      name="fcl_lcl"
+                      value={inputData.fcl_lcl}
+                      onChange={handleInputChange}
+                    >
+                      <option value="">Select...</option>
+                      <option value="FCL">FCL</option>
+                      <option value="LCL">LCL</option>
+                    </select>
+                  </div>
+
+                  <div className="col-md-6 mb-3">
+                    <h5 className="labelTitle">Comment</h5>
+                    <input
+                      type="text"
+                      name="comment"
+                      onChange={handleInputChange}
+                      value={inputData.comment}
+                    />
+                  </div>
+                  <div className="col-md-6 mb-3">
+                    <h5 className="labelTitle">Licenses</h5>
+                    <input
+                      type="file"
+                      name="licenses"
+                      onChange={handleFileChange2}
+                      multiple
+                      className="form-control"
+                    />
                   </div>
                 </div>
               </div>
             </div>
           </section>
-          <div className="text-center my-3">
-            <button
-              type="submit"
-              className=" allFreFilter btn btn_add_web "
-              onClick={handleclicknavi}
-            >
+          <div className="modalFooterActions">
+            <button className="btn-cancel" onClick={handleUpdateClose}>
+              Cancel
+            </button>
+            <button className="btn-submit" onClick={handleclicknavi}>
               Update Freight
             </button>
           </div>
