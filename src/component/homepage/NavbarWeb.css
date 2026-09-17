@@ -15,7 +15,8 @@
 }
 
 .dash_nav .navbar-brand img {
-  height: 45px !important; /* Slightly smaller for a modern, sleek logo look */
+  height: 45px !important;
+  /* Slightly smaller for a modern, sleek logo look */
   width: auto !important;
   object-fit: contain !important;
   transition: transform 0.2s ease !important;
@@ -33,7 +34,8 @@
   justify-content: center !important;
   width: 40px !important;
   height: 40px !important;
-  background-color: #f1f5f9 !important; /* Soft gray circular badge bg */
+  background-color: #f1f5f9 !important;
+  /* Soft gray circular badge bg */
   border-radius: 50% !important;
   transition: all 0.2s ease !important;
 }
@@ -44,13 +46,15 @@
 
 .bell_icon i.noti_icon {
   font-size: 18px !important;
-  color: #64748b !important; /* Muted slate bell */
+  color: #64748b !important;
+  /* Muted slate bell */
   padding: 0 !important;
   margin: 0 !important;
 }
 
 .bell_icon:hover i.noti_icon {
-  color: #0f172a !important; /* Slate color on hover */
+  color: #0f172a !important;
+  /* Slate color on hover */
 }
 
 /* Notification badge count */
@@ -58,7 +62,8 @@
   position: absolute !important;
   top: -4px !important;
   right: -4px !important;
-  background-color: #d31c20 !important; /* Brand red badge */
+  background-color: #d31c20 !important;
+  /* Brand red badge */
   color: #ffffff !important;
   font-size: 0.7rem !important;
   font-weight: 700 !important;
@@ -145,7 +150,8 @@
 }
 
 .notidropparent h6 {
-  color: #0f172a !important; /* Sleek dark text */
+  color: #0f172a !important;
+  /* Sleek dark text */
   font-size: 0.875rem !important;
   font-weight: 600 !important;
   margin-bottom: 4px !important;
@@ -153,7 +159,8 @@
 }
 
 .notidropparent p {
-  color: #64748b !important; /* Muted body text */
+  color: #64748b !important;
+  /* Muted body text */
   font-size: 0.8rem !important;
   line-height: 1.4 !important;
   margin: 0 !important;
@@ -169,7 +176,8 @@
 }
 
 .btnShowAll button {
-  background-color: #d31c20 !important; /* Maroon/red action button */
+  background-color: #d31c20 !important;
+  /* Maroon/red action button */
   color: #ffffff !important;
   font-size: 0.85rem !important;
   font-weight: 600 !important;
@@ -186,53 +194,390 @@
   box-shadow: 0 4px 6px -1px rgba(211, 28, 32, 0.2) !important;
 }
 
-/* Bell Icon in Topbar */
-.bellIcon {
+/* =========================================================
+   Unified Profile & Notification Dropdowns Design System
+   ========================================================= */
+
+/* Profile Trigger in Header/Topbar */
+.profileDropWrapper {
   position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+.profileTriggerBtn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  cursor: pointer !important;
+  padding: 3px 6px !important;
+  border-radius: 9999px !important;
+  transition: all 0.2s ease !important;
+  user-select: none !important;
+}
+
+.profileTriggerBtn:hover {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.userAvatarImg {
+  width: 34px !important;
+  height: 34px !important;
+  border-radius: 50% !important;
+  border: 2px solid #ffffff !important;
+  object-fit: cover !important;
+  display: block !important;
+  flex-shrink: 0 !important;
+}
+
+.profileTriggerText {
+  display: flex !important;
+  flex-direction: column !important;
+  line-height: 1.15 !important;
+  text-align: left !important;
+}
+
+.profileTriggerName {
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+  color: #0f172a !important;
+  max-width: 140px !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  text-transform: capitalize !important;
+}
+
+.topBar .profileTriggerName {
+  color: #ffffff !important;
+}
+
+.dash_nav .profileTriggerName {
+  color: #0f172a !important;
+}
+
+.profileTriggerEmail {
+  font-size: 11px !important;
+  color: #64748b !important;
+  max-width: 140px !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+.topBar .profileTriggerEmail {
+  color: #94a3b8 !important;
+}
+
+.dash_nav .profileTriggerEmail {
+  color: #64748b !important;
+}
+
+.profileTriggerArrow {
+  color: #64748b !important;
+  font-size: 18px !important;
+  transition: transform 0.2s ease !important;
+}
+
+.topBar .profileTriggerArrow {
+  color: #94a3b8 !important;
+}
+
+/* Profile Dropdown Box */
+.customProfileDropdown {
+  position: absolute !important;
+  top: calc(100% + 8px) !important;
+  right: 0 !important;
+  width: 240px !important;
+  background-color: #ffffff !important;
+  border-radius: 14px !important;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.14), 0 2px 10px rgba(0, 0, 0, 0.06) !important;
+  border: 1px solid #e2e8f0 !important;
+  z-index: 9999999 !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 6px 0 !important;
+  margin: 0 !important;
+  animation: dropdownFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.customProfileHeader {
+  padding: 12px 18px 10px !important;
+  border-bottom: 1px solid #f1f5f9 !important;
+  margin-bottom: 4px !important;
+  background-color: #ffffff !important;
+}
+
+.customProfileHeaderName {
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  color: #0f172a !important;
+  margin: 0 0 2px 0 !important;
+  text-transform: capitalize !important;
+  line-height: 1.3 !important;
+}
+
+.customProfileHeaderEmail {
+  font-size: 12px !important;
+  color: #64748b !important;
+  margin: 0 !important;
+  word-break: break-all !important;
+  line-height: 1.3 !important;
+}
+
+.customProfileItem {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  width: 100% !important;
+  padding: 10px 18px !important;
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  color: #334155 !important;
+  border-bottom: 1px solid #f8fafc !important;
+  text-decoration: none !important;
+  background-color: #ffffff !important;
+  transition: all 0.15s ease !important;
+  cursor: pointer !important;
+}
+
+.customProfileItem:hover {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+.customProfileItemIcon {
+  font-size: 17px !important;
+  color: #64748b !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  width: 36px !important;
-  height: 36px !important;
-  background-color: rgba(255, 255, 255, 0.1) !important; /* Semi-transparent white bg for black topbar */
+  flex-shrink: 0 !important;
+  transition: color 0.15s ease !important;
+}
+
+.customProfileItem:hover .customProfileItemIcon {
+  color: #0f172a !important;
+}
+
+.customProfileItem.logoutItem {
+  color: #dc2626 !important;
+  border-top: 1px solid #f1f5f9 !important;
+  margin-top: 2px !important;
+  border-bottom: none !important;
+}
+
+.customProfileItem.logoutItem:hover {
+  background-color: #fee2e2 !important;
+  color: #b91c1c !important;
+}
+
+.customProfileItem.logoutItem .customProfileItemIcon {
+  color: #dc2626 !important;
+}
+
+.customProfileItem.logoutItem:hover .customProfileItemIcon {
+  color: #b91c1c !important;
+}
+
+/* =========================================================
+   Notification Dropdown Design
+   ========================================================= */
+.notiDropWrapper {
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+.bellCircleWrapper {
+  width: 34px !important;
+  height: 34px !important;
   border-radius: 50% !important;
-  transition: all 0.2s ease !important;
+  background: #1e2229 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: relative !important;
+  cursor: pointer !important;
+  transition: background-color 0.2s ease !important;
 }
 
-.bellIcon:hover {
-  background-color: rgba(255, 255, 255, 0.2) !important;
+.bellCircleWrapper:hover {
+  background: #2b303c !important;
 }
 
-.bellIcon i {
-  font-size: 16px !important;
-  color: #ffffff !important; /* White bell on black topbar */
-  padding: 0 !important;
-  margin: 0 !important;
-}
-
-/* Notification count badge in Topbar */
-.bellIcon span.OneNot {
-  position: absolute !important;
-  top: -4px !important;
-  right: -4px !important;
-  background-color: #d31c20 !important; /* Brand red */
+.bellIconWhite {
   color: #ffffff !important;
-  font-size: 0.65rem !important;
-  font-weight: 700 !important;
-  border-radius: 9999px !important;
-  min-width: 16px !important;
+  font-size: 15px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.bellCircleWrapper span.OneNot {
+  position: absolute !important;
+  top: -2px !important;
+  right: -2px !important;
+  background-color: #d01b20 !important;
+  color: #ffffff !important;
+  border-radius: 50% !important;
+  width: 16px !important;
   height: 16px !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  border: 1.5px solid #000000 !important; /* Dark border matching topbar bg */
-  padding: 0 3px !important;
-  left: auto !important; /* Clear left values from App.css */
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  border: 1.5px solid #000000 !important;
 }
 
-.bellIcon span.OneNot small {
-  position: relative !important;
-  top: 0 !important;
-  font-size: inherit !important;
+.customNotiDropdown {
+  position: absolute !important;
+  top: calc(100% + 8px) !important;
+  right: 0 !important;
+  width: 330px !important;
+  max-width: 90vw !important;
+  background-color: #ffffff !important;
+  border-radius: 14px !important;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.14), 0 2px 10px rgba(0, 0, 0, 0.06) !important;
+  border: 1px solid #e2e8f0 !important;
+  z-index: 9999999 !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  animation: dropdownFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
+.customNotiHeader {
+  padding: 14px 18px !important;
+  border-bottom: 1px solid #f1f5f9 !important;
+  background-color: #ffffff !important;
+}
+
+.customNotiTitle {
+  font-size: 15px !important;
+  font-weight: 800 !important;
+  color: #0f172a !important;
+  margin: 0 !important;
+  line-height: 1.2 !important;
+}
+
+.customNotiScroll {
+  max-height: 280px !important;
+  overflow-y: auto !important;
+  padding: 0 !important;
+}
+
+.customNotiScroll::-webkit-scrollbar {
+  width: 5px !important;
+}
+
+.customNotiScroll::-webkit-scrollbar-track {
+  background: #f8fafc !important;
+}
+
+.customNotiScroll::-webkit-scrollbar-thumb {
+  background: #cbd5e1 !important;
+  border-radius: 3px !important;
+}
+
+.customNotiScroll::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8 !important;
+}
+
+.customNotiItem {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 12px !important;
+  padding: 12px 18px !important;
+  border-bottom: 1px solid #f1f5f9 !important;
+  cursor: pointer !important;
+  transition: background-color 0.15s ease !important;
+}
+
+.customNotiItem:hover {
+  background-color: #f8fafc !important;
+}
+
+.customNotiIconBadge {
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 50% !important;
+  background-color: #eff6ff !important;
+  color: #3b82f6 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+  margin-top: 2px !important;
+}
+
+.customNotiContent {
+  flex: 1 !important;
+  min-width: 0 !important;
+}
+
+.customNotiItemTitle {
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+  color: #0f172a !important;
+  margin: 0 0 3px 0 !important;
+  line-height: 1.35 !important;
+}
+
+.customNotiItemDesc {
+  font-size: 12px !important;
+  color: #64748b !important;
+  margin: 0 !important;
+  line-height: 1.4 !important;
+  word-break: break-word !important;
+}
+
+.customNotiEmpty {
+  padding: 36px 18px !important;
+  text-align: center !important;
+  color: #94a3b8 !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+}
+
+.customNotiFooter {
+  padding: 12px 18px !important;
+  text-align: center !important;
+  border-top: 1px solid #f1f5f9 !important;
+  background-color: #ffffff !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+}
+
+.customNotiFooter span {
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  color: #2563eb !important;
+  transition: color 0.15s ease !important;
+}
+
+.customNotiFooter:hover {
+  background-color: #f8fafc !important;
+}
+
+.customNotiFooter:hover span {
+  color: #1d4ed8 !important;
+  text-decoration: underline !important;
+}

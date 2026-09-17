@@ -1,27 +1,42 @@
 import axios from "axios";
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { MyContext } from "../MyContext";
 import image2 from "../assestss/logo.png";
 import imagelogouser from "../assestss/logoasia.png";
 import "./homepage/NavbarWeb.css";
+
+// Material UI Icons
+import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
+import LocalShippingOutlinedIcon from "@mui/icons-material/LocalShippingOutlined";
+import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
+
 export default function Topbar() {
   const { text, setText } = useContext(MyContext);
   const [userData, setUserData] = useState({});
   const [data, setData] = useState([]);
   const [countdatat, setCountdatat] = useState({});
+  
+  // React dropdown state
+  const [showNoti, setShowNoti] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
+  const notiRef = useRef(null);
+  const profileRef = useRef(null);
+
   const navigate = useNavigate();
 
   const hanldeclicklogin = () => {
     navigate("/login");
   };
 
-  const handlkecloick = () => {
-    navigate("/notification");
-  };
-  const user = JSON.parse(localStorage.getItem("data"));
+  const user = JSON.parse(localStorage.getItem("data") || "{}");
   const userid = user?.id;
+
   const handleclicknavi = () => {
     if (!userid) {
       navigate("/login");
@@ -31,240 +46,271 @@ export default function Topbar() {
           user_id: userid,
         })
         .then((response) => {
-          console.log(response.data);
-          setCountdatat(response.data);
-          setData(response.data.data);
+          setCountdatat(response.data || {});
+          setData(response.data?.data || []);
         })
         .catch((error) => {
-          toast.error(error.response.data.message);
+          toast.error(error.response?.data?.message || "Failed to load notifications");
         });
     }
   };
 
+  const handleToggleNoti = (e) => {
+    e.stopPropagation();
+    setShowNoti((prev) => !prev);
+    setShowProfile(false);
+    if (!showNoti) {
+      handleclicknavi();
+    }
+  };
+
+  const handleToggleProfile = (e) => {
+    e.stopPropagation();
+    setShowProfile((prev) => !prev);
+    setShowNoti(false);
+  };
+
   const handleclicklogout = () => {
-    console.log("a");
-    navigate("/login");
+    setShowProfile(false);
     localStorage.clear();
+    navigate("/login");
   };
 
   const fetchData = () => {
-    const user = JSON.parse(localStorage.getItem("data"));
+    const user = JSON.parse(localStorage.getItem("data") || "{}");
+    if (!user?.id) return;
     axios
       .post(`${process.env.REACT_APP_BASE_URL}client-details`, {
-        client_id: user?.id,
+        client_id: user.id,
       })
       .then((response) => {
-        console.log(  response?.data?.data);
-        setUserData(response?.data?.data);
+        setUserData(response?.data?.data || {});
       })
       .catch((error) => {
-        console.log(error.response.data.message);
+        console.log(error?.response?.data?.message);
       });
   };
 
   useEffect(() => {
     fetchData();
-  }, []);
+    if (userid) {
+      handleclicknavi();
+    }
+
+    // Click outside listener to close dropdowns
+    const handleClickOutside = (event) => {
+      if (notiRef.current && !notiRef.current.contains(event.target)) {
+        setShowNoti(false);
+      }
+      if (profileRef.current && !profileRef.current.contains(event.target)) {
+        setShowProfile(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [userid]);
 
   return (
     <div>
       <section className="topBar">
-        <div className="container">
+        <div className="container custom-header-container">
           <div className="row align-items-center">
-            <div className="col-lg-7 col-sm-8 col-6 ">
+            <div className="col-lg-7 col-sm-6 col-5">
               <div className="topParentLeft">
                 <div className="nav_img1">
                   <Link className="navbar-brand py-0" to={"/"}>
-                    <img src={image2} alt="hello" />
+                    <img src={image2} alt="Asia Direct" />
                   </Link>
                 </div>
-                <div className="topLeftChild">
+                <div className="topLeftChild d-none d-md-flex">
                   <p>
-                    <i className="fi fi-ss-envelope" />{" "}
-                    <span>sa@asiadirect.africa </span>
+                    <i className="fi fi-ss-envelope topbarRedIcon" />{" "}
+                    <span>sa@asiadirect.africa</span>
                   </p>
                 </div>
-                <div className="topLeftChild">
+                <span className="topbarDivider d-none d-md-inline">|</span>
+                <div className="topLeftChild d-none d-md-flex">
                   <p>
-                    <i className="fi fi-rs-marker" />
-                    <span> Johannesburg, South Africa</span>
+                    <i className="fi fi-rs-marker topbarRedIcon" />
+                    <span>Johannesburg, South Africa</span>
                   </p>
                 </div>
               </div>
             </div>
-            <div className="col-lg-5 col-sm-4 col-6 ">
-              <div className="topRightParent">
-                <div className="topLeftChild d-none   d-lg-block">
-                  <p>
-                    <i className="fi fi-rr-phone-call" />{" "}
-                    <span> +27 10 448 0733 </span>
+
+            <div className="col-lg-5 col-sm-6 col-7">
+              <div className="topRightParent" style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: "14px" }}>
+                <div className="topRightPhone d-none d-lg-block">
+                  <p style={{ color: "#ffffff", margin: 0, display: "flex", alignItems: "center", gap: "8px" }}>
+                    <i className="fi fi-rr-phone-call topbarRedIcon" style={{ color: "#e11d48", fontSize: "14px" }} />{" "}
+                    <span style={{ color: "#ffffff", fontWeight: 600, fontSize: "13.5px", letterSpacing: "0.03em" }}>
+                      +27 10 448 0733
+                    </span>
                   </p>
                 </div>
-                <div>
-                  {userid ? (
-                    <li
-                      className="nav-item dropdown  notiDrop"
-                      onClick={handleclicknavi}
-                    >
-                      <a
-                        className=""
-                        href="#"
-                        role="button"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                        style={{ cursor: "pointer" }}
-                      >
-                        <div className="bellIcon">
-                          <i className="fi fi-ss-bell mx-4"></i>
-                          {countdatat.unseenCount ? (
-                            <span className="OneNot">
-                              <small>{countdatat.unseenCount}</small>
-                            </span>
-                          ) : (
-                            ""
-                          )}
-                        </div>
-                      </a>
-                      <ul className="dropdown-menu sidebar123 drop_noti notifi_view">
-                        <h5 className="noti_cation">Notification</h5>
-                        <div className="scrollNoti">
-                          {data && data.length > 0 ? (
-                            data.map((item, index) => (
-                              <div className="notidropparent" key={index}>
-                                <div>
-                                  <h6 className="text-dark text-capitalize">
-                                    {item?.title}
-                                  </h6>
-                                  <p>{item?.description}</p>
-                                </div>
-                                <div className="dateTopNoti"></div>
-                              </div>
-                            ))
-                          ) : (
-                            <div>
-                              {data.length === 0 ? (
-                                <p
-                                  className="fw-bold text-center"
-                                  style={{ marginTop: "100px" }}
-                                >
-                                  No notifications
-                                </p>
-                              ) : (
-                                <p>One notification</p>
-                              )}
-                            </div>
-                          )}
-                        </div>
-                        <div className="btnShowAll">
-                          <button onClick={handlkecloick}>
-                            {" "}
-                            View all notification
-                          </button>
-                        </div>
-                      </ul>
-                    </li>
-                  ) : (
-                    <p></p>
-                  )}
-                </div>
+
                 {userid ? (
-                  <div>
-                    <li className="nav-item dropdown dropImg">
-                      <a
-                        className=""
-                        href="#"
+                  <>
+                    <span className="topbarDivider d-none d-lg-inline" style={{ color: "rgba(255, 255, 255, 0.25)" }}>|</span>
+
+                    {/* Notification Dropdown */}
+                    <div className="notiDropWrapper" ref={notiRef}>
+                      <div
+                        className="bellCircleWrapper"
                         role="button"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                        style={{ cursor: "pointer" }}
+                        onClick={handleToggleNoti}
                       >
-                        {/* {userData.profile=="" ? (
-                          // <img src={imagelogo} alt="dfsdfsf" />
-                            <img
-                            src={`${process.env.REACT_APP_BASE_URL_image}${imagelogouser}`}
-                            alt="dfsdfsf"
-                          />
-                        
-                        ) : (
-                          <img
-                            src={`${process.env.REACT_APP_BASE_URL_image}${userData?.profile}`}
-                            alt="df"
-                          />
-                        )} */}
-                     
-                     {userData?.profile ? (
-  <img
-    src={`${process.env.REACT_APP_BASE_URL_image}${userData?.profile}`}
-    alt="profile"
-  />
-) : (
-  <img
-    src={imagelogouser}
-    alt="default-profile"
-  />
-)}
-                     
-                      </a>
-                      <ul className="dropdown-menu menu_item profile_view">
-                        <li>
-                          <Link
-                            className="dropdown-item list_item"
-                            to={"/My-profile"}
-                          >
-                            My Profile
-                          </Link>
-                        </li>
-                        <li>
-                          <Link
-                            className="dropdown-item list_item"
-                            to={"/order-details"}
-                          >
-                            Freight Orders
-                          </Link>
-                        </li>
-                        {/* <li><Link className="dropdown-item list_item" to={'/invoices'} >Invoices</Link></li> */}
-                        {/* <li><Link className="dropdown-item" to={"/Custom-clearence"}>My Clearances</Link></li> */}
-                        <li>
-                          <Link
-                            className="dropdown-item list_item"
-                            to={"/Clearence-order"}
-                          >
-                            Clearance Orders
-                          </Link>
-                        </li>
-                        <li>
-                          <Link
-                            className="dropdown-item list_item"
-                            to={"/Changepassword"}
-                          >
-                            Change Password
-                          </Link>
-                        </li>
-                        <li>
-                          <Link
-                            className="dropdown-item list_item"
-                            to={"/QuotationInFreight"}
-                          >
-                            Chat
-                          </Link>
-                        </li>
-                        {/* <li><Link className="dropdown-item list_item drop_item1" onClick={handleclicklogout}>Logout</Link></li> */}
-                        <li>
-                          <span
-                            className="dropdown-item list_item"
-                            onClick={handleclicklogout}
-                          >
-                            Logout
+                        <i className="fi fi-ss-bell bellIconWhite" />
+                        {countdatat?.unseenCount > 0 ? (
+                          <span className="OneNot">
+                            <small>{countdatat.unseenCount}</small>
                           </span>
-                        </li>
-                      </ul>
-                    </li>
-                  </div>
+                        ) : null}
+                      </div>
+
+                      {showNoti && (
+                        <div className="customNotiDropdown">
+                          <div className="customNotiHeader">
+                            <h5 className="customNotiTitle">Notifications</h5>
+                          </div>
+
+                          <div className="customNotiScroll">
+                            {data && data.length > 0 ? (
+                              data.map((item, index) => (
+                                <div
+                                  className="customNotiItem"
+                                  key={index}
+                                  onClick={() => {
+                                    setShowNoti(false);
+                                    navigate("/notification");
+                                  }}
+                                >
+                                  <div className="customNotiIconBadge">
+                                    <NotificationsNoneOutlinedIcon style={{ fontSize: "1.15rem" }} />
+                                  </div>
+                                  <div className="customNotiContent">
+                                    <h6 className="customNotiItemTitle">{item?.title}</h6>
+                                    <p className="customNotiItemDesc">{item?.description}</p>
+                                  </div>
+                                </div>
+                              ))
+                            ) : (
+                              <div className="customNotiEmpty">
+                                <p>No new notifications</p>
+                              </div>
+                            )}
+                          </div>
+
+                          <div
+                            className="customNotiFooter"
+                            onClick={() => {
+                              setShowNoti(false);
+                              navigate("/notification");
+                            }}
+                          >
+                            <span>View all notifications</span>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Profile Dropdown - Circular Avatar Only */}
+                    <div className="profileDropWrapper" ref={profileRef}>
+                      <div
+                        className="profileTriggerBtn"
+                        role="button"
+                        onClick={handleToggleProfile}
+                        style={{ padding: 0 }}
+                      >
+                        <img
+                          className="userAvatarImg"
+                          src={
+                            userData?.profile
+                              ? `${process.env.REACT_APP_BASE_URL_image}${userData?.profile}`
+                              : imagelogouser
+                          }
+                          alt="profile"
+                        />
+                      </div>
+
+                      {showProfile && (
+                        <div className="customProfileDropdown">
+                          {/* User info header inside dropdown */}
+                          <div className="customProfileHeader">
+                            <h6 className="customProfileHeaderName">
+                              {userData?.full_name || userData?.client_name || user?.full_name || user?.client_name || "User Account"}
+                            </h6>
+                            <p className="customProfileHeaderEmail">
+                              {userData?.email || user?.email || ""}
+                            </p>
+                          </div>
+
+                          {/* List items with icons */}
+                          <Link
+                            className="customProfileItem"
+                            to={"/My-profile"}
+                            onClick={() => setShowProfile(false)}
+                          >
+                            <PersonOutlineOutlinedIcon className="customProfileItemIcon" />
+                            <span>My Profile</span>
+                          </Link>
+
+                          <Link
+                            className="customProfileItem"
+                            to={"/order-details"}
+                            onClick={() => setShowProfile(false)}
+                          >
+                            <LocalShippingOutlinedIcon className="customProfileItemIcon" />
+                            <span>Freight Orders</span>
+                          </Link>
+
+                          <Link
+                            className="customProfileItem"
+                            to={"/Clearence-order"}
+                            onClick={() => setShowProfile(false)}
+                          >
+                            <DescriptionOutlinedIcon className="customProfileItemIcon" />
+                            <span>Clearance Orders</span>
+                          </Link>
+
+                          <Link
+                            className="customProfileItem"
+                            to={"/Changepassword"}
+                            onClick={() => setShowProfile(false)}
+                          >
+                            <LockOutlinedIcon className="customProfileItemIcon" />
+                            <span>Change Password</span>
+                          </Link>
+
+                          <Link
+                            className="customProfileItem"
+                            to={"/QuotationInFreight"}
+                            onClick={() => setShowProfile(false)}
+                          >
+                            <ChatBubbleOutlineOutlinedIcon className="customProfileItemIcon" />
+                            <span>Chat</span>
+                          </Link>
+
+                          <div
+                            className="customProfileItem logoutItem"
+                            onClick={handleclicklogout}
+                            role="button"
+                          >
+                            <LogoutOutlinedIcon className="customProfileItemIcon" />
+                            <span>Logout</span>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </>
                 ) : (
-                  <div style={{ width: "50px", height: "30px" }}>
+                  <div>
                     <button
                       className="px-4 py-1 rounded"
-                      style={{ backgroundColor: "#d01b20", color: "white " }}
+                      style={{ backgroundColor: "#d01b20", color: "white" }}
                       onClick={hanldeclicklogin}
                     >
                       Login

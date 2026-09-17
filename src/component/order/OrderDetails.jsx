@@ -1196,6 +1196,19 @@ export default function OrderDetails() {
     const { name, value } = e.target;
     setInputval({ ...inputval, [name]: value });
   };
+  const handleResetFilter = () => {
+    setInputval({
+      user_id: "",
+      origin: "",
+      destination: "",
+      startDate: "",
+      endDate: "",
+      freight: "",
+      type: "",
+    });
+    getdata();
+    handleUpdateClose5();
+  };
   const postapi = () => {
     const postdata = {
       user_id: user.id,
@@ -2041,137 +2054,196 @@ export default function OrderDetails() {
 
       {/* Modal 5: Filter Modal */}
       <Modal open={showModald5} onClose={handleUpdateClose5}>
-        <Box
-          className="od-modal-box"
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: { xs: "90%", sm: 600, md: 700 },
-          }}
-        >
-          <div className="od-modal-header">
-            <h5>Filter Orders</h5>
-            <button className="od-modal-close-btn" onClick={handleUpdateClose5}>
-              <CloseIcon />
-            </button>
-          </div>
-          
-          <div className="od-modal-body frightFormSec">
-            <div className="row od-form-row">
-              <div className="col-6">
-                <div className="od-form-group">
-                  <label htmlFor="filter-origin">Collection from</label>
-                  <select
-                    id="filter-origin"
-                    name="origin"
-                    onChange={handechangefilter}
-                    value={inputval.origin || ""}
-                  >
-                    <option value="">Select country...</option>
-                    {country?.map((item) => (
-                      <option key={item.id} value={item.id}>
-                        {item.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+        <Box className="filter-modal-overlay">
+          <div className="filter-modal-header">
+            <div className="filter-modal-header-left">
+              <div className="filter-modal-icon-badge">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#4f46e5"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <line x1="4" y1="7" x2="20" y2="7"></line>
+                  <line x1="7" y1="12" x2="17" y2="12"></line>
+                  <line x1="10" y1="17" x2="14" y2="17"></line>
+                </svg>
               </div>
-              <div className="col-6">
-                <div className="od-form-group">
-                  <label htmlFor="filter-destination">Destination</label>
-                  <select
-                    id="filter-destination"
-                    name="destination"
-                    onChange={handechangefilter}
-                    value={inputval.destination || ""}
-                  >
-                    <option value="">Select country...</option>
-                    {country?.map((item) => (
-                      <option key={item.id} value={item.id}>
-                        {item.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+              <div className="filter-modal-titles">
+                <h5 className="filter-modal-title">Filter Orders</h5>
+                <p className="filter-modal-subtitle">
+                  Filter by country route, date range, or freight criteria
+                </p>
               </div>
             </div>
-            
-            <div className="row od-form-row">
-              <div className="col-6">
-                <div className="od-form-group">
-                  <label htmlFor="filter-startDate">Start Date</label>
-                  <input
-                    type="date"
-                    id="filter-startDate"
-                    name="startDate"
-                    onChange={handechangefilter}
-                    value={inputval.startDate || ""}
-                  />
-                </div>
-              </div>
-              <div className="col-6">
-                <div className="od-form-group">
-                  <label htmlFor="filter-endDate">End Date</label>
-                  <input
-                    type="date"
-                    id="filter-endDate"
-                    name="endDate"
-                    onChange={handechangefilter}
-                    value={inputval.endDate || ""}
-                  />
-                </div>
-              </div>
-            </div>
-            
-            <div className="row od-form-row">
-              <div className="col-6">
-                <div className="od-form-group">
-                  <label htmlFor="filter-freight">Freight Mode</label>
-                  <select
-                    id="filter-freight"
-                    name="freight"
-                    onChange={handechangefilter}
-                    value={inputval.freight || ""}
-                  >
-                    <option value="">All Modes</option>
-                    <option value="Sea">Sea</option>
-                    <option value="Air">Air</option>
-                  </select>
-                </div>
-              </div>
-              <div className="col-6">
-                <div className="od-form-group">
-                  <label htmlFor="filter-type">Freight Type</label>
-                  <select
-                    id="filter-type"
-                    name="type"
-                    onChange={handechangefilter}
-                    value={inputval.type || ""}
-                  >
-                    <option value="">All Types</option>
-                    <option value="express">Express</option>
-                    <option value="normal">Consolidation</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div className="od-modal-footer">
             <button
+              type="button"
+              className="filter-modal-close-btn"
               onClick={handleUpdateClose5}
-              className="od-btn od-btn-secondary"
+              aria-label="Close"
             >
-              Close
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
             </button>
+          </div>
+
+          <div className="filter-modal-grid">
+            <div className="filter-field-group">
+              <label className="filter-field-label" htmlFor="filter-origin">
+                Collection from
+              </label>
+              <select
+                id="filter-origin"
+                className="filter-control-select"
+                name="origin"
+                onChange={handechangefilter}
+                value={inputval.origin || ""}
+              >
+                <option value="">Select country...</option>
+                {country?.map((item) => (
+                  <option key={item.id} value={item.id}>
+                    {item.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="filter-field-group">
+              <label className="filter-field-label" htmlFor="filter-destination">
+                Destination
+              </label>
+              <select
+                id="filter-destination"
+                className="filter-control-select"
+                name="destination"
+                onChange={handechangefilter}
+                value={inputval.destination || ""}
+              >
+                <option value="">Select country...</option>
+                {country?.map((item) => (
+                  <option key={item.id} value={item.id}>
+                    {item.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="filter-field-group">
+              <label className="filter-field-label" htmlFor="filter-startDate">
+                Start Date
+              </label>
+              <input
+                type="date"
+                id="filter-startDate"
+                className="filter-control-input"
+                name="startDate"
+                onChange={handechangefilter}
+                value={inputval.startDate || ""}
+              />
+            </div>
+
+            <div className="filter-field-group">
+              <label className="filter-field-label" htmlFor="filter-endDate">
+                End Date
+              </label>
+              <input
+                type="date"
+                id="filter-endDate"
+                className="filter-control-input"
+                name="endDate"
+                onChange={handechangefilter}
+                value={inputval.endDate || ""}
+              />
+            </div>
+
+            <div className="filter-field-group">
+              <label className="filter-field-label" htmlFor="filter-freight">
+                Freight Mode
+              </label>
+              <select
+                id="filter-freight"
+                className="filter-control-select"
+                name="freight"
+                onChange={handechangefilter}
+                value={inputval.freight || ""}
+              >
+                <option value="">All Modes</option>
+                <option value="Sea">Sea</option>
+                <option value="Air">Air</option>
+                <option value="Road">Road</option>
+              </select>
+            </div>
+
+            <div className="filter-field-group">
+              <label className="filter-field-label" htmlFor="filter-type">
+                Freight Type
+              </label>
+              <select
+                id="filter-type"
+                className="filter-control-select"
+                name="type"
+                onChange={handechangefilter}
+                value={inputval.type || ""}
+              >
+                <option value="">All Types</option>
+                <option value="express">Express</option>
+                <option value="normal">Consolidation</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="filter-modal-footer">
             <button
-              onClick={postapi}
-              className="od-btn od-btn-primary"
+              type="button"
+              className="filter-btn-reset"
+              onClick={handleResetFilter}
             >
-              Apply Filters
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                <path d="M3 3v5h5"></path>
+              </svg>
+              <span>Reset Filters</span>
             </button>
+            <div className="filter-modal-footer-right">
+              <button
+                type="button"
+                onClick={handleUpdateClose5}
+                className="filter-btn-close"
+              >
+                Close
+              </button>
+              <button
+                type="button"
+                onClick={postapi}
+                className="filter-btn-apply"
+              >
+                Apply Filters
+              </button>
+            </div>
           </div>
         </Box>
       </Modal>
